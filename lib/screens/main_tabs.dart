@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:per_rat/models/anime.dart';
+import 'package:per_rat/data/movie_info.dart';
+
 import 'package:per_rat/screens/discover.dart';
 import 'package:per_rat/screens/anime.dart';
 import 'package:per_rat/screens/my_list.dart';
@@ -28,11 +29,10 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Anime availableAnime;
+    final availableAnime = dummyAnime.last;
 
     Widget currentPage = AnimeScreen(
-      anime: availableAnime,
-      title: availableAnime.title,
+      chosenAnime: availableAnime,
     );
 
     if (_selectedPageIndex == 1) {
@@ -47,6 +47,7 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text('PerRat'),
       ),
       drawer: const MainDrawer(),
