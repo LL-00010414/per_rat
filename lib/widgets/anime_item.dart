@@ -23,70 +23,77 @@ class AnimeItem extends StatelessWidget {
       ),
       clipBehavior: Clip.hardEdge,
       elevation: 2,
-      child: InkWell(
-        onTap: () {
-          onSelectAnime(anime);
-        },
-        child: Stack(
-          children: [
-            FadeInImage(
-              placeholder: MemoryImage(kTransparentImage),
-              image: NetworkImage(anime.imageUrl),
-              fit: BoxFit.cover,
-              height: 400,
-              width: 200,
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                color: Colors.black54,
-                padding: const EdgeInsets.symmetric(
-                  vertical: 1,
-                  horizontal: 3,
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      anime.title,
-                      maxLines: 2,
-                      textAlign: TextAlign.center,
-                      softWrap: true,
-                      overflow: TextOverflow.fade,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.white,
+      child: Badge(
+        alignment: Alignment.topRight,
+        backgroundColor: Colors.amberAccent,
+        largeSize: 35,
+        isLabelVisible: true,
+        label: const Text('new'),
+        child: InkWell(
+          onTap: () {
+            onSelectAnime(anime);
+          },
+          child: Stack(
+            children: [
+              FadeInImage(
+                placeholder: MemoryImage(kTransparentImage),
+                image: NetworkImage(anime.imageUrl),
+                fit: BoxFit.cover,
+                height: 400,
+                width: 200,
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  color: Colors.black54,
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 1,
+                    horizontal: 3,
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        anime.title,
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                        softWrap: true,
+                        overflow: TextOverflow.fade,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w300,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 7,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        AnimeItemTrait(
-                          icon: Icons.star_border_outlined,
-                          label: '${anime.score} ',
-                        ),
-                        const SizedBox(width: 5),
-                        AnimeItemTrait(
-                          icon: Icons.movie_outlined,
-                          label: anime.genre.name,
-                        ),
-                        const SizedBox(width: 5),
-                        AnimeItemTrait(
-                          icon: Icons.numbers_outlined,
-                          label: anime.totalEpisodes.toString(),
-                        )
-                      ],
-                    )
-                  ],
+                      const SizedBox(
+                        height: 7,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          AnimeItemTrait(
+                            icon: Icons.star_border_outlined,
+                            label: '${anime.score} ',
+                          ),
+                          const SizedBox(width: 5),
+                          AnimeItemTrait(
+                            icon: Icons.movie_outlined,
+                            label: anime.genre.name,
+                          ),
+                          const SizedBox(width: 5),
+                          AnimeItemTrait(
+                            icon: Icons.numbers_outlined,
+                            label: anime.totalEpisodes.toString(),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

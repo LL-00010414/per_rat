@@ -1,9 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({
     super.key,
+    required this.onSelectScreen,
+    required this.user1,
   });
+
+  final void Function() onSelectScreen;
+
+  final User user1;
 
   @override
   Widget build(BuildContext context) {
@@ -19,21 +26,27 @@ class MainDrawer extends StatelessWidget {
               Color.fromARGB(255, 191, 171, 38),
               Color.fromARGB(255, 223, 200, 45),
             ])),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.person_rounded,
-                  size: 50,
-                  color: Theme.of(context).colorScheme.inversePrimary,
-                ),
-                const SizedBox(width: 15),
-                Text(
-                  'Username',
-                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                )
-              ],
+            child: GestureDetector(
+              onTap: () {
+                onSelectScreen();
+              },
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.person_rounded,
+                    size: 50,
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                  ),
+                  const SizedBox(width: 15),
+                  Text(
+                    user1.email!.substring(0, 11),
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
+                        ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

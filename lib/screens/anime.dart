@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:per_rat/data/movie_info.dart';
+
 import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/screens/anime_details.dart';
 import 'package:per_rat/widgets/anime_item.dart';
@@ -14,13 +14,17 @@ class AnimeScreen extends StatelessWidget {
     required this.chosenAnime,
   });
 
-  final Anime chosenAnime;
+  final List<Anime> chosenAnime;
+  //final List<Anime> availableList;
 
-  void selectAnime(BuildContext context, Anime chosenAnime) {
-    Navigator.of(context).push(MaterialPageRoute(
+  void selectAnime(BuildContext context, Anime anime) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
         builder: (ctx) => AnimeDetailsScreen(
-              anime: chosenAnime,
-            )));
+          anime: anime,
+        ),
+      ),
+    );
   }
 
   @override
@@ -32,34 +36,14 @@ class AnimeScreen extends StatelessWidget {
         crossAxisSpacing: 5,
         mainAxisSpacing: 5,
       ),
-      itemCount: dummyAnime.length,
+      itemCount: chosenAnime.length,
       itemBuilder: (ctx, index) => AnimeItem(
-          anime: dummyAnime[index],
-          onSelectAnime: (anime) {
-            selectAnime(context, chosenAnime);
-          }),
+        anime: chosenAnime[index],
+        onSelectAnime: (anime) {
+          selectAnime(context, anime);
+        },
+      ),
     );
-
-    // Center(
-    //   child: Column(
-    //     mainAxisSize: MainAxisSize.min,
-    //     children: [
-    //       Text(
-    //         'Uh oh ... nothing here!',
-    //         style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-    //               color: Theme.of(context).colorScheme.onBackground,
-    //             ),
-    //       ),
-    //       const SizedBox(height: 16),
-    //       Text(
-    //         'Try selecting a different anime!',
-    //         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-    //               color: Theme.of(context).colorScheme.onBackground,
-    //             ),
-    //       ),
-    //     ],
-    //   ),
-    // );
 
     return Scaffold(
       appBar: AppBar(

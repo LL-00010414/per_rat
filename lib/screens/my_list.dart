@@ -1,19 +1,101 @@
 import 'package:flutter/material.dart';
 
-class MyListScreen extends StatelessWidget {
-  const MyListScreen({super.key});
+class MyListScreen extends StatefulWidget {
+  const MyListScreen({
+    super.key,
+  });
+
+  //final List<Anime> lastAnime;
+
+  @override
+  State<MyListScreen> createState() => _MyListScreenState();
+}
+
+class _MyListScreenState extends State<MyListScreen>
+    with TickerProviderStateMixin {
+  late final TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 6, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My ratings list'),
+        flexibleSpace: TabBar(
+          isScrollable: true,
+          controller: _tabController,
+          tabs: const <Widget>[
+            Tab(
+              text: 'All',
+            ),
+            Tab(
+              text: 'Watching',
+            ),
+            Tab(
+              text: 'Completed',
+            ),
+            Tab(
+              text: 'On Hold',
+            ),
+            Tab(
+              text: 'Dropped',
+            ),
+            Tab(
+              text: 'Plan to Watch',
+            ),
+          ],
+        ),
       ),
-      body: Center(
-        child: Text('The list of my ratings...',
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                )),
+      body: TabBarView(
+        controller: _tabController,
+        children: const <Widget>[
+          Center(
+            child: Text(
+              'All',
+              style: TextStyle(color: Colors.amber),
+            ),
+          ),
+          Center(
+            child: Text(
+              'Watching',
+              style: TextStyle(color: Colors.amber),
+            ),
+          ),
+          Center(
+            child: Text(
+              'Completed',
+              style: TextStyle(color: Colors.amber),
+            ),
+          ),
+          Center(
+            child: Text(
+              'On Hold',
+              style: TextStyle(color: Colors.amber),
+            ),
+          ),
+          Center(
+            child: Text(
+              'Dropped',
+              style: TextStyle(color: Colors.amber),
+            ),
+          ),
+          Center(
+            child: Text(
+              'Plan to Watch',
+              style: TextStyle(color: Colors.amber),
+            ),
+          ),
+        ],
       ),
     );
   }
