@@ -1,6 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 const uuid = Uuid();
+
+// class Item {
+//   Item({
+//     required this.id,
+//   });
+
+//   final String id;
+// }
 
 enum Genre {
   action,
@@ -83,13 +92,16 @@ enum Studio {
   bsFuji,
   zexcs,
   studioComet,
+  lerche,
+  jcStaff,
+  nexus,
 }
 
-enum Status {
-  completed,
-  ongoing,
-  upcoming,
-}
+// enum Status {
+//   completed,
+//   ongoing,
+//   upcoming,
+// }
 
 class Anime {
   Anime({
@@ -100,11 +112,13 @@ class Anime {
     required this.score,
     required this.rank,
     required this.popularity,
+    required this.favorites,
     required this.trailerUrl,
     required this.genre,
     required this.demographics,
     required this.studio,
     required this.status,
+    required this.dateTimeRange,
   }) : id = uuid.v4();
 
   final String id;
@@ -115,9 +129,11 @@ class Anime {
   final String score;
   final String rank;
   final String popularity;
+  final int favorites;
   final String trailerUrl;
   final Genre genre;
   final Demographics demographics;
   final Studio studio;
-  final Status status;
+  String status;
+  final DateTimeRange dateTimeRange;
 }
