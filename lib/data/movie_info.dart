@@ -26,7 +26,7 @@ final dummyAnime = [
     studio: Studio.studioBind,
     status: 'Completed',
     dateTimeRange: DateTimeRange(
-      start: DateTime.now(),
+      start: DateTime(2023, 8, 10),
       end: DateTime(2024, 2, 4),
     ),
   ),

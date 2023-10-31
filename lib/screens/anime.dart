@@ -32,8 +32,6 @@ class _AnimeScreenState extends State<AnimeScreen> {
   }
 
   void _removeAnime(Anime anime) {
-    // final List<String> videoURL =
-    // dummyAnime.map((anime) => anime.trailerUrl).toList();
     //final animeName = _registeredAnime.map((anime) => anime.title).toList();
     final animeIndex = _registeredAnime.indexOf(anime);
     setState(() {
@@ -92,6 +90,12 @@ class _AnimeScreenState extends State<AnimeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('HOME'),
+        actions: [
+          IconButton(
+            onPressed: _openAddAnimeDialog,
+            icon: const Icon(Icons.add_sharp),
+          )
+        ],
       ),
       body: content,
     );
