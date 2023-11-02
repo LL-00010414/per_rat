@@ -1,12 +1,18 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
 import 'package:flutter/services.dart';
+import 'package:per_rat/data/demographic_info.dart';
 import 'package:per_rat/data/genre_info.dart';
+import 'package:per_rat/data/status_info.dart';
+import 'package:per_rat/data/studio_info.dart';
 import 'package:per_rat/models/anime.dart';
 import 'package:http/http.dart' as http;
+import 'package:per_rat/models/demographics.dart';
 import 'package:per_rat/models/genres.dart';
+import 'package:per_rat/models/statuses.dart';
+import 'package:per_rat/models/studios.dart';
 
 class NewAnime extends StatefulWidget {
   const NewAnime({
@@ -26,15 +32,15 @@ class _NewAnimeState extends State<NewAnime> {
   var _enteredImageUrl = '';
   var _enteredSynopsis = '';
   var _enteredTotalEpisodes = 12;
-  var _enteredScore = 5;
+  var _enteredScore = 5.5;
   var _enteredRank = 1000;
   var _enteredPopularity = 700;
   var _enteredFavorites = 140;
   var _enteredTrailerUrl = '';
   var _selectedGenre = genres[Genres.action]!;
-  //var _enteredDemographics = Demographics.shounen;
-  //var _enteredStudio = Studio.a1Pictures;
-  //var _enteredStatus = 'Completed';
+  var _selectedDemographic = demographics[Demographics.josei]!;
+  var _selectedStudio = studios[Studios.a1Pictures]!;
+  var _selectedStatus = statuses[Statuses.completed]!;
   // var _enteredStartDate = DateTime.now();
   // var _enteredEndDate = DateTime.now();
 
@@ -61,9 +67,9 @@ class _NewAnimeState extends State<NewAnime> {
             'favorites': _enteredFavorites,
             'trailerUrl': _enteredTrailerUrl,
             'genre': _selectedGenre,
-            //'demographics': _enteredDemographics,
-            //'studio': _enteredStudio,
-            //'status': _enteredStatus,
+            'demographics': _selectedDemographic,
+            'studio': _selectedStudio,
+            'status': _selectedStatus,
             // 'startDate': _enteredStartDate,
             // 'endDate': _enteredEndDate,
           },
@@ -212,16 +218,37 @@ class _NewAnimeState extends State<NewAnime> {
                   },
                 ), // instead of TextField()
                 const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: Text(
+                        'Genre:',
+                        style:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimaryContainer,
+                                ),
+                      ),
+                    ),
+                  ],
+                ),
                 Expanded(
                   flex: 0,
                   child: DropdownButtonFormField(
                     menuMaxHeight: 250,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12))),
                     //style: TextStyle(color: Colors.amber),
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          color:
-                              Theme.of(context).colorScheme.onPrimaryContainer,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
-
+                    padding: const EdgeInsets.only(
+                      top: 15,
+                      bottom: 15,
+                    ),
                     value: _selectedGenre,
                     items: [
                       for (final genre in genres.entries)
@@ -243,7 +270,169 @@ class _NewAnimeState extends State<NewAnime> {
                     },
                   ),
                 ),
-                const SizedBox(height: 12),
+
+                //const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: Text(
+                        'Studio:',
+                        style:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimaryContainer,
+                                ),
+                      ),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  flex: 0,
+                  child: DropdownButtonFormField(
+                    menuMaxHeight: 250,
+                    //style: TextStyle(color: Colors.amber),
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12))),
+                    //style: TextStyle(color: Colors.amber),
+                    padding: const EdgeInsets.only(
+                      top: 15,
+                      bottom: 15,
+                    ),
+                    value: _selectedStudio,
+                    items: [
+                      for (final studio in studios.entries)
+                        DropdownMenuItem(
+                          enabled: true,
+                          value: studio.value,
+                          child: Row(
+                            children: [
+                              const SizedBox(width: 6),
+                              Text(studio.value.title),
+                            ],
+                          ),
+                        ),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedStudio = value!;
+                      });
+                    },
+                  ),
+                ),
+                //const SizedBox(height: 12),
+
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: Text(
+                        'Status:',
+                        style:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimaryContainer,
+                                ),
+                      ),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  flex: 0,
+                  child: DropdownButtonFormField(
+                    menuMaxHeight: 250,
+                    //style: TextStyle(color: Colors.amber),
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12))),
+                    //style: TextStyle(color: Colors.amber),
+                    padding: const EdgeInsets.only(
+                      top: 15,
+                      bottom: 15,
+                    ),
+                    value: _selectedStatus,
+                    items: [
+                      for (final status in statuses.entries)
+                        DropdownMenuItem(
+                          enabled: true,
+                          value: status.value,
+                          child: Row(
+                            children: [
+                              const SizedBox(width: 6),
+                              Text(status.value.title),
+                            ],
+                          ),
+                        ),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedStatus = value!;
+                      });
+                    },
+                  ),
+                ),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: Text(
+                        'Demographics:',
+                        style:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimaryContainer,
+                                ),
+                      ),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  flex: 0,
+                  child: DropdownButtonFormField(
+                    menuMaxHeight: 250,
+                    //style: TextStyle(color: Colors.amber),
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12))),
+                    //style: TextStyle(color: Colors.amber),
+                    padding: const EdgeInsets.only(
+                      top: 15,
+                      bottom: 15,
+                    ),
+                    value: _selectedDemographic,
+                    items: [
+                      for (final demographic in demographics.entries)
+                        DropdownMenuItem(
+                          enabled: true,
+                          value: demographic.value,
+                          child: Row(
+                            children: [
+                              const SizedBox(width: 6),
+                              Text(demographic.value.title),
+                            ],
+                          ),
+                        ),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedDemographic = value!;
+                      });
+                    },
+                  ),
+                ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -261,21 +450,20 @@ class _NewAnimeState extends State<NewAnime> {
                         validator: (value) {
                           if (value == null ||
                               value.isEmpty ||
-                              int.tryParse(value) == null ||
-                              int.tryParse(value)! <= 0) {
+                              double.tryParse(value) == null ||
+                              double.tryParse(value)! <= 0) {
                             return 'Must be a valid, positive number.';
                           }
                           return null;
                         },
                         onSaved: (value) {
-                          _enteredScore = int.parse(value!);
+                          _enteredScore = double.parse(value!);
                         },
                       ),
                     ),
                     const SizedBox(width: 8),
                   ],
                 ),
-                const SizedBox(height: 12),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
