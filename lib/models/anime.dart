@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:per_rat/models/demographics.dart';
+import 'package:per_rat/models/genres.dart';
+import 'package:per_rat/models/statuses.dart';
+import 'package:per_rat/models/studios.dart';
 import 'package:uuid/uuid.dart';
 
 const uuid = Uuid();
@@ -9,98 +13,6 @@ const uuid = Uuid();
 //   });
 
 //   final String id;
-// }
-
-enum Genre {
-  action,
-  adventure,
-  boysLove,
-  comedy,
-  drama,
-  fantasy,
-  girlsLove,
-  horror,
-  mystery,
-  romance,
-  sciFi,
-  sliceOfLife,
-  sports,
-  supernatural,
-  ecchi,
-  hentai,
-}
-
-enum Demographics {
-  josei,
-  kids,
-  seinen,
-  shoujo,
-  shounen,
-}
-
-enum Studio {
-  kinemaCitrus,
-  cloverWorks,
-  sentaiFilmworks,
-  studioDeen,
-  studioBind,
-  a1Pictures,
-  tatsunokoProduction,
-  nipponTelevisionNetwork,
-  showgate,
-  dogaKobo,
-  hololiveProduction,
-  gallop,
-  ufotable,
-  aniplex,
-  pierrot,
-  shinEiAnimation,
-  tencentPenguinPictures,
-  shaft,
-  silverLink,
-  seven,
-  witStudio,
-  gainax,
-  feel,
-  discotekMedia,
-  olm,
-  bilibili,
-  shogakukanShueishaProductions,
-  gonzo,
-  brainsBase,
-  ashiProductions,
-  aquaAris,
-  studio4C,
-  studioHibari,
-  tmsEntertainment,
-  aic,
-  dle,
-  xebec,
-  kyotoAnimation,
-  satelight,
-  studioMausu,
-  mappa,
-  mushiProduction,
-  maidenJapan,
-  madhouse,
-  tbs,
-  bandaiEntertainment,
-  nihonAdSystems,
-  warnerBrosJapan,
-  lidenfilms,
-  geidaiAnimation,
-  bsFuji,
-  zexcs,
-  studioComet,
-  lerche,
-  jcStaff,
-  nexus,
-}
-
-// enum Status {
-//   completed,
-//   ongoing,
-//   upcoming,
 // }
 
 class Anime {
@@ -115,7 +27,7 @@ class Anime {
     required this.favorites,
     required this.trailerUrl,
     required this.genre,
-    required this.demographics,
+    required this.demographic,
     required this.studio,
     required this.status,
     required this.dateTimeRange,
@@ -132,8 +44,8 @@ class Anime {
   final int favorites;
   final String trailerUrl;
   final Genre genre;
-  final Demographics demographics;
+  final Demographic demographic;
   final Studio studio;
-  String status;
+  final Status status;
   final DateTimeRange dateTimeRange;
 }

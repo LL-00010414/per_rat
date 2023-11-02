@@ -209,7 +209,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                         ),
                   ),
                   Text(
-                    widget.anime.status.toUpperCase(),
+                    widget.anime.status.title,
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           color: Colors.greenAccent,
                           fontWeight: FontWeight.normal,
@@ -233,7 +233,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Genre: ${widget.anime.genre.name.toUpperCase()}',
+                    'Genre: ${widget.anime.genre.title.toUpperCase()}',
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           color: Colors.red,
                           fontWeight: FontWeight.w500,

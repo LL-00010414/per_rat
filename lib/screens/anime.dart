@@ -54,9 +54,9 @@ class _AnimeScreenState extends State<AnimeScreen> {
     );
   }
 
-  void _openAddAnimeDialog() {
-    showModalBottomSheet(
-        context: context, builder: (ctx) => NewAnime(onAddAnime: _addAnime));
+  void _addAnimePage() async {
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (ctx) => NewAnime(onAddAnime: _addAnime)));
   }
 
   void selectAnime(BuildContext context, Anime anime) {
@@ -92,7 +92,7 @@ class _AnimeScreenState extends State<AnimeScreen> {
         title: const Text('HOME'),
         actions: [
           IconButton(
-            onPressed: _openAddAnimeDialog,
+            onPressed: _addAnimePage,
             icon: const Icon(Icons.add_sharp),
           )
         ],

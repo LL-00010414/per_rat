@@ -79,7 +79,7 @@ class AnimeItem extends StatelessWidget {
                           const SizedBox(width: 5),
                           AnimeItemTrait(
                             icon: Icons.movie_outlined,
-                            label: anime.genre.name,
+                            label: anime.genre.title,
                           ),
                           const SizedBox(width: 5),
                           AnimeItemTrait(
