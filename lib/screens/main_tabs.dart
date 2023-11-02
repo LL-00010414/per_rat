@@ -52,13 +52,14 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final ongoingAnime1 =
-        dummyAnime.where((anime) => anime.status.contains('Ongoing')).toList();
+    final ongoingAnime1 = dummyAnime
+        .where((anime) => anime.status.title.contains('Ongoing'))
+        .toList();
     final trendingAnime1 = dummyAnime
         .where((anime1) => int.parse(anime1.popularity) < 1000)
         .toList();
     final upcomingAnime1 = dummyAnime
-        .where((anime3) => anime3.status.contains('Upcoming'))
+        .where((anime3) => anime3.status.title.contains('Upcoming'))
         .toList();
 
     final user = FirebaseAuth.instance.currentUser!;

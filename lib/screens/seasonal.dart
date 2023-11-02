@@ -34,13 +34,13 @@ class _SeasonalScreenState extends State<SeasonalScreen>
   @override
   Widget build(BuildContext context) {
     final List<Anime> lastAnime = dummyAnime
-        .where((anime) => anime.status.contains('Completed'))
+        .where((anime) => anime.status.title.contains('Completed'))
         .toList();
     final List<Anime> thisSeaAnime = dummyAnime
-        .where((anime1) => anime1.status.contains('Ongoing'))
+        .where((anime1) => anime1.status.title.contains('Ongoing'))
         .toList();
     final List<Anime> nextAnime = dummyAnime
-        .where((anime1) => anime1.status.contains('Upcoming'))
+        .where((anime1) => anime1.status.title.contains('Upcoming'))
         .toList();
 
     void pickAnime(BuildContext context, Anime anime) {
