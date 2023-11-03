@@ -44,6 +44,46 @@ class _NewAnimeState extends State<NewAnime> {
   // var _enteredStartDate = DateTime.now();
   // var _enteredEndDate = DateTime.now();
 
+  DateTime? _selectedStartDate;
+
+  DateTime? _selectedEndDate;
+
+  void _startDatePicker() async {
+    final now = DateTime.now();
+    final firstDate = DateTime(1950, 1, 1);
+    final lastDate = DateTime(now.year + 5, now.month, now.day);
+    final pickedDate = await showDatePicker(
+        context: context,
+        firstDate: firstDate,
+        lastDate: lastDate,
+        initialDate: now);
+    setState(() {
+      _selectedStartDate = pickedDate;
+      if (_selectedStartDate!.isAfter(_selectedEndDate!) ||
+          _selectedEndDate == null) {
+        _selectedEndDate = _selectedStartDate;
+      }
+    });
+  }
+
+  void _endDatePicker() async {
+    final now = DateTime.now();
+    final firstDate = DateTime(1950, 1, 1);
+    final lastDate = DateTime(now.year + 5, now.month, now.day);
+    final pickedDate = await showDatePicker(
+        context: context,
+        firstDate: firstDate,
+        lastDate: lastDate,
+        initialDate: now);
+    setState(() {
+      _selectedEndDate = pickedDate;
+      if (_selectedEndDate!.isBefore(_selectedStartDate!) ||
+          _selectedEndDate == null) {
+        _selectedStartDate = _selectedEndDate;
+      }
+    });
+  }
+
   void _saveItem() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -513,31 +553,57 @@ class _NewAnimeState extends State<NewAnime> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
-                // Row(
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                //   children: [
-                //     SizedBox(
-                //       width: 170,
-                //       child: Row(
-                //         mainAxisAlignment: MainAxisAlignment.end,
-                //         crossAxisAlignment: CrossAxisAlignment.center,
-                //         children: [
-                //           Text(
-                //             _selectedDate == null
-                //                 ? 'No date selected'
-                //                 : formatter.format(_selectedDate!),
-                //           ),
-                //           IconButton(
-                //             onPressed: _presentDatePicker,
-                //             icon: const Icon(Icons.calendar_month_rounded),
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ],
-                // ),
+                const SizedBox(height: 22),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(
+                      width: 135,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            _selectedStartDate == null
+                                ? 'Pick a date'
+                                : formatter.format(_selectedStartDate!),
+                            // if _selectedStartDate == null
+                            //   'Pick a Date';
+
+                            // else
+                            //   formatter.format(_selectedStartDate!);
+                          ),
+                          IconButton(
+                            onPressed: _startDatePicker,
+                            icon: const Icon(Icons.calendar_month_rounded),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 135,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            _selectedEndDate == null
+                                ? 'Pick a date'
+                                : formatter.format(_selectedEndDate!),
+                          ),
+                          IconButton(
+                            onPressed: _endDatePicker,
+                            icon: const Icon(Icons.calendar_month_rounded),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
                 TextFormField(
                   style: const TextStyle(
                     color: Colors.white,
