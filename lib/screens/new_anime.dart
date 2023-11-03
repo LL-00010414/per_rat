@@ -102,7 +102,7 @@ class _NewAnimeState extends State<NewAnime> {
                   maxLength: 50,
                   decoration: const InputDecoration(
                     labelStyle: TextStyle(color: Colors.amber),
-                    label: Text('Name'),
+                    label: Text('Title'),
                   ),
                   validator: (value) {
                     if (value == null ||
@@ -120,158 +120,142 @@ class _NewAnimeState extends State<NewAnime> {
                     _enteredTitle = value!;
                   },
                 ), // instead of TextField()
+
+                const SizedBox(height: 12),
+
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Expanded(
-                      child: TextFormField(
-                        style: const TextStyle(
-                          color: Colors.white,
-                        ),
-                        decoration: const InputDecoration(
-                          label: Text('Total Episodes'),
-                          labelStyle: TextStyle(color: Colors.amber),
-                        ),
-                        keyboardType: TextInputType.number,
-                        initialValue: _enteredTotalEpisodes.toString(),
-                        validator: (value) {
-                          if (value == null ||
-                              value.isEmpty ||
-                              int.tryParse(value) == null ||
-                              int.tryParse(value)! <= 0) {
-                            return 'Must be a valid, positive number.';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _enteredTotalEpisodes = int.parse(value!);
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                TextFormField(
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ),
-                  maxLength: 80,
-                  decoration: const InputDecoration(
-                    label: Text('Image URL'),
-                    labelStyle: TextStyle(color: Colors.amber),
-                  ),
-                  validator: (value) {
-                    if (value == null ||
-                        value.isEmpty ||
-                        value.trim().length <= 5 ||
-                        value.trim().length > 80) {
-                      return 'Must provide a valid URL';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    // if (value == null) {
-                    //   return;
-                    // }
-                    _enteredImageUrl = value!;
-                  },
-                ), // instead of TextField()
-                const SizedBox(height: 12),
-                TextFormField(
-                  textAlign: TextAlign.start,
-                  textInputAction: TextInputAction.next,
-                  maxLengthEnforcement:
-                      MaxLengthEnforcement.truncateAfterCompositionEnds,
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ),
-                  //initialValue: 'Synopsis',
-                  maxLength: 500,
-                  maxLines: 4,
-                  decoration: const InputDecoration(
-                    alignLabelWithHint: true,
-                    errorMaxLines: 6,
-                    floatingLabelAlignment: FloatingLabelAlignment.start,
-                    helperMaxLines: 6,
-                    hintText: 'Provide a description of the show...',
-                    hintMaxLines: 6,
-                    contentPadding: EdgeInsets.all(20),
-                    border: OutlineInputBorder(),
-                    label: Text(
-                      'Description',
-                    ),
-                    labelStyle: TextStyle(color: Colors.amber),
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                  ),
-                  validator: (value) {
-                    if (value == null ||
-                        value.isEmpty ||
-                        value.trim().length <= 10 ||
-                        value.trim().length > 500) {
-                      return 'Must be between 10 and 500 characters.';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _enteredSynopsis = value!;
-                  },
-                ), // instead of TextField()
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: Text(
-                        'Genre:',
-                        style:
-                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      //mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10, right: 10),
+                          child: Text(
+                            'Genre:',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(
                                   color: Theme.of(context)
                                       .colorScheme
                                       .onPrimaryContainer,
                                 ),
-                      ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 165,
+                          child: DropdownButtonFormField(
+                            menuMaxHeight: 250,
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12))),
+                            //style: TextStyle(color: Colors.amber),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface,
+                                ),
+                            padding: const EdgeInsets.only(
+                              top: 15,
+                              bottom: 15,
+                            ),
+                            value: _selectedGenre,
+                            items: [
+                              for (final genre in genres.entries)
+                                DropdownMenuItem(
+                                  enabled: true,
+                                  value: genre.value,
+                                  child: Row(
+                                    children: [
+                                      const SizedBox(width: 6),
+                                      Text(genre.value.title),
+                                    ],
+                                  ),
+                                ),
+                            ],
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedGenre = value!;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10, right: 10),
+                          child: Text(
+                            'Demographics:',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimaryContainer,
+                                ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 165,
+                          child: DropdownButtonFormField(
+                            menuMaxHeight: 250,
+                            //style: TextStyle(color: Colors.amber),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface,
+                                ),
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12))),
+                            //style: TextStyle(color: Colors.amber),
+                            padding: const EdgeInsets.only(
+                              top: 15,
+                              bottom: 15,
+                            ),
+                            value: _selectedDemographic,
+                            items: [
+                              for (final demographic in demographics.entries)
+                                DropdownMenuItem(
+                                  enabled: true,
+                                  value: demographic.value,
+                                  child: Row(
+                                    children: [
+                                      const SizedBox(width: 6),
+                                      Text(demographic.value.title),
+                                    ],
+                                  ),
+                                ),
+                            ],
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedDemographic = value!;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                Expanded(
-                  flex: 0,
-                  child: DropdownButtonFormField(
-                    menuMaxHeight: 250,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12))),
-                    //style: TextStyle(color: Colors.amber),
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
-                    padding: const EdgeInsets.only(
-                      top: 15,
-                      bottom: 15,
-                    ),
-                    value: _selectedGenre,
-                    items: [
-                      for (final genre in genres.entries)
-                        DropdownMenuItem(
-                          enabled: true,
-                          value: genre.value,
-                          child: Row(
-                            children: [
-                              const SizedBox(width: 6),
-                              Text(genre.value.title),
-                            ],
-                          ),
-                        ),
-                    ],
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedGenre = value!;
-                      });
-                    },
-                  ),
-                ),
 
                 //const SizedBox(height: 12),
+
+                //const SizedBox(height: 12),
+
                 Row(
                   children: [
                     Padding(
@@ -325,7 +309,6 @@ class _NewAnimeState extends State<NewAnime> {
                     },
                   ),
                 ),
-                //const SizedBox(height: 12),
 
                 Row(
                   children: [
@@ -380,64 +363,15 @@ class _NewAnimeState extends State<NewAnime> {
                     },
                   ),
                 ),
+
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: Text(
-                        'Demographics:',
-                        style:
-                            Theme.of(context).textTheme.titleMedium!.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onPrimaryContainer,
-                                ),
-                      ),
-                    ),
-                  ],
-                ),
-                Expanded(
-                  flex: 0,
-                  child: DropdownButtonFormField(
-                    menuMaxHeight: 250,
-                    //style: TextStyle(color: Colors.amber),
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12))),
-                    //style: TextStyle(color: Colors.amber),
-                    padding: const EdgeInsets.only(
-                      top: 15,
-                      bottom: 15,
-                    ),
-                    value: _selectedDemographic,
-                    items: [
-                      for (final demographic in demographics.entries)
-                        DropdownMenuItem(
-                          enabled: true,
-                          value: demographic.value,
-                          child: Row(
-                            children: [
-                              const SizedBox(width: 6),
-                              Text(demographic.value.title),
-                            ],
-                          ),
-                        ),
-                    ],
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedDemographic = value!;
-                      });
-                    },
-                  ),
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Expanded(
+                    SizedBox(
+                      width: 80,
                       child: TextFormField(
+                        maxLength: 10,
                         style: const TextStyle(
                           color: Colors.white,
                         ),
@@ -453,6 +387,8 @@ class _NewAnimeState extends State<NewAnime> {
                               double.tryParse(value) == null ||
                               double.tryParse(value)! <= 0) {
                             return 'Must be a valid, positive number.';
+                          } else if (double.tryParse(value)! > 10) {
+                            return 'The score cannot be over 10';
                           }
                           return null;
                         },
@@ -461,14 +397,11 @@ class _NewAnimeState extends State<NewAnime> {
                         },
                       ),
                     ),
-                    const SizedBox(width: 8),
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Expanded(
+                    //const SizedBox(width: 88),
+                    SizedBox(
+                      width: 80,
                       child: TextFormField(
+                        maxLength: 10,
                         style: const TextStyle(
                           color: Colors.white,
                         ),
@@ -492,15 +425,42 @@ class _NewAnimeState extends State<NewAnime> {
                         },
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(
+                      width: 100,
+                      child: TextFormField(
+                        maxLength: 8,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: const InputDecoration(
+                          label: Text('Total Episodes'),
+                          labelStyle: TextStyle(color: Colors.amber),
+                        ),
+                        keyboardType: TextInputType.number,
+                        initialValue: _enteredTotalEpisodes.toString(),
+                        validator: (value) {
+                          if (value == null ||
+                              value.isEmpty ||
+                              int.tryParse(value) == null ||
+                              int.tryParse(value)! <= 0) {
+                            return 'Must be a valid, positive number.';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _enteredTotalEpisodes = int.parse(value!);
+                        },
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 12),
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Expanded(
+                    SizedBox(
+                      width: 100,
                       child: TextFormField(
+                        maxLength: 10,
                         style: const TextStyle(
                           color: Colors.white,
                         ),
@@ -524,15 +484,10 @@ class _NewAnimeState extends State<NewAnime> {
                         },
                       ),
                     ),
-                    const SizedBox(width: 8),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Expanded(
+                    SizedBox(
+                      width: 100,
                       child: TextFormField(
+                        maxLength: 10,
                         style: const TextStyle(
                           color: Colors.white,
                         ),
@@ -556,10 +511,60 @@ class _NewAnimeState extends State<NewAnime> {
                         },
                       ),
                     ),
-                    const SizedBox(width: 8),
                   ],
                 ),
                 const SizedBox(height: 12),
+                // Row(
+                //   crossAxisAlignment: CrossAxisAlignment.start,
+                //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //   children: [
+                //     SizedBox(
+                //       width: 170,
+                //       child: Row(
+                //         mainAxisAlignment: MainAxisAlignment.end,
+                //         crossAxisAlignment: CrossAxisAlignment.center,
+                //         children: [
+                //           Text(
+                //             _selectedDate == null
+                //                 ? 'No date selected'
+                //                 : formatter.format(_selectedDate!),
+                //           ),
+                //           IconButton(
+                //             onPressed: _presentDatePicker,
+                //             icon: const Icon(Icons.calendar_month_rounded),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                TextFormField(
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                  maxLength: 80,
+                  decoration: const InputDecoration(
+                    label: Text('Image URL'),
+                    labelStyle: TextStyle(color: Colors.amber),
+                  ),
+                  validator: (value) {
+                    if (value == null ||
+                        value.isEmpty ||
+                        value.trim().length <= 5 ||
+                        value.trim().length > 80) {
+                      return 'Must provide a valid URL';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    // if (value == null) {
+                    //   return;
+                    // }
+                    _enteredImageUrl = value!;
+                  },
+                ), // instead of TextField()
+                const SizedBox(height: 12),
+
                 TextFormField(
                   style: const TextStyle(
                     color: Colors.white,
@@ -585,6 +590,48 @@ class _NewAnimeState extends State<NewAnime> {
                     _enteredTrailerUrl = value!;
                   },
                 ), // instead of TextField()
+                const SizedBox(height: 22),
+
+                TextFormField(
+                  textAlign: TextAlign.start,
+                  textInputAction: TextInputAction.next,
+                  maxLengthEnforcement:
+                      MaxLengthEnforcement.truncateAfterCompositionEnds,
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                  //initialValue: 'Synopsis',
+                  maxLength: 500,
+                  maxLines: 8,
+                  decoration: const InputDecoration(
+                    alignLabelWithHint: true,
+                    errorMaxLines: 6,
+                    floatingLabelAlignment: FloatingLabelAlignment.start,
+                    helperMaxLines: 8,
+                    hintText: 'Provide a description of the show...',
+                    hintMaxLines: 6,
+                    contentPadding: EdgeInsets.all(20),
+                    border: OutlineInputBorder(),
+                    label: Text(
+                      'Description',
+                    ),
+                    labelStyle: TextStyle(color: Colors.amber),
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                  ),
+                  validator: (value) {
+                    if (value == null ||
+                        value.isEmpty ||
+                        value.trim().length <= 10 ||
+                        value.trim().length > 500) {
+                      return 'Must be between 10 and 500 characters.';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _enteredSynopsis = value!;
+                  },
+                ), // instead of TextField()
+                const SizedBox(height: 12),
                 const SizedBox(height: 12),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,

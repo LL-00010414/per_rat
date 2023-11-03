@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:per_rat/data/demographic_info.dart';
 import 'package:per_rat/data/genre_info.dart';
 import 'package:per_rat/data/status_info.dart';
@@ -33,10 +32,8 @@ final dummyAnime = [
     demographic: demographics[Demographics.shounen]!,
     studio: studios[Studios.studioBind]!,
     status: statuses[Statuses.completed]!,
-    dateTimeRange: DateTimeRange(
-      start: DateTime(2023, 8, 10),
-      end: DateTime(2024, 2, 4),
-    ),
+    startDate: DateTime(2019, 5, 4),
+    endDate: DateTime(2023, 5, 4),
   ),
   Anime(
     title: 'Jujutsu Kaisen 2nd Season',
@@ -52,10 +49,8 @@ final dummyAnime = [
     demographic: demographics[Demographics.shounen]!,
     studio: studios[Studios.mappa]!,
     status: statuses[Statuses.ongoing]!,
-    dateTimeRange: DateTimeRange(
-      start: DateTime(2023, 9, 15),
-      end: DateTime(2024, 2, 4),
-    ),
+    startDate: DateTime(2015, 5, 4),
+    endDate: DateTime(2016, 5, 4),
   ),
   Anime(
     title: 'Horimiya: The Missing Pieces',
@@ -76,10 +71,8 @@ final dummyAnime = [
     demographic: demographics[Demographics.shounen]!,
     studio: studios[Studios.cloverWorks]!,
     status: statuses[Statuses.completed]!,
-    dateTimeRange: DateTimeRange(
-      start: DateTime(2024, 9, 23),
-      end: DateTime(2024, 11, 23),
-    ),
+    startDate: DateTime(2015, 5, 4),
+    endDate: DateTime(2016, 5, 4),
   ),
   Anime(
     title: 'Watashi no Shiawase na Kekkon',
@@ -101,10 +94,8 @@ final dummyAnime = [
     demographic: demographics[Demographics.seinen]!,
     studio: studios[Studios.kinemaCitrus]!,
     status: statuses[Statuses.completed]!,
-    dateTimeRange: DateTimeRange(
-      start: DateTime(2023, 7, 5),
-      end: DateTime(2023, 9, 20),
-    ),
+    startDate: DateTime(2015, 5, 4),
+    endDate: DateTime(2016, 5, 4),
   ),
   Anime(
     title: 'Tate no Yuusha no Nariagari Season 3',
@@ -120,10 +111,8 @@ final dummyAnime = [
     demographic: demographics[Demographics.shounen]!,
     studio: studios[Studios.kinemaCitrus]!,
     status: statuses[Statuses.ongoing]!,
-    dateTimeRange: DateTimeRange(
-      start: DateTime(2023, 10, 6),
-      end: DateTime(2024, 1, 4),
-    ),
+    startDate: DateTime(2015, 5, 4),
+    endDate: DateTime(2016, 5, 4),
   ),
   Anime(
     title: 'Goblin Slayer II',
@@ -139,10 +128,8 @@ final dummyAnime = [
     demographic: demographics[Demographics.shounen]!,
     studio: studios[Studios.lidenfilms]!,
     status: statuses[Statuses.ongoing]!,
-    dateTimeRange: DateTimeRange(
-      start: DateTime(2023, 10, 6),
-      end: DateTime(2024, 1, 4),
-    ),
+    startDate: DateTime(2015, 5, 4),
+    endDate: DateTime(2016, 5, 4),
   ),
   Anime(
     title: 'Solo Leveling',
@@ -164,10 +151,8 @@ final dummyAnime = [
     demographic: demographics[Demographics.shounen]!,
     studio: studios[Studios.a1Pictures]!,
     status: statuses[Statuses.upcoming]!,
-    dateTimeRange: DateTimeRange(
-      start: DateTime(2024),
-      end: DateTime(2024, 2, 4),
-    ),
+    startDate: DateTime(2015, 5, 4),
+    endDate: DateTime(2016, 5, 4),
   ),
   Anime(
     title: 'Classroom of the Elite III',
@@ -185,10 +170,8 @@ final dummyAnime = [
     demographic: demographics[Demographics.shounen]!,
     studio: studios[Studios.lerche]!,
     status: statuses[Statuses.upcoming]!,
-    dateTimeRange: DateTimeRange(
-      start: DateTime(2024, 1, 1),
-      end: DateTime(2024, 12, 4),
-    ),
+    startDate: DateTime(2015, 5, 4),
+    endDate: DateTime(2016, 5, 4),
   ),
   Anime(
     title: 'Mashle 2nd Season',
@@ -204,10 +187,8 @@ final dummyAnime = [
     demographic: demographics[Demographics.shounen]!,
     studio: studios[Studios.a1Pictures]!,
     status: statuses[Statuses.upcoming]!,
-    dateTimeRange: DateTimeRange(
-      start: DateTime(2024, 1, 1),
-      end: DateTime(2024, 12, 4),
-    ),
+    startDate: DateTime(2015, 5, 4),
+    endDate: DateTime(2016, 5, 4),
   ),
   Anime(
     title: 'Tsukimichi -Moonlit Fantasy- Season 2',
@@ -223,10 +204,8 @@ final dummyAnime = [
     demographic: demographics[Demographics.shounen]!,
     studio: studios[Studios.lerche]!,
     status: statuses[Statuses.upcoming]!,
-    dateTimeRange: DateTimeRange(
-      start: DateTime(2024, 1, 1),
-      end: DateTime(2024, 12, 4),
-    ),
+    startDate: DateTime(2015, 5, 4),
+    endDate: DateTime(2016, 5, 4),
   ),
   Anime(
     title: 'Mato Seihei no Slave',
@@ -250,10 +229,8 @@ final dummyAnime = [
     demographic: demographics[Demographics.shounen]!,
     studio: studios[Studios.seven]!,
     status: statuses[Statuses.upcoming]!,
-    dateTimeRange: DateTimeRange(
-      start: DateTime(2024, 1, 1),
-      end: DateTime(2024, 12, 4),
-    ),
+    startDate: DateTime(2015, 5, 4),
+    endDate: DateTime(2016, 5, 4),
   ),
   Anime(
     title: 'Spy x Family Season 2',
@@ -271,10 +248,8 @@ final dummyAnime = [
     demographic: demographics[Demographics.shounen]!,
     studio: studios[Studios.witStudio]!,
     status: statuses[Statuses.ongoing]!,
-    dateTimeRange: DateTimeRange(
-      start: DateTime(2023, 10, 7),
-      end: DateTime(2024, 3, 4),
-    ),
+    startDate: DateTime(2015, 5, 4),
+    endDate: DateTime(2016, 5, 4),
   ),
   Anime(
     title: 'Kage no Jitsuryokusha ni Naritakute! 2nd Season',
@@ -297,10 +272,8 @@ final dummyAnime = [
     demographic: demographics[Demographics.shounen]!,
     studio: studios[Studios.nexus]!,
     status: statuses[Statuses.ongoing]!,
-    dateTimeRange: DateTimeRange(
-      start: DateTime(2023, 10, 4),
-      end: DateTime(2024, 3, 4),
-    ),
+    startDate: DateTime(2015, 5, 4),
+    endDate: DateTime(2016, 5, 4),
   ),
   Anime(
     title: 'Sousou no Frieren',
@@ -322,10 +295,8 @@ final dummyAnime = [
     demographic: demographics[Demographics.shounen]!,
     studio: studios[Studios.madhouse]!,
     status: statuses[Statuses.ongoing]!,
-    dateTimeRange: DateTimeRange(
-      start: DateTime(2023, 9, 29),
-      end: DateTime(2024, 3, 4),
-    ),
+    startDate: DateTime(2015, 5, 4),
+    endDate: DateTime(2016, 5, 4),
   ),
   Anime(
     title: 'Tokyo Revengers: Tenjiku-hen',
@@ -343,9 +314,7 @@ final dummyAnime = [
     demographic: demographics[Demographics.shounen]!,
     studio: studios[Studios.lidenfilms]!,
     status: statuses[Statuses.ongoing]!,
-    dateTimeRange: DateTimeRange(
-      start: DateTime(2023, 10, 4),
-      end: DateTime(2024, 3, 4),
-    ),
+    startDate: DateTime(2015, 5, 4),
+    endDate: DateTime(2016, 5, 4),
   ),
 ];

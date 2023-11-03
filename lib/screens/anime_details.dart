@@ -202,7 +202,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Premiered: ${widget.anime.dateTimeRange.start.year}',
+                    'Premiered: ${widget.anime.formattedDate.substring(2)}',
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           color: Colors.greenAccent,
                           fontWeight: FontWeight.normal,
