@@ -1,19 +1,13 @@
-import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:per_rat/models/demographics.dart';
 import 'package:per_rat/models/genres.dart';
 import 'package:per_rat/models/statuses.dart';
 import 'package:per_rat/models/studios.dart';
 import 'package:uuid/uuid.dart';
 
+final formatter = DateFormat.yMd();
+
 const uuid = Uuid();
-
-// class Item {
-//   Item({
-//     required this.id,
-//   });
-
-//   final String id;
-// }
 
 class Anime {
   Anime({
@@ -30,7 +24,8 @@ class Anime {
     required this.demographic,
     required this.studio,
     required this.status,
-    required this.dateTimeRange,
+    required this.startDate,
+    required this.endDate,
   }) : id = uuid.v4();
 
   final String id;
@@ -47,5 +42,14 @@ class Anime {
   final Demographic demographic;
   final Studio studio;
   final Status status;
-  final DateTimeRange dateTimeRange;
+  final DateTime startDate;
+  final DateTime endDate;
+
+  String get formattedDate {
+    return formatter.format(startDate);
+  }
+
+  String get formattedDate1 {
+    return formatter.format(endDate);
+  }
 }
