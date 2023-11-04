@@ -41,12 +41,9 @@ class _NewAnimeState extends State<NewAnime> {
   var _selectedDemographic = demographics[Demographics.josei]!;
   var _selectedStudio = studios[Studios.a1Pictures]!;
   var _selectedStatus = statuses[Statuses.completed]!;
-  // var _enteredStartDate = DateTime.now();
-  // var _enteredEndDate = DateTime.now();
-
-  DateTime _selectedStartDate = DateTime.now();
-
-  DateTime _selectedEndDate = DateTime.now();
+  //DateTimes were done different
+  var _selectedStartDate = DateTime.now();
+  var _selectedEndDate = DateTime.now();
 
   void _startDatePicker() async {
     final now = DateTime.now();
@@ -104,12 +101,12 @@ class _NewAnimeState extends State<NewAnime> {
             'popularity': _enteredPopularity,
             'favorites': _enteredFavorites,
             'trailerUrl': _enteredTrailerUrl,
-            'genre': _selectedGenre,
-            'demographics': _selectedDemographic,
-            'studio': _selectedStudio,
-            'status': _selectedStatus,
-            // 'startDate': _enteredStartDate,
-            // 'endDate': _enteredEndDate,
+            'genre': _selectedGenre.title,
+            'demographics': _selectedDemographic.title,
+            'studio': _selectedStudio.title,
+            'status': _selectedStatus.title,
+            'startDate': formatter.format(_selectedStartDate),
+            'endDate': formatter.format(_selectedEndDate),
           },
         ),
       );
@@ -133,30 +130,42 @@ class _NewAnimeState extends State<NewAnime> {
             key: _formKey,
             child: Column(
               children: [
-                TextFormField(
-                  style: const TextStyle(
-                    color: Colors.white,
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 8,
+                    right: 8,
                   ),
-                  maxLength: 50,
-                  decoration: const InputDecoration(
-                    labelStyle: TextStyle(color: Colors.amber),
-                    label: Text('Title'),
+                  child: TextFormField(
+                    style: const TextStyle(
+                      color: Colors.white,
+                    ),
+                    maxLength: 50,
+                    decoration: InputDecoration(
+                      labelStyle:
+                          Theme.of(context).textTheme.titleLarge!.copyWith(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onPrimaryContainer,
+                              ),
+                      label: const Text('Title'),
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                    ),
+                    validator: (value) {
+                      if (value == null ||
+                          value.isEmpty ||
+                          value.trim().length <= 1 ||
+                          value.trim().length > 50) {
+                        return 'Must be between 1 and 50 characters.';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      // if (value == null) {
+                      //   return;
+                      // }
+                      _enteredTitle = value!;
+                    },
                   ),
-                  validator: (value) {
-                    if (value == null ||
-                        value.isEmpty ||
-                        value.trim().length <= 1 ||
-                        value.trim().length > 50) {
-                      return 'Must be between 1 and 50 characters.';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    // if (value == null) {
-                    //   return;
-                    // }
-                    _enteredTitle = value!;
-                  },
                 ), // instead of TextField()
 
                 const SizedBox(height: 12),
@@ -310,41 +319,47 @@ class _NewAnimeState extends State<NewAnime> {
                     ),
                   ],
                 ),
-                Expanded(
-                  flex: 0,
-                  child: DropdownButtonFormField(
-                    menuMaxHeight: 250,
-                    //style: TextStyle(color: Colors.amber),
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12))),
-                    //style: TextStyle(color: Colors.amber),
-                    padding: const EdgeInsets.only(
-                      top: 15,
-                      bottom: 15,
-                    ),
-                    value: _selectedStudio,
-                    items: [
-                      for (final studio in studios.entries)
-                        DropdownMenuItem(
-                          enabled: true,
-                          value: studio.value,
-                          child: Row(
-                            children: [
-                              const SizedBox(width: 6),
-                              Text(studio.value.title),
-                            ],
+                Padding(
+                  padding: const EdgeInsets.only(
+                    right: 5,
+                    left: 5,
+                  ),
+                  child: SizedBox(
+                    width: 650,
+                    child: DropdownButtonFormField(
+                      menuMaxHeight: 250,
+                      //style: TextStyle(color: Colors.amber),
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
-                        ),
-                    ],
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedStudio = value!;
-                      });
-                    },
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12))),
+                      //style: TextStyle(color: Colors.amber),
+                      padding: const EdgeInsets.only(
+                        top: 15,
+                        bottom: 15,
+                      ),
+                      value: _selectedStudio,
+                      items: [
+                        for (final studio in studios.entries)
+                          DropdownMenuItem(
+                            enabled: true,
+                            value: studio.value,
+                            child: Row(
+                              children: [
+                                const SizedBox(width: 6),
+                                Text(studio.value.title),
+                              ],
+                            ),
+                          ),
+                      ],
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedStudio = value!;
+                        });
+                      },
+                    ),
                   ),
                 ),
 
@@ -364,41 +379,47 @@ class _NewAnimeState extends State<NewAnime> {
                     ),
                   ],
                 ),
-                Expanded(
-                  flex: 0,
-                  child: DropdownButtonFormField(
-                    menuMaxHeight: 250,
-                    //style: TextStyle(color: Colors.amber),
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12))),
-                    //style: TextStyle(color: Colors.amber),
-                    padding: const EdgeInsets.only(
-                      top: 15,
-                      bottom: 15,
-                    ),
-                    value: _selectedStatus,
-                    items: [
-                      for (final status in statuses.entries)
-                        DropdownMenuItem(
-                          enabled: true,
-                          value: status.value,
-                          child: Row(
-                            children: [
-                              const SizedBox(width: 6),
-                              Text(status.value.title),
-                            ],
+                Padding(
+                  padding: const EdgeInsets.only(
+                    right: 5,
+                    left: 5,
+                  ),
+                  child: SizedBox(
+                    width: 650,
+                    child: DropdownButtonFormField(
+                      menuMaxHeight: 250,
+                      //style: TextStyle(color: Colors.amber),
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
-                        ),
-                    ],
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedStatus = value!;
-                      });
-                    },
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12))),
+                      //style: TextStyle(color: Colors.amber),
+                      padding: const EdgeInsets.only(
+                        top: 15,
+                        bottom: 15,
+                      ),
+                      value: _selectedStatus,
+                      items: [
+                        for (final status in statuses.entries)
+                          DropdownMenuItem(
+                            enabled: true,
+                            value: status.value,
+                            child: Row(
+                              children: [
+                                const SizedBox(width: 6),
+                                Text(status.value.title),
+                              ],
+                            ),
+                          ),
+                      ],
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedStatus = value!;
+                        });
+                      },
+                    ),
                   ),
                 ),
 
@@ -624,57 +645,69 @@ class _NewAnimeState extends State<NewAnime> {
                 const SizedBox(
                   height: 20,
                 ),
-                TextFormField(
-                  style: const TextStyle(
-                    color: Colors.white,
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 8,
+                    right: 8,
                   ),
-                  maxLength: 80,
-                  decoration: const InputDecoration(
-                    label: Text('Image URL'),
-                    labelStyle: TextStyle(color: Colors.amber),
+                  child: TextFormField(
+                    style: const TextStyle(
+                      color: Colors.white,
+                    ),
+                    maxLength: 80,
+                    decoration: const InputDecoration(
+                      label: Text('Image URL'),
+                      labelStyle: TextStyle(color: Colors.amber),
+                    ),
+                    validator: (value) {
+                      if (value == null ||
+                          value.isEmpty ||
+                          value.trim().length <= 5 ||
+                          value.trim().length > 80) {
+                        return 'Must provide a valid URL';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      // if (value == null) {
+                      //   return;
+                      // }
+                      _enteredImageUrl = value!;
+                    },
                   ),
-                  validator: (value) {
-                    if (value == null ||
-                        value.isEmpty ||
-                        value.trim().length <= 5 ||
-                        value.trim().length > 80) {
-                      return 'Must provide a valid URL';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    // if (value == null) {
-                    //   return;
-                    // }
-                    _enteredImageUrl = value!;
-                  },
                 ), // instead of TextField()
                 const SizedBox(height: 12),
 
-                TextFormField(
-                  style: const TextStyle(
-                    color: Colors.white,
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 8,
+                    right: 8,
                   ),
-                  maxLength: 80,
-                  decoration: const InputDecoration(
-                    label: Text('Trailer URL'),
-                    labelStyle: TextStyle(color: Colors.amber),
+                  child: TextFormField(
+                    style: const TextStyle(
+                      color: Colors.white,
+                    ),
+                    maxLength: 80,
+                    decoration: const InputDecoration(
+                      label: Text('Trailer URL'),
+                      labelStyle: TextStyle(color: Colors.amber),
+                    ),
+                    validator: (value) {
+                      if (value == null ||
+                          value.isEmpty ||
+                          value.trim().length <= 5 ||
+                          value.trim().length > 80) {
+                        return 'Must provide a valid URL';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      // if (value == null) {
+                      //   return;
+                      // }
+                      _enteredTrailerUrl = value!;
+                    },
                   ),
-                  validator: (value) {
-                    if (value == null ||
-                        value.isEmpty ||
-                        value.trim().length <= 5 ||
-                        value.trim().length > 80) {
-                      return 'Must provide a valid URL';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    // if (value == null) {
-                    //   return;
-                    // }
-                    _enteredTrailerUrl = value!;
-                  },
                 ), // instead of TextField()
                 const SizedBox(height: 22),
 
