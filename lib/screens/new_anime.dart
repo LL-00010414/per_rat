@@ -44,9 +44,9 @@ class _NewAnimeState extends State<NewAnime> {
   // var _enteredStartDate = DateTime.now();
   // var _enteredEndDate = DateTime.now();
 
-  DateTime? _selectedStartDate;
+  DateTime _selectedStartDate = DateTime.now();
 
-  DateTime? _selectedEndDate;
+  DateTime _selectedEndDate = DateTime.now();
 
   void _startDatePicker() async {
     final now = DateTime.now();
@@ -58,9 +58,8 @@ class _NewAnimeState extends State<NewAnime> {
         lastDate: lastDate,
         initialDate: now);
     setState(() {
-      _selectedStartDate = pickedDate;
-      if (_selectedStartDate!.isAfter(_selectedEndDate!) ||
-          _selectedEndDate == null) {
+      _selectedStartDate = pickedDate!;
+      if (_selectedStartDate.isAfter(_selectedEndDate)) {
         _selectedEndDate = _selectedStartDate;
       }
     });
@@ -76,9 +75,8 @@ class _NewAnimeState extends State<NewAnime> {
         lastDate: lastDate,
         initialDate: now);
     setState(() {
-      _selectedEndDate = pickedDate;
-      if (_selectedEndDate!.isBefore(_selectedStartDate!) ||
-          _selectedEndDate == null) {
+      _selectedEndDate = pickedDate!;
+      if (_selectedEndDate.isBefore(_selectedStartDate)) {
         _selectedStartDate = _selectedEndDate;
       }
     });
@@ -554,6 +552,30 @@ class _NewAnimeState extends State<NewAnime> {
                   ],
                 ),
                 const SizedBox(height: 22),
+                const Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        right: 50,
+                      ),
+                      child: Text(
+                        'Start Date:',
+                        style: TextStyle(color: Colors.amber),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        right: 50,
+                      ),
+                      child: Text(
+                        'End Date:',
+                        style: TextStyle(color: Colors.amber),
+                      ),
+                    ),
+                  ],
+                ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -565,9 +587,8 @@ class _NewAnimeState extends State<NewAnime> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            _selectedStartDate == null
-                                ? 'Pick a date'
-                                : formatter.format(_selectedStartDate!),
+                            formatter.format(_selectedStartDate),
+                            style: const TextStyle(color: Colors.white),
                             // if _selectedStartDate == null
                             //   'Pick a Date';
 
@@ -588,9 +609,8 @@ class _NewAnimeState extends State<NewAnime> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            _selectedEndDate == null
-                                ? 'Pick a date'
-                                : formatter.format(_selectedEndDate!),
+                            formatter.format(_selectedEndDate),
+                            style: const TextStyle(color: Colors.white),
                           ),
                           IconButton(
                             onPressed: _endDatePicker,
