@@ -64,9 +64,7 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
 
     final user = FirebaseAuth.instance.currentUser!;
 
-    Widget currentPage = AnimeScreen(
-      chosenAnime: dummyAnime,
-    );
+    Widget currentPage = const AnimeScreen();
 
     if (_selectedPageIndex == 1) {
       currentPage = DiscoverScreen(
