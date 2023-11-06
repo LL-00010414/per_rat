@@ -79,13 +79,13 @@ class _NewAnimeState extends State<NewAnime> {
     });
   }
 
-  void _saveItem() {
+  void _saveItem() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       final url = Uri.https(
           'perratauth-default-rtdb.asia-southeast1.firebasedatabase.app',
           'anime-list.json');
-      http.post(
+      final response = await http.post(
         url,
         headers: {
           'Content-Type': 'application/json',
@@ -110,7 +110,13 @@ class _NewAnimeState extends State<NewAnime> {
           },
         ),
       );
-      // Navigator.of(context).pop();
+      print(response.statusCode);
+      print(response.body);
+
+      if (!context.mounted) {
+        return;
+      }
+      Navigator.of(context).pop();
     }
   }
 
