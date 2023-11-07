@@ -3,14 +3,15 @@ import 'package:per_rat/models/demographics.dart';
 import 'package:per_rat/models/genres.dart';
 import 'package:per_rat/models/statuses.dart';
 import 'package:per_rat/models/studios.dart';
-import 'package:uuid/uuid.dart';
+// import 'package:uuid/uuid.dart';
 
 final formatter = DateFormat.yMd();
 
-const uuid = Uuid();
+// const uuid = Uuid();
 
 class Anime {
   Anime({
+    required this.id,
     required this.title,
     required this.imageUrl,
     required this.synopsis,
@@ -26,7 +27,8 @@ class Anime {
     required this.status,
     required this.startDate,
     required this.endDate,
-  }) : id = uuid.v4();
+  });
+  // : id = uuid.v4();
 
   final String id;
   final String title;

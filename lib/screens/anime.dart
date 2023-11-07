@@ -74,7 +74,7 @@ class _AnimeScreenState extends State<AnimeScreen> {
     final response = await http.get(url);
 
     final Map<String, dynamic> listAnime = json.decode(response.body);
-    final List<Anime> _loadedAnime = [];
+    final List<Anime> loadedAnime = [];
 
     for (final show in listAnime.entries) {
       final genre = genres.entries
@@ -82,7 +82,7 @@ class _AnimeScreenState extends State<AnimeScreen> {
           .value;
       final demographic = demographics.entries
           .firstWhere(
-              (demItem) => demItem.value.title == show.value['demographic'])
+              (demItem) => demItem.value.title == show.value['demographics'])
           .value;
       final studio = studios.entries
           .firstWhere(
@@ -92,30 +92,35 @@ class _AnimeScreenState extends State<AnimeScreen> {
           .firstWhere(
               (statItem) => statItem.value.title == show.value['status'])
           .value;
+      final DateTime startDate = formatter.parse(show.value['startDate']);
+      final DateTime endDate = formatter.parse(show.value['startDate']);
+      final String description = show.value['synopsis'].toString();
+      final List<String> synopsis = description.split(',');
 
       //the logic part
-      _loadedAnime.add(
+      loadedAnime.add(
         Anime(
+          id: show.key,
           title: show.value['title'],
           imageUrl: show.value['imageUrl'],
-          synopsis: show.value['synopsis'],
+          synopsis: synopsis,
           totalEpisodes: show.value['totalEpisodes'],
-          score: show.value['score'],
-          rank: show.value['rank'],
-          popularity: show.value['popularity'],
+          score: show.value['score'].toString(),
+          rank: show.value['rank'].toString(),
+          popularity: show.value['popularity'].toString(),
           favorites: show.value['favorites'],
           trailerUrl: show.value['trailerUrl'],
           genre: genre,
           demographic: demographic,
           studio: studio,
           status: status,
-          startDate: show.value['startDate'],
-          endDate: show.value['endDate'],
+          startDate: startDate,
+          endDate: endDate,
         ),
       );
     }
     setState(() {
-      _registeredAnime = _loadedAnime;
+      _registeredAnime = loadedAnime;
     });
   }
 

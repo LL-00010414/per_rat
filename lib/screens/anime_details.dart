@@ -252,6 +252,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
             const SizedBox(
               height: 10,
             ),
+            //the loop was for displaying List<String>
             for (final description in widget.anime.synopsis)
               Text(
                 description,
