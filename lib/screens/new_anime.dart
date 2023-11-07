@@ -30,7 +30,7 @@ class _NewAnimeState extends State<NewAnime> {
   final _formKey = GlobalKey<FormState>();
   var _enteredTitle = '';
   var _enteredImageUrl = '';
-  var _enteredSynopsis = '';
+  var _enteredSynopsis = [''];
   var _enteredTotalEpisodes = 12;
   var _enteredScore = 5.5;
   var _enteredRank = 1000;
@@ -752,8 +752,8 @@ class _NewAnimeState extends State<NewAnime> {
                     }
                     return null;
                   },
-                  onSaved: (value) {
-                    _enteredSynopsis = value!;
+                  onSaved: ([value]) {
+                    _enteredSynopsis = [value!];
                   },
                 ), // instead of TextField()
                 const SizedBox(height: 12),

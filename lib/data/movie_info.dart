@@ -10,6 +10,7 @@ import 'package:per_rat/models/studios.dart';
 
 final dummyAnime = [
   Anime(
+    id: '0',
     title: 'Mushoku Tensei',
     imageUrl: 'https://cdn.myanimelist.net/images/anime/1776/131746l.jpg',
     synopsis: [
@@ -36,6 +37,7 @@ final dummyAnime = [
     endDate: DateTime(2023, 5, 4),
   ),
   Anime(
+    id: '0',
     title: 'Jujutsu Kaisen 2nd Season',
     imageUrl: 'https://cdn.myanimelist.net/images/anime/1676/128448l.jpg',
     synopsis: ['Second season of Jujutsu Kaisen'],
@@ -53,6 +55,7 @@ final dummyAnime = [
     endDate: DateTime(2016, 5, 4),
   ),
   Anime(
+    id: '0',
     title: 'Horimiya: The Missing Pieces',
     imageUrl: 'https://cdn.myanimelist.net/images/anime/1007/136277l.jpg',
     synopsis: [
@@ -75,6 +78,7 @@ final dummyAnime = [
     endDate: DateTime(2016, 5, 4),
   ),
   Anime(
+    id: '0',
     title: 'Watashi no Shiawase na Kekkon',
     imageUrl: 'https://cdn.myanimelist.net/images/anime/1698/132259l.jpg',
     synopsis: [
@@ -98,6 +102,7 @@ final dummyAnime = [
     endDate: DateTime(2016, 5, 4),
   ),
   Anime(
+    id: '0',
     title: 'Tate no Yuusha no Nariagari Season 3',
     imageUrl: 'https://cdn.myanimelist.net/images/anime/1188/136926l.jpg',
     synopsis: ['Third season of Tate no Yuusha no Nariagari.'],
@@ -115,6 +120,7 @@ final dummyAnime = [
     endDate: DateTime(2016, 5, 4),
   ),
   Anime(
+    id: '0',
     title: 'Goblin Slayer II',
     imageUrl: 'https://cdn.myanimelist.net/images/anime/1488/122008l.jpg',
     synopsis: ['Second season of Goblin Slayer.'],
@@ -132,6 +138,7 @@ final dummyAnime = [
     endDate: DateTime(2016, 5, 4),
   ),
   Anime(
+    id: '0',
     title: 'Solo Leveling',
     imageUrl: 'https://cdn.myanimelist.net/images/anime/1542/124991l.jpg',
     synopsis: [
@@ -155,6 +162,7 @@ final dummyAnime = [
     endDate: DateTime(2016, 5, 4),
   ),
   Anime(
+    id: '0',
     title: 'Classroom of the Elite III',
     imageUrl: 'https://cdn.myanimelist.net/images/anime/1280/137323l.jpg',
     synopsis: [
@@ -174,6 +182,7 @@ final dummyAnime = [
     endDate: DateTime(2016, 5, 4),
   ),
   Anime(
+    id: '0',
     title: 'Mashle 2nd Season',
     imageUrl: 'https://cdn.myanimelist.net/images/anime/1593/136775l.jpg',
     synopsis: ['Second season of Mashle.'],
@@ -191,6 +200,7 @@ final dummyAnime = [
     endDate: DateTime(2016, 5, 4),
   ),
   Anime(
+    id: '0',
     title: 'Tsukimichi -Moonlit Fantasy- Season 2',
     imageUrl: 'https://cdn.myanimelist.net/images/anime/1996/137082l.jpg',
     synopsis: ['Second Season of Tsuki ga Michibiku Isekai Douchuu.'],
@@ -208,6 +218,7 @@ final dummyAnime = [
     endDate: DateTime(2016, 5, 4),
   ),
   Anime(
+    id: '0',
     title: 'Mato Seihei no Slave',
     imageUrl: 'https://cdn.myanimelist.net/images/anime/1416/119501l.jpg',
     synopsis: [
@@ -233,6 +244,7 @@ final dummyAnime = [
     endDate: DateTime(2016, 5, 4),
   ),
   Anime(
+    id: '0',
     title: 'Spy x Family Season 2',
     imageUrl: 'https://cdn.myanimelist.net/images/anime/1573/136206l.jpg',
     synopsis: [
@@ -252,6 +264,7 @@ final dummyAnime = [
     endDate: DateTime(2016, 5, 4),
   ),
   Anime(
+    id: '0',
     title: 'Kage no Jitsuryokusha ni Naritakute! 2nd Season',
     imageUrl: 'https://cdn.myanimelist.net/images/anime/1892/133677l.jpg',
     synopsis: [
@@ -276,6 +289,7 @@ final dummyAnime = [
     endDate: DateTime(2016, 5, 4),
   ),
   Anime(
+    id: '0',
     title: 'Sousou no Frieren',
     imageUrl: 'https://cdn.myanimelist.net/images/anime/1553/137254l.jpg',
     synopsis: [
@@ -299,6 +313,7 @@ final dummyAnime = [
     endDate: DateTime(2016, 5, 4),
   ),
   Anime(
+    id: '0',
     title: 'Tokyo Revengers: Tenjiku-hen',
     imageUrl: 'https://cdn.myanimelist.net/images/anime/1790/138322l.jpg',
     synopsis: [
