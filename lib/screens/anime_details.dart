@@ -16,14 +16,16 @@ class AnimeDetailsScreen extends StatefulWidget {
 }
 
 class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
+  late YoutubePlayerController _controller;
   final List<String> videoURL =
       dummyAnime.map((anime) => anime.trailerUrl).toList();
 
-  late YoutubePlayerController _controller;
-
   @override
   void initState() {
-    final videoID = YoutubePlayer.convertUrlToId(videoURL[2]);
+    final animeIndex = dummyAnime.indexOf(widget.anime);
+    // _registeredAnime.indexOf(anime);
+    //final index = videoURL.length;
+    final videoID = YoutubePlayer.convertUrlToId(videoURL[animeIndex + 1]);
 
     _controller = YoutubePlayerController(
       initialVideoId: videoID!,

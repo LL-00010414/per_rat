@@ -4,7 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:per_rat/data/movie_info.dart';
 
 import 'package:per_rat/screens/discover.dart';
-import 'package:per_rat/screens/anime.dart';
+import 'package:per_rat/screens/home.dart';
 import 'package:per_rat/screens/my_list.dart';
 import 'package:per_rat/screens/profile_screen.dart';
 
@@ -64,7 +64,7 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
 
     final user = FirebaseAuth.instance.currentUser!;
 
-    Widget currentPage = const AnimeScreen();
+    Widget currentPage = const HomeScreen();
 
     if (_selectedPageIndex == 1) {
       currentPage = DiscoverScreen(
