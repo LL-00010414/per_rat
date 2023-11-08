@@ -18,8 +18,8 @@ import 'package:http/http.dart' as http;
 //import 'package:per_rat/data/movie_info.dart';
 //import 'package:transparent_image/transparent_image.dart';
 
-class AnimeScreen extends StatefulWidget {
-  const AnimeScreen({
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({
     super.key,
     //required this.chosenAnime,
   });
@@ -27,11 +27,12 @@ class AnimeScreen extends StatefulWidget {
   //final List<Anime> chosenAnime;
 
   @override
-  State<AnimeScreen> createState() => _AnimeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _AnimeScreenState extends State<AnimeScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   List<Anime> _registeredAnime = [];
+  var _isLoading = true;
 
   @override
   void initState() {
@@ -121,17 +122,24 @@ class _AnimeScreenState extends State<AnimeScreen> {
     }
     setState(() {
       _registeredAnime = loadedAnime;
+      _isLoading = false;
     });
   }
 
   void _addAnimePage() async {
-    await Navigator.of(context).push(
+    final newAnime = await Navigator.of(context).push<Anime>(
       MaterialPageRoute(
         builder: (ctx) => NewAnime(onAddAnime: _addAnime),
       ),
     );
 
-    _loadAnime();
+    if (newAnime == null) {
+      return;
+    }
+
+    setState(() {
+      _registeredAnime.add(newAnime);
+    });
   }
 
   void selectAnime(BuildContext context, Anime anime) {
@@ -146,21 +154,35 @@ class _AnimeScreenState extends State<AnimeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Widget content = GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 0.5,
-        crossAxisSpacing: 5,
-        mainAxisSpacing: 5,
-      ),
-      itemCount: _registeredAnime.length,
-      itemBuilder: (ctx, index) => AnimeItem(
-        anime: _registeredAnime[index],
-        onSelectAnime: (anime) {
-          selectAnime(context, anime);
-        },
+    Widget content = const Center(
+      child: Text(
+        'No shows are present',
+        style: TextStyle(color: Colors.white),
       ),
     );
+
+    if (_isLoading) {
+      content = const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+    if (_registeredAnime.isNotEmpty) {
+      content = GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 0.5,
+          crossAxisSpacing: 5,
+          mainAxisSpacing: 5,
+        ),
+        itemCount: _registeredAnime.length,
+        itemBuilder: (ctx, index) => AnimeItem(
+          anime: _registeredAnime[index],
+          onSelectAnime: (anime) {
+            selectAnime(context, anime);
+          },
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(

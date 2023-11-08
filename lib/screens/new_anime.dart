@@ -44,6 +44,8 @@ class _NewAnimeState extends State<NewAnime> {
   //DateTimes were done different
   var _selectedStartDate = DateTime.now();
   var _selectedEndDate = DateTime.now();
+  //other variables
+  var _isSending = false;
 
   void _startDatePicker() async {
     final now = DateTime.now();
@@ -82,6 +84,9 @@ class _NewAnimeState extends State<NewAnime> {
   void _saveItem() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+      setState(() {
+        _isSending = true;
+      });
       final url = Uri.https(
           'perratauth-default-rtdb.asia-southeast1.firebasedatabase.app',
           'anime-list.json');
@@ -110,13 +115,31 @@ class _NewAnimeState extends State<NewAnime> {
           },
         ),
       );
-      print(response.statusCode);
-      print(response.body);
+      final Map<String, dynamic> resData = json.decode(response.body);
 
       if (!context.mounted) {
         return;
       }
-      Navigator.of(context).pop();
+      Navigator.of(context).pop(
+        Anime(
+          id: resData['name'],
+          title: _enteredTitle,
+          imageUrl: _enteredImageUrl,
+          synopsis: _enteredSynopsis,
+          totalEpisodes: _enteredTotalEpisodes,
+          score: _enteredScore.toString(),
+          rank: _enteredRank.toString(),
+          popularity: _enteredPopularity.toString(),
+          favorites: _enteredFavorites,
+          trailerUrl: _enteredTrailerUrl,
+          genre: _selectedGenre,
+          demographic: _selectedDemographic,
+          studio: _selectedStudio,
+          status: _selectedStatus,
+          startDate: _selectedStartDate,
+          endDate: _selectedEndDate,
+        ),
+      );
     }
   }
 
@@ -762,14 +785,22 @@ class _NewAnimeState extends State<NewAnime> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
-                      onPressed: () {
-                        _formKey.currentState!.reset();
-                      },
+                      onPressed: _isSending
+                          ? null
+                          : () {
+                              _formKey.currentState!.reset();
+                            },
                       child: const Text('Reset'),
                     ),
                     ElevatedButton(
-                      onPressed: _saveItem,
-                      child: const Text('Add'),
+                      onPressed: _isSending ? null : _saveItem,
+                      child: _isSending
+                          ? const SizedBox(
+                              height: 16,
+                              width: 16,
+                              child: CircularProgressIndicator(),
+                            )
+                          : const Text("Add Item"),
                     )
                   ],
                 ),
