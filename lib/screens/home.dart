@@ -33,6 +33,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<Anime> _registeredAnime = [];
   var _isLoading = true;
+  String? _error;
 
   @override
   void initState() {
@@ -46,33 +47,17 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void _removeAnime(Anime anime) {
-    final animeIndex = _registeredAnime.indexOf(anime);
-    setState(() {
-      _registeredAnime.remove(anime);
-    });
-    ScaffoldMessenger.of(context).clearSnackBars();
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        duration: const Duration(seconds: 3),
-        content: Text("${anime.title} has been deleted"),
-        action: SnackBarAction(
-            label: "Undo",
-            onPressed: () {
-              setState(() {
-                _registeredAnime.insert(animeIndex, anime);
-              });
-            }),
-      ),
-    );
-  }
-
   void _loadAnime() async {
     final url = Uri.https(
         'perratauth-default-rtdb.asia-southeast1.firebasedatabase.app',
         'anime-list.json');
     final response = await http.get(url);
+
+    if (response.statusCode >= 400) {
+      setState(() {
+        _error = 'Failed to show data. Please try again later!';
+      });
+    }
 
     final Map<String, dynamic> listAnime = json.decode(response.body);
     final List<Anime> loadedAnime = [];
@@ -152,6 +137,74 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  void _removeAnime(Anime anime) async {
+    final animeIndex = _registeredAnime.indexOf(anime);
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        backgroundColor: Colors.white,
+        title: Text(anime.title),
+        content: Text('Do you want to delete ${anime.title}?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () async {
+              // setState(() {
+              //   _registeredAnime.remove(anime);
+              // });
+              final url = Uri.https(
+                  'perratauth-default-rtdb.asia-southeast1.firebasedatabase.app',
+                  'anime-list/${anime.id}.json');
+              final response = await http.delete(url);
+
+              if (response.statusCode >= 400) {
+                //error message
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    duration: const Duration(seconds: 3),
+                    content: Text(" Error code: ${response.statusCode} "),
+                  ),
+                );
+                setState(() {
+                  _registeredAnime.insert(animeIndex, anime);
+                });
+              } else {
+                setState(() {
+                  _registeredAnime.remove(anime);
+                  Navigator.pop(context);
+                });
+                ScaffoldMessenger.of(context).clearSnackBars();
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    duration: const Duration(seconds: 3),
+                    content: Text("${anime.title} has been deleted"),
+                    // action: SnackBarAction(
+                    //   label: "UNDO",
+                    //   onPressed: () {
+                    //     _registeredAnime.insert(animeIndex, anime);
+                    //   },
+                    // ),
+                  ),
+                );
+              }
+            },
+            child: const Text(
+              'Yes',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text(
+              'No',
+              style: TextStyle(color: Colors.green),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget content = const Center(
@@ -180,6 +233,17 @@ class _HomeScreenState extends State<HomeScreen> {
           onSelectAnime: (anime) {
             selectAnime(context, anime);
           },
+          onDeleteAnime: (anime) {
+            _removeAnime(anime);
+          },
+        ),
+      );
+    }
+    if (_error != null) {
+      content = Center(
+        child: Text(
+          _error!,
+          style: const TextStyle(color: Colors.white),
         ),
       );
     }

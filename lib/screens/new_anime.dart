@@ -156,6 +156,7 @@ class _NewAnimeState extends State<NewAnime> {
         padding: const EdgeInsets.all(12),
         children: <Widget>[
           Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             key: _formKey,
             child: Column(
               children: [
@@ -204,7 +205,6 @@ class _NewAnimeState extends State<NewAnime> {
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      //mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 10, right: 10),
@@ -257,6 +257,9 @@ class _NewAnimeState extends State<NewAnime> {
                               setState(() {
                                 _selectedGenre = value!;
                               });
+                            },
+                            onSaved: (value) {
+                              _selectedGenre = value!;
                             },
                           ),
                         ),
@@ -473,7 +476,7 @@ class _NewAnimeState extends State<NewAnime> {
                           if (value == null ||
                               value.isEmpty ||
                               double.tryParse(value) == null ||
-                              double.tryParse(value)! <= 0) {
+                              double.tryParse(value)! < 0) {
                             return 'Must be a valid, positive number.';
                           } else if (double.tryParse(value)! > 10) {
                             return 'The score cannot be over 10';
@@ -503,7 +506,7 @@ class _NewAnimeState extends State<NewAnime> {
                           if (value == null ||
                               value.isEmpty ||
                               int.tryParse(value) == null ||
-                              int.tryParse(value)! <= 0) {
+                              int.tryParse(value)! < 0) {
                             return 'Must be a valid, positive number.';
                           }
                           return null;
@@ -528,7 +531,7 @@ class _NewAnimeState extends State<NewAnime> {
                           if (value == null ||
                               value.isEmpty ||
                               int.tryParse(value) == null ||
-                              int.tryParse(value)! <= 0) {
+                              int.tryParse(value)! < 0) {
                             return 'Must be a valid, positive number.';
                           }
                           return null;
@@ -692,15 +695,13 @@ class _NewAnimeState extends State<NewAnime> {
                       if (value == null ||
                           value.isEmpty ||
                           value.trim().length <= 5 ||
-                          value.trim().length > 80) {
+                          value.trim().length > 80 ||
+                          !value.endsWith('png') && !value.endsWith('jpg')) {
                         return 'Must provide a valid URL';
                       }
                       return null;
                     },
                     onSaved: (value) {
-                      // if (value == null) {
-                      //   return;
-                      // }
                       _enteredImageUrl = value!;
                     },
                   ),
@@ -725,7 +726,8 @@ class _NewAnimeState extends State<NewAnime> {
                       if (value == null ||
                           value.isEmpty ||
                           value.trim().length <= 5 ||
-                          value.trim().length > 80) {
+                          value.trim().length > 80 ||
+                          !value.startsWith('https:')) {
                         return 'Must provide a valid URL';
                       }
                       return null;
