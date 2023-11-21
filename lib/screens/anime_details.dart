@@ -22,10 +22,11 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
 
   @override
   void initState() {
-    final animeIndex = dummyAnime.indexOf(widget.anime);
+    //final animeIndex = dummyAnime.indexOf(widget.anime);
     // _registeredAnime.indexOf(anime);
     //final index = videoURL.length;
-    final videoID = YoutubePlayer.convertUrlToId(videoURL[animeIndex + 1]);
+    //final videoID1 = YoutubePlayer.convertUrlToId(videoURL[animeIndex + 1]);
+    final videoID = YoutubePlayer.convertUrlToId(widget.anime.trailerUrl);
 
     _controller = YoutubePlayerController(
       initialVideoId: videoID!,
@@ -89,7 +90,9 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 8),
                             child: Text(
-                              widget.anime.score,
+                              (double.tryParse(widget.anime.score) == 0)
+                                  ? 'N/A'
+                                  : widget.anime.score,
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium!
@@ -120,7 +123,9 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                       Padding(
                         padding: const EdgeInsets.only(right: 8),
                         child: Text(
-                          widget.anime.rank,
+                          (int.tryParse(widget.anime.rank) == 0)
+                              ? 'N/A'
+                              : widget.anime.rank,
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium!

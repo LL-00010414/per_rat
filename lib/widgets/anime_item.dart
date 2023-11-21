@@ -9,10 +9,12 @@ class AnimeItem extends StatelessWidget {
     super.key,
     required this.anime,
     required this.onSelectAnime,
+    required this.onDeleteAnime,
   });
 
   final Anime anime;
   final void Function(Anime anime) onSelectAnime;
+  final void Function(Anime anime) onDeleteAnime;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,9 @@ class AnimeItem extends StatelessWidget {
         child: InkWell(
           onTap: () {
             onSelectAnime(anime);
+          },
+          onLongPress: () {
+            onDeleteAnime(anime);
           },
           child: Stack(
             children: [
@@ -73,9 +78,10 @@ class AnimeItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           AnimeItemTrait(
-                            icon: Icons.star_border_outlined,
-                            label: '${anime.score} ',
-                          ),
+                              icon: Icons.star_border_outlined,
+                              label: (double.tryParse(anime.score) == 0)
+                                  ? 'N/A'
+                                  : anime.score),
                           const SizedBox(width: 5),
                           AnimeItemTrait(
                             icon: Icons.movie_outlined,
@@ -84,7 +90,9 @@ class AnimeItem extends StatelessWidget {
                           const SizedBox(width: 5),
                           AnimeItemTrait(
                             icon: Icons.numbers_outlined,
-                            label: anime.totalEpisodes.toString(),
+                            label: (anime.totalEpisodes == 0)
+                                ? 'N/A'
+                                : anime.totalEpisodes.toString(),
                           )
                         ],
                       ),
