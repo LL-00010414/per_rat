@@ -15,10 +15,14 @@ class DatedAnimeItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
+        minVerticalPadding: 0,
+        tileColor: const Color.fromARGB(255, 79, 53, 45),
+        dense: false,
+        contentPadding: const EdgeInsets.all(15),
         title: Text(anime.title),
         leading: Tab(
           icon: Image.network(anime.imageUrl),
-          height: 50,
+          height: 72,
         ),
         trailing: Text(anime.totalEpisodes.toString()),
         onTap: () {
