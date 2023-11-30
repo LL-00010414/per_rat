@@ -39,7 +39,7 @@ class MainDrawer extends StatelessWidget {
                   ),
                   const SizedBox(width: 15),
                   Text(
-                    user1.email!.substring(0, 11),
+                    user1.email!.substring(0, user1.email!.indexOf('@')),
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                           color:
                               Theme.of(context).colorScheme.onPrimaryContainer,

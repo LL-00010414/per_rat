@@ -6,10 +6,13 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
     return Scaffold(
       //backgroundColor: const Color.fromARGB(255, 56, 22, 205),
       appBar: AppBar(
-        title: Text(FirebaseAuth.instance.currentUser!.email!.substring(0, 11)),
+        title: Text(
+          user.email!.substring(0, user.email!.indexOf('@')),
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(18),
