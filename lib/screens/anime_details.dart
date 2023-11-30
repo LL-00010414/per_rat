@@ -42,6 +42,12 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       //backgroundColor: const Color.fromARGB(255, 56, 22, 205),
@@ -209,7 +215,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Premiered: ${widget.anime.formattedDate.substring(2)}',
+                    'Premiered: ${formatterMY.format(widget.anime.startDate)}',
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           color: Colors.greenAccent,
                           fontWeight: FontWeight.normal,
@@ -262,7 +268,9 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
             //the loop was for displaying List<String>
             for (final description in widget.anime.synopsis)
               Text(
-                description,
+                description.replaceAll('[', '"').replaceAll(']', '"'),
+
+                //description.replaceAllMapped(from, (match) => null)
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       color: Theme.of(context).colorScheme.onBackground,
                     ),

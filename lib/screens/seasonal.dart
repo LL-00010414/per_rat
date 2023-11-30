@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+
 import 'package:per_rat/data/demographic_info.dart';
 import 'package:per_rat/data/genre_info.dart';
 
@@ -8,6 +9,8 @@ import 'package:per_rat/data/status_info.dart';
 import 'package:per_rat/data/studio_info.dart';
 import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/screens/anime_details.dart';
+import 'package:per_rat/screens/dated_anime_screen.dart';
+import 'package:per_rat/widgets/archive_anime_item.dart';
 import 'package:per_rat/widgets/seasonal_anime_item.dart';
 import 'package:http/http.dart' as http;
 
@@ -93,6 +96,7 @@ class _SeasonalScreenState extends State<SeasonalScreen>
           endDate: endDate,
         ),
       );
+      //final animeSeasonIn = formatterMY.format(startDate);
     }
     setState(() {
       _registeredAnime = loadedAnime;
@@ -108,6 +112,14 @@ class _SeasonalScreenState extends State<SeasonalScreen>
         ),
       ),
     );
+  }
+
+  void pickSeason(List<Anime> datedAnime, String animeYM) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (ctx) => DatedAnimeScreen(
+              datedAnime: datedAnime,
+              animeYM: animeYM,
+            )));
   }
 
   @override
@@ -127,6 +139,30 @@ class _SeasonalScreenState extends State<SeasonalScreen>
     final List<Anime> nextAnime = _registeredAnime
         .where((anime1) => anime1.status.title.contains('Upcoming'))
         .toList();
+
+    //archive tab
+    // final List<Anime> anime2023 = _registeredAnime
+    //     .where((anime) => anime.startDate.isAfter(DateTime(2023, 1, 1)))
+    //     .where((anime) => anime.startDate.isBefore(
+    //           DateTime(2024, 1, 1),
+    //         ))
+    //     .toList();
+    final List<Anime> anime2023 = _registeredAnime
+        .where((anime) => formatterMY.format(anime.startDate).contains('2023'))
+        .toList();
+    final List<Anime> anime2022 = _registeredAnime
+        .where((anime) => formatterMY.format(anime.startDate).contains('2022'))
+        .toList();
+    final List<Anime> anime2021 = _registeredAnime
+        .where((anime) => formatterMY.format(anime.startDate).contains('2021'))
+        .toList();
+    final List<Anime> anime2020 = _registeredAnime
+        .where((anime) => formatterMY.format(anime.startDate).contains('2020'))
+        .toList();
+    const String anime23 = '2023';
+    const String anime22 = '2022';
+    const String anime21 = '2021';
+    const String anime20 = '2020';
 
     //Last season tab
     Widget lastContent = const Center(
@@ -155,6 +191,14 @@ class _SeasonalScreenState extends State<SeasonalScreen>
           onPickAnime: (anime) {
             pickAnime(context, anime);
           },
+        ),
+      );
+    }
+    if (_error != null) {
+      lastContent = Center(
+        child: Text(
+          _error!,
+          style: const TextStyle(color: Colors.white),
         ),
       );
     }
@@ -189,6 +233,14 @@ class _SeasonalScreenState extends State<SeasonalScreen>
         ),
       );
     }
+    if (_error != null) {
+      thisSeaContent = Center(
+        child: Text(
+          _error!,
+          style: const TextStyle(color: Colors.white),
+        ),
+      );
+    }
 
     //Next season tab
     Widget nextContent = const Center(
@@ -220,6 +272,264 @@ class _SeasonalScreenState extends State<SeasonalScreen>
         ),
       );
     }
+    if (_error != null) {
+      nextContent = Center(
+        child: Text(
+          _error!,
+          style: const TextStyle(color: Colors.white),
+        ),
+      );
+    }
+    //archive tab
+
+    Widget archContent = ListView(
+      children: <Widget>[
+        Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                anime23,
+                style: TextStyle(color: Colors.white, fontSize: 22),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ArchiveAnimeItem(
+                  onPickSeason: (datedAnime) {
+                    pickSeason(datedAnime, anime23);
+                  },
+                  animeSeason: 'Winter',
+                  datedAnime: anime2023
+                      .where((anime) =>
+                          (anime.startDate.isAfter(DateTime(2023, 1, 1))))
+                      .where((anime) =>
+                          anime.startDate.isBefore(DateTime(2023, 4, 1)))
+                      .toList(),
+                ),
+                ArchiveAnimeItem(
+                  onPickSeason: (datedAnime) {
+                    pickSeason(datedAnime, anime23);
+                  },
+                  animeSeason: 'Spring',
+                  datedAnime: anime2023
+                      .where((anime) =>
+                          (anime.startDate.isAfter(DateTime(2023, 4, 1))))
+                      .where((anime) =>
+                          anime.startDate.isBefore(DateTime(2023, 7, 1)))
+                      .toList(),
+                ),
+                ArchiveAnimeItem(
+                  onPickSeason: (datedAnime) {
+                    pickSeason(datedAnime, anime23);
+                  },
+                  animeSeason: 'Summer',
+                  datedAnime: anime2023
+                      .where((anime) =>
+                          (anime.startDate.isAfter(DateTime(2023, 7, 1))))
+                      .where((anime) =>
+                          anime.startDate.isBefore(DateTime(2023, 10, 1)))
+                      .toList(),
+                ),
+                ArchiveAnimeItem(
+                  onPickSeason: (datedAnime) {
+                    pickSeason(datedAnime, anime23);
+                  },
+                  animeSeason: 'Fall',
+                  datedAnime: anime2023
+                      .where((anime) =>
+                          (anime.startDate.isAfter(DateTime(2023, 10, 1))))
+                      .where((anime) =>
+                          anime.startDate.isBefore(DateTime(2023, 12, 31)))
+                      .toList(),
+                ),
+              ],
+            ),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                anime22,
+                style: TextStyle(color: Colors.white, fontSize: 22),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ArchiveAnimeItem(
+                  onPickSeason: (datedAnime) {
+                    pickSeason(datedAnime, anime22);
+                  },
+                  animeSeason: 'Winter',
+                  datedAnime: anime2022
+                      .where((anime) =>
+                          (anime.startDate.isAfter(DateTime(2022, 1, 1))))
+                      .where((anime) =>
+                          anime.startDate.isBefore(DateTime(2022, 4, 1)))
+                      .toList(),
+                ),
+                ArchiveAnimeItem(
+                  onPickSeason: (datedAnime) {
+                    pickSeason(datedAnime, anime22);
+                  },
+                  animeSeason: 'Spring',
+                  datedAnime: anime2022
+                      .where((anime) =>
+                          (anime.startDate.isAfter(DateTime(2022, 4, 1))))
+                      .where((anime) =>
+                          anime.startDate.isBefore(DateTime(2022, 7, 1)))
+                      .toList(),
+                ),
+                ArchiveAnimeItem(
+                  onPickSeason: (datedAnime) {
+                    pickSeason(datedAnime, anime22);
+                  },
+                  animeSeason: 'Summer',
+                  datedAnime: anime2022
+                      .where((anime) =>
+                          (anime.startDate.isAfter(DateTime(2022, 7, 1))))
+                      .where((anime) =>
+                          anime.startDate.isBefore(DateTime(2022, 10, 1)))
+                      .toList(),
+                ),
+                ArchiveAnimeItem(
+                  onPickSeason: (datedAnime) {
+                    pickSeason(datedAnime, anime22);
+                  },
+                  animeSeason: 'Fall',
+                  datedAnime: anime2022
+                      .where((anime) =>
+                          (anime.startDate.isAfter(DateTime(2022, 10, 1))))
+                      .where((anime) =>
+                          anime.startDate.isBefore(DateTime(2022, 12, 31)))
+                      .toList(),
+                ),
+              ],
+            ),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                '2021',
+                style: TextStyle(color: Colors.white, fontSize: 22),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ArchiveAnimeItem(
+                  onPickSeason: (datedAnime) {
+                    pickSeason(datedAnime, anime21);
+                  },
+                  animeSeason: 'Winter',
+                  datedAnime: anime2021
+                      .where((anime) =>
+                          (anime.startDate.isAfter(DateTime(2021, 1, 1))))
+                      .where((anime) =>
+                          anime.startDate.isBefore(DateTime(2021, 4, 1)))
+                      .toList(),
+                ),
+                ArchiveAnimeItem(
+                  onPickSeason: (datedAnime) {
+                    pickSeason(datedAnime, anime21);
+                  },
+                  animeSeason: 'Spring',
+                  datedAnime: anime2023
+                      .where((anime) =>
+                          (anime.startDate.isAfter(DateTime(2021, 4, 1))))
+                      .where((anime) =>
+                          anime.startDate.isBefore(DateTime(2021, 7, 1)))
+                      .toList(),
+                ),
+                ArchiveAnimeItem(
+                  onPickSeason: (datedAnime) {
+                    pickSeason(datedAnime, anime21);
+                  },
+                  animeSeason: 'Summer',
+                  datedAnime: anime2021
+                      .where((anime) =>
+                          (anime.startDate.isAfter(DateTime(2021, 7, 1))))
+                      .where((anime) =>
+                          anime.startDate.isBefore(DateTime(2021, 10, 1)))
+                      .toList(),
+                ),
+                ArchiveAnimeItem(
+                  onPickSeason: (datedAnime) {
+                    pickSeason(datedAnime, anime21);
+                  },
+                  animeSeason: 'Fall',
+                  datedAnime: anime2021
+                      .where((anime) =>
+                          (anime.startDate.isAfter(DateTime(2021, 10, 1))))
+                      .where((anime) =>
+                          anime.startDate.isBefore(DateTime(2021, 12, 31)))
+                      .toList(),
+                ),
+              ],
+            ),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                '2020',
+                style: TextStyle(color: Colors.white, fontSize: 22),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ArchiveAnimeItem(
+                  onPickSeason: (datedAnime) {
+                    pickSeason(datedAnime, anime20);
+                  },
+                  animeSeason: 'Winter',
+                  datedAnime: anime2020
+                      .where((anime) =>
+                          (anime.startDate.isAfter(DateTime(2020, 1, 1))))
+                      .where((anime) =>
+                          anime.startDate.isBefore(DateTime(2020, 4, 1)))
+                      .toList(),
+                ),
+                ArchiveAnimeItem(
+                  onPickSeason: (datedAnime) {
+                    pickSeason(datedAnime, anime20);
+                  },
+                  animeSeason: 'Spring',
+                  datedAnime: anime2020
+                      .where((anime) =>
+                          (anime.startDate.isAfter(DateTime(2020, 4, 1))))
+                      .where((anime) =>
+                          anime.startDate.isBefore(DateTime(2020, 7, 1)))
+                      .toList(),
+                ),
+                ArchiveAnimeItem(
+                  onPickSeason: (datedAnime) {
+                    pickSeason(datedAnime, anime20);
+                  },
+                  animeSeason: 'Summer',
+                  datedAnime: anime2020
+                      .where((anime) =>
+                          (anime.startDate.isAfter(DateTime(2020, 7, 1))))
+                      .where((anime) =>
+                          anime.startDate.isBefore(DateTime(2020, 10, 1)))
+                      .toList(),
+                ),
+                ArchiveAnimeItem(
+                  onPickSeason: (datedAnime) {
+                    pickSeason(datedAnime, anime20);
+                  },
+                  animeSeason: 'Fall',
+                  datedAnime: anime2020
+                      .where((anime) =>
+                          (anime.startDate.isAfter(DateTime(2020, 10, 1))))
+                      .where((anime) =>
+                          anime.startDate.isBefore(DateTime(2020, 12, 31)))
+                      .toList(),
+                ),
+              ],
+            ),
+          ],
+        )
+      ],
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -263,11 +573,8 @@ class _SeasonalScreenState extends State<SeasonalScreen>
           Center(
             child: nextContent,
           ),
-          const Center(
-            child: Text(
-              'Archive',
-              style: TextStyle(color: Colors.amber),
-            ),
+          Center(
+            child: archContent,
           ),
         ],
       ),

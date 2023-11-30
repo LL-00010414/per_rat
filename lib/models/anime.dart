@@ -6,6 +6,7 @@ import 'package:per_rat/models/studios.dart';
 // import 'package:uuid/uuid.dart';
 
 final formatter = DateFormat.yMd();
+final formatterMY = DateFormat.yM();
 
 // const uuid = Uuid();
 
