@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:per_rat/data/movie_info.dart';
+import 'package:per_rat/screens/all_anime_screen.dart';
 
 class MyListScreen extends StatefulWidget {
   const MyListScreen({
@@ -58,38 +60,33 @@ class _MyListScreenState extends State<MyListScreen>
       ),
       body: TabBarView(
         controller: _tabController,
-        children: const <Widget>[
-          Center(
-            child: Text(
-              'All',
-              style: TextStyle(color: Colors.amber),
-            ),
-          ),
-          Center(
+        children: <Widget>[
+          AllAnimeScreen(myAnimeList: dummyAnime),
+          const Center(
             child: Text(
               'Watching',
               style: TextStyle(color: Colors.amber),
             ),
           ),
-          Center(
+          const Center(
             child: Text(
               'Completed',
               style: TextStyle(color: Colors.amber),
             ),
           ),
-          Center(
+          const Center(
             child: Text(
               'On Hold',
               style: TextStyle(color: Colors.amber),
             ),
           ),
-          Center(
+          const Center(
             child: Text(
               'Dropped',
               style: TextStyle(color: Colors.amber),
             ),
           ),
-          Center(
+          const Center(
             child: Text(
               'Plan to Watch',
               style: TextStyle(color: Colors.amber),

@@ -290,7 +290,7 @@ class _SeasonalScreenState extends State<SeasonalScreen>
                     children: [
                       ArchiveAnimeItem(
                         onPickSeason: (datedAnime) {
-                          pickSeason(datedAnime, year.toString());
+                          pickSeason(datedAnime, 'Winter $year');
                         },
                         animeSeason: 'Winter',
                         datedAnime: _registeredAnime
@@ -302,7 +302,7 @@ class _SeasonalScreenState extends State<SeasonalScreen>
                       ),
                       ArchiveAnimeItem(
                         onPickSeason: (datedAnime) {
-                          pickSeason(datedAnime, year.toString());
+                          pickSeason(datedAnime, 'Spring $year');
                         },
                         animeSeason: 'Spring',
                         datedAnime: _registeredAnime
@@ -314,7 +314,7 @@ class _SeasonalScreenState extends State<SeasonalScreen>
                       ),
                       ArchiveAnimeItem(
                         onPickSeason: (datedAnime) {
-                          pickSeason(datedAnime, year.toString());
+                          pickSeason(datedAnime, 'Summer $year');
                         },
                         animeSeason: 'Summer',
                         datedAnime: _registeredAnime
@@ -326,7 +326,7 @@ class _SeasonalScreenState extends State<SeasonalScreen>
                       ),
                       ArchiveAnimeItem(
                         onPickSeason: (datedAnime) {
-                          pickSeason(datedAnime, year.toString());
+                          pickSeason(datedAnime, 'Fall $year');
                         },
                         animeSeason: 'Fall',
                         datedAnime: _registeredAnime
