@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "374741660385",
+    "project_id": "perratauth",
+    "storage_bucket": "perratauth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:374741660385:android:2a58fd92d10d483936bda0",
+        "android_client_info": {
+          "package_name": "com.example.per_rat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFuAVilVwpEUDhth8YkA9NWmnCzzdgByY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
