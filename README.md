@@ -1,5 +1,6 @@
+Source code for PerRat project
 
-PerRat project source code
+APK file can be found in APK folder
 
 
 
