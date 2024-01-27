@@ -43,7 +43,7 @@ class _NewAnimeState extends State<NewAnime> {
   var _selectedStatus = statuses[Statuses.completed]!;
   //DateTimes were done different
   var _selectedStartDate = DateTime.now();
-  var _selectedEndDate = DateTime.now();
+  var _selectedEndDate = DateTime.now().add(const Duration(days: 90));
   //other variables
   var _isSending = false;
 
@@ -61,11 +61,14 @@ class _NewAnimeState extends State<NewAnime> {
       if (_selectedStartDate.isAfter(_selectedEndDate)) {
         _selectedEndDate = _selectedStartDate;
       }
+      // if (_selectedEndDate.isAfter(_selectedStartDate)) {
+      //   _selectedEndDate = _selectedEndDate.add(const Duration(days: 90));
+      // }
     });
   }
 
   void _endDatePicker() async {
-    final now = DateTime.now();
+    final now = DateTime.now().add(const Duration(days: 90));
     final firstDate = DateTime(1950, 1, 1);
     final lastDate = DateTime(now.year + 5, now.month, now.day);
     final pickedDate = await showDatePicker(
@@ -232,9 +235,12 @@ class _NewAnimeState extends State<NewAnime> {
                                 .textTheme
                                 .titleMedium!
                                 .copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.onSurface,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimaryContainer,
                                 ),
+                            dropdownColor:
+                                Theme.of(context).colorScheme.outlineVariant,
                             padding: const EdgeInsets.only(
                               top: 15,
                               bottom: 15,
@@ -294,9 +300,12 @@ class _NewAnimeState extends State<NewAnime> {
                                 .textTheme
                                 .titleMedium!
                                 .copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.onSurface,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimaryContainer,
                                 ),
+                            dropdownColor:
+                                Theme.of(context).colorScheme.outlineVariant,
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12))),
@@ -362,8 +371,13 @@ class _NewAnimeState extends State<NewAnime> {
                       menuMaxHeight: 250,
                       //style: TextStyle(color: Colors.amber),
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.onSurface,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
                           ),
+                      dropdownColor:
+                          Theme.of(context).colorScheme.outlineVariant,
+
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12))),
@@ -422,8 +436,12 @@ class _NewAnimeState extends State<NewAnime> {
                       menuMaxHeight: 250,
                       //style: TextStyle(color: Colors.amber),
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.onSurface,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
                           ),
+                      dropdownColor:
+                          Theme.of(context).colorScheme.outlineVariant,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12))),
@@ -650,7 +668,10 @@ class _NewAnimeState extends State<NewAnime> {
                           ),
                           IconButton(
                             onPressed: _startDatePicker,
-                            icon: const Icon(Icons.calendar_month_rounded),
+                            icon: const Icon(
+                              Icons.calendar_month_rounded,
+                              color: Colors.white,
+                            ),
                           ),
                         ],
                       ),
@@ -667,7 +688,10 @@ class _NewAnimeState extends State<NewAnime> {
                           ),
                           IconButton(
                             onPressed: _endDatePicker,
-                            icon: const Icon(Icons.calendar_month_rounded),
+                            icon: const Icon(
+                              Icons.calendar_month_rounded,
+                              color: Colors.white,
+                            ),
                           ),
                         ],
                       ),
@@ -753,12 +777,14 @@ class _NewAnimeState extends State<NewAnime> {
                   //initialValue: 'Synopsis',
                   maxLength: 500,
                   maxLines: 8,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     alignLabelWithHint: true,
                     errorMaxLines: 6,
                     floatingLabelAlignment: FloatingLabelAlignment.start,
                     helperMaxLines: 8,
-                    hintText: 'Provide a description of the show...',
+                    hintText: 'Provide a description for the show...',
+                    hintStyle:
+                        TextStyle(color: Theme.of(context).colorScheme.error),
                     hintMaxLines: 6,
                     contentPadding: EdgeInsets.all(20),
                     border: OutlineInputBorder(),

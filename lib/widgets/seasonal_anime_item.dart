@@ -9,10 +9,12 @@ class SeasonalAnimeItem extends StatelessWidget {
     super.key,
     required this.anime,
     required this.onPickAnime,
+    required this.onEditScore,
   });
 
   final Anime anime;
   final void Function(Anime anime) onPickAnime;
+  final void Function(Anime anime) onEditScore;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +66,7 @@ class SeasonalAnimeItem extends StatelessWidget {
                       height: 7,
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         AnimeItemTrait(
                           icon: Icons.star_border_outlined,
@@ -75,11 +77,21 @@ class SeasonalAnimeItem extends StatelessWidget {
                           icon: Icons.movie_outlined,
                           label: anime.genre.title,
                         ),
-                        const SizedBox(width: 5),
-                        AnimeItemTrait(
-                          icon: Icons.numbers_outlined,
-                          label: anime.totalEpisodes.toString(),
-                        )
+                        const SizedBox(width: 4),
+                        IconButton.outlined(
+                          style: OutlinedButton.styleFrom(
+                            backgroundColor:
+                                const Color.fromARGB(199, 83, 109, 254),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                          ),
+                          onPressed: () {
+                            onEditScore(anime);
+                          },
+                          icon: const Icon(Icons.edit_note_sharp),
+                          iconSize: 20,
+                        ),
                       ],
                     )
                   ],

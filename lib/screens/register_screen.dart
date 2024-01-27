@@ -61,7 +61,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: const Duration(seconds: 2),
-        backgroundColor: Colors.white54,
+        backgroundColor: Colors.white,
         content: Text(message),
         action: SnackBarAction(
           label: '',
@@ -76,9 +76,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 169, 152, 55),
+      backgroundColor: Theme.of(context).colorScheme.surfaceTint,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 169, 152, 55),
+        backgroundColor: Theme.of(context).colorScheme.surfaceTint,
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -89,7 +89,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 15,
               ),
               Image.asset(
-                'assets/logo.png',
+                'assets/icon/playstore.png',
                 height: 150,
                 fit: BoxFit.cover,
                 colorBlendMode: BlendMode.src,
@@ -97,10 +97,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(
                 height: 30,
               ),
-              const Text(
+              Text(
                 'Let\'s create a new account!',
                 style: TextStyle(
-                  color: Colors.black26,
+                  color: Theme.of(context).colorScheme.onTertiary,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),

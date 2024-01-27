@@ -1,7 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:per_rat/data/movie_info.dart';
+import 'package:per_rat/data/demographic_info.dart';
+import 'package:per_rat/data/genre_info.dart';
+
+import 'package:per_rat/data/status_info.dart';
+import 'package:per_rat/data/studio_info.dart';
 import 'package:per_rat/models/anime.dart';
+
+import 'package:per_rat/widgets/similar_anime_item.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:http/http.dart' as http;
 
 class AnimeDetailsScreen extends StatefulWidget {
   const AnimeDetailsScreen({
@@ -17,15 +26,12 @@ class AnimeDetailsScreen extends StatefulWidget {
 
 class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
   late YoutubePlayerController _controller;
-  final List<String> videoURL =
-      dummyAnime.map((anime) => anime.trailerUrl).toList();
+  List<Anime> registeredAnime = [];
 
   @override
   void initState() {
     //final animeIndex = dummyAnime.indexOf(widget.anime);
-    // _registeredAnime.indexOf(anime);
-    //final index = videoURL.length;
-    //final videoID1 = YoutubePlayer.convertUrlToId(videoURL[animeIndex + 1]);
+
     final videoID = YoutubePlayer.convertUrlToId(widget.anime.trailerUrl);
 
     _controller = YoutubePlayerController(
@@ -39,6 +45,74 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
       ),
     );
     super.initState();
+    loadAnime();
+  }
+
+  void loadAnime() async {
+    final url = Uri.https(
+        'perratauth-default-rtdb.asia-southeast1.firebasedatabase.app',
+        'anime-list.json');
+    final response = await http.get(url);
+
+    final Map<String, dynamic> listAnime = json.decode(response.body);
+    final List<Anime> loadedAnime = [];
+
+    for (final show in listAnime.entries) {
+      final genre = genres.entries
+          .firstWhere((genItem) => genItem.value.title == show.value['genre'])
+          .value;
+      final demographic = demographics.entries
+          .firstWhere(
+              (demItem) => demItem.value.title == show.value['demographics'])
+          .value;
+      final studio = studios.entries
+          .firstWhere(
+              (studItem) => studItem.value.title == show.value['studio'])
+          .value;
+      final status = statuses.entries
+          .firstWhere(
+              (statItem) => statItem.value.title == show.value['status'])
+          .value;
+      final DateTime startDate = formatter.parse(show.value['startDate']);
+      final DateTime endDate = formatter.parse(show.value['startDate']);
+      final String description = show.value['synopsis'].toString();
+      final List<String> synopsis = description.split(',');
+
+      //the logic part
+      loadedAnime.add(
+        Anime(
+          id: show.key,
+          title: show.value['title'],
+          imageUrl: show.value['imageUrl'],
+          synopsis: synopsis,
+          totalEpisodes: show.value['totalEpisodes'],
+          score: show.value['score'].toString(),
+          rank: show.value['rank'].toString(),
+          popularity: show.value['popularity'].toString(),
+          favorites: show.value['favorites'],
+          trailerUrl: show.value['trailerUrl'],
+          genre: genre,
+          demographic: demographic,
+          studio: studio,
+          status: status,
+          startDate: startDate,
+          endDate: endDate,
+        ),
+      );
+    }
+    setState(() {
+      registeredAnime = loadedAnime;
+    });
+  }
+
+  void pickAnime(BuildContext context, Anime anime) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => AnimeDetailsScreen(
+          anime: anime,
+        ),
+      ),
+    );
   }
 
   @override
@@ -49,6 +123,10 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final List<Anime> similarAnime = registeredAnime
+        .where((anime) => anime.genre.title.contains(widget.anime.genre.title))
+        .where((anime) => anime.title != widget.anime.title)
+        .toList();
     return Scaffold(
       //backgroundColor: const Color.fromARGB(255, 56, 22, 205),
       appBar: AppBar(
@@ -70,13 +148,13 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                 ),
                 SizedBox(
                   height: 300,
-                  width: 150,
+                  width: 175,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(top: 8, right: 8),
+                        padding: const EdgeInsets.only(top: 20, right: 8),
                         child: Text(
                           'Score',
                           style: Theme.of(context)
@@ -92,7 +170,11 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          const Icon(Icons.star_border_rounded),
+                          Icon(
+                            Icons.star_border_rounded,
+                            color:
+                                Theme.of(context).colorScheme.onErrorContainer,
+                          ),
                           Padding(
                             padding: const EdgeInsets.only(right: 8),
                             child: Text(
@@ -126,21 +208,32 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                               ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8),
-                        child: Text(
-                          (int.tryParse(widget.anime.rank) == 0)
-                              ? 'N/A'
-                              : widget.anime.rank,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(
-                                color:
-                                    Theme.of(context).colorScheme.onBackground,
-                                fontWeight: FontWeight.normal,
-                              ),
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Icon(
+                            Icons.radar,
+                            color:
+                                Theme.of(context).colorScheme.onErrorContainer,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: Text(
+                              (int.tryParse(widget.anime.rank) == 0)
+                                  ? 'N/A'
+                                  : widget.anime.rank,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onBackground,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
+                          ),
+                        ],
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 28, right: 8),
@@ -266,15 +359,17 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
               height: 10,
             ),
             //the loop was for displaying List<String>
-            for (final description in widget.anime.synopsis)
-              Text(
-                description.replaceAll('[', '"').replaceAll(']', '"'),
-
-                //description.replaceAllMapped(from, (match) => null)
-                style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
-              ),
+            //for (final description in widget.anime.synopsis)
+            Text(
+              //textAlign: TextAlign.left,
+              widget.anime.synopsis
+                  .join()
+                  .replaceAll('[', '"')
+                  .replaceAll(']', '"'),
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
+            ),
             const SizedBox(
               height: 20,
             ),
@@ -297,6 +392,38 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                   const PlaybackSpeedButton(),
                   PlayPauseButton(),
                 ],
+              ),
+            ),
+            Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.only(top: 20),
+                  child: Text(
+                    'Similar Titles:',
+                    style:
+                        Theme.of(context).primaryTextTheme.titleLarge!.copyWith(
+                              color: Colors.amber,
+                            ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 240,
+              child: ListView.builder(
+                itemExtent: 155,
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.only(
+                    left: 5, right: 15, top: 15, bottom: 10),
+                itemCount: similarAnime.length,
+                itemBuilder: (context, index) {
+                  return SimilarAnimeItem(
+                    anime: similarAnime[index],
+                    onPickAnime: (anime) {
+                      pickAnime(context, anime);
+                    },
+                  );
+                },
               ),
             ),
           ],

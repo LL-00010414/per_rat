@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: const Duration(seconds: 2),
-        backgroundColor: Colors.white54,
+        backgroundColor: Colors.white,
         content: Text(message),
         action: SnackBarAction(
           label: '',
@@ -69,9 +69,9 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 169, 152, 55),
+      backgroundColor: Theme.of(context).colorScheme.surfaceTint,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 169, 152, 55),
+        backgroundColor: Theme.of(context).colorScheme.surfaceTint,
         // leading: TextButton(
         //   style: const ButtonStyle(
         //     iconColor: MaterialStatePropertyAll(Colors.white),
@@ -107,10 +107,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 30,
               ),
               Image.asset(
-                'assets/logo.png',
+                'assets/icon/playstore.png',
                 height: 150,
                 fit: BoxFit.cover,
-                colorBlendMode: BlendMode.src,
+                //colorBlendMode: BlendMode.src,
               ),
               // const Icon(
               //   Icons.movie_rounded,
@@ -119,10 +119,10 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 30,
               ),
-              const Text(
-                'Welcome back, cunt!',
+              Text(
+                'Welcome back, user!',
                 style: TextStyle(
-                  color: Colors.black26,
+                  color: Theme.of(context).colorScheme.onTertiary,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
@@ -215,7 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Not a cunt?'),
+                  const Text('Not a user?'),
                   const SizedBox(
                     width: 5,
                   ),

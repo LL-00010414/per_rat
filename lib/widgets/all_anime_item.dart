@@ -38,6 +38,11 @@ class AllAnimeItem extends StatelessWidget {
         ),
         isThreeLine: true,
         trailing: IconButton.outlined(
+            style: OutlinedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
+              ),
+            ),
             onPressed: () {
               onEditScore(anime);
             },

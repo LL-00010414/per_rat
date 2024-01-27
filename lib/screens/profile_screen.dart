@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -7,13 +8,26 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
+    void signUserOut() {
+      GoogleSignIn().signOut();
+      FirebaseAuth.instance.signOut();
+      Navigator.pop(context);
+    }
+
     return Scaffold(
       //backgroundColor: const Color.fromARGB(255, 56, 22, 205),
       appBar: AppBar(
         title: Text(
           user.email!.substring(0, user.email!.indexOf('@')),
         ),
+        actions: [
+          IconButton(
+            onPressed: signUserOut,
+            icon: const Icon(Icons.logout_rounded),
+          ),
+        ],
       ),
+
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(18),
         child: Column(
@@ -146,7 +160,8 @@ class ProfileScreen extends StatelessWidget {
                               .textTheme
                               .titleMedium!
                               .copyWith(
-                                color: Theme.of(context).colorScheme.tertiary,
+                                color:
+                                    Theme.of(context).colorScheme.onBackground,
                                 fontWeight: FontWeight.normal,
                               ),
                         ),
@@ -170,7 +185,7 @@ class ProfileScreen extends StatelessWidget {
               height: 10,
             ),
             Text(
-              'someshit',
+              '"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam!"',
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     color: Theme.of(context).colorScheme.onBackground,
                   ),

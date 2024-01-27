@@ -10,6 +10,7 @@ import 'package:per_rat/data/studio_info.dart';
 import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/screens/anime_details.dart';
 import 'package:per_rat/screens/dated_anime_screen.dart';
+import 'package:per_rat/screens/edit_score_screen.dart';
 import 'package:per_rat/widgets/archive_anime_item.dart';
 import 'package:per_rat/widgets/seasonal_anime_item.dart';
 import 'package:http/http.dart' as http;
@@ -122,6 +123,13 @@ class _SeasonalScreenState extends State<SeasonalScreen>
             )));
   }
 
+  void editScore(BuildContext context, Anime anime) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (ctx) => EditScoreScreen(
+              anime: anime,
+            )));
+  }
+
   @override
   void dispose() {
     _tabController.dispose();
@@ -180,6 +188,9 @@ class _SeasonalScreenState extends State<SeasonalScreen>
           onPickAnime: (anime) {
             pickAnime(context, anime);
           },
+          onEditScore: (anime) {
+            editScore(context, anime);
+          },
         ),
       );
     }
@@ -219,6 +230,9 @@ class _SeasonalScreenState extends State<SeasonalScreen>
           onPickAnime: (anime) {
             pickAnime(context, anime);
           },
+          onEditScore: (anime) {
+            editScore(context, anime);
+          },
         ),
       );
     }
@@ -257,6 +271,9 @@ class _SeasonalScreenState extends State<SeasonalScreen>
           anime: nextAnime[index],
           onPickAnime: (anime) {
             pickAnime(context, anime);
+          },
+          onEditScore: (anime) {
+            editScore(context, anime);
           },
         ),
       );

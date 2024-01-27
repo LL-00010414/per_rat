@@ -133,6 +133,9 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                       borderSide: BorderSide.none,
                     ),
                     hintText: 'Type anime name',
+                    hintStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.onBackground,
+                    ),
                     prefixIcon: const Icon(
                       Icons.search_rounded,
                       color: Colors.amber,

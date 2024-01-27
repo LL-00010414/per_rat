@@ -34,18 +34,34 @@ class EditScoreScreen extends StatelessWidget {
                   fontWeight: FontWeight.w100,
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(
+              Padding(
+                padding: const EdgeInsets.only(
                   top: 20,
                   bottom: 15,
                 ),
-                child: Text(
-                  'Status',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w100,
-                  ),
+                child: Row(
+                  children: [
+                    const Text(
+                      'Status:  ',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w100,
+                      ),
+                    ),
+                    Text(
+                      anime.status.title,
+                      style: TextStyle(
+                        color: (anime.status.title.contains('Upcoming')
+                            ? Colors.blue
+                            : anime.status.title.contains('Ongoing')
+                                ? Colors.green
+                                : Colors.purple),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Row(
@@ -125,6 +141,164 @@ class EditScoreScreen extends StatelessWidget {
                   ),
                 ],
               ),
+              const Text(
+                'Progress',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  right: 20,
+                  left: 20,
+                ),
+                child: SizedBox(
+                  height: 80,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: (anime.totalEpisodes > 0)
+                          ? anime.totalEpisodes + 1
+                          : anime.totalEpisodes + 2,
+                      itemBuilder: (context, index) {
+                        int number = index;
+                        // if (anime.totalEpisodes == 0) {
+                        //   return Container(
+                        //     width:
+                        //         50, // Adjust the width of each item as needed
+                        //     height:
+                        //         50, // Adjust the height of each item as needed
+                        //     margin: const EdgeInsets.all(8),
+                        //     decoration: BoxDecoration(
+                        //       border: Border.all(color: Colors.blue),
+                        //       borderRadius: BorderRadius.circular(10),
+                        //     ),
+                        //     child: const Center(
+                        //       child: Text(
+                        //         '0',
+                        //         style: TextStyle(
+                        //           fontSize: 18,
+                        //           color: Colors.white,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   );
+                        // }
+
+                        return GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            width:
+                                50, // Adjust the width of each item as needed
+                            height:
+                                50, // Adjust the height of each item as needed
+                            margin: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.blue),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                              child: Text(
+                                '$number',
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                ),
+              ),
+              const Text(
+                'Score',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  right: 20,
+                  left: 20,
+                ),
+                child: SizedBox(
+                  height: 80,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 10, // Adjust the number of items as needed
+                      itemBuilder: (context, index) {
+                        int number =
+                            index + 1; // Assuming you want to start from 1
+                        return GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            width:
+                                50, // Adjust the width of each item as needed
+                            height:
+                                50, // Adjust the height of each item as needed
+                            margin: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.blue),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                              child: Text(
+                                '$number',
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                ),
+              ),
+              SizedBox(
+                height: 295,
+                //width: 500,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                                foregroundColor: Colors.green,
+                                //padding: const EdgeInsets.all(16.0),
+                                textStyle:
+                                    const TextStyle(fontSize: buttonFontSize),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                )),
+                            onPressed: () {},
+                            child: const Padding(
+                              padding: EdgeInsets.all(14.0),
+                              child: Text('Submit'),
+                            )),
+                        OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                                foregroundColor: Colors.red,
+                                //padding: const EdgeInsets.all(16.0),
+                                textStyle:
+                                    const TextStyle(fontSize: buttonFontSize),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                )),
+                            onPressed: () {},
+                            child: const Padding(
+                              padding: EdgeInsets.all(14.0),
+                              child: Text('Delete'),
+                            )),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -140,6 +314,7 @@ class EditScoreScreen extends StatelessWidget {
             icon: const Icon(
               Icons.save_outlined,
               size: 35,
+              color: Colors.blueAccent,
             ),
           )
         ],

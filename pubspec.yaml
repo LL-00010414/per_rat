@@ -47,17 +47,20 @@ dependencies:
   intl: ^0.18.1
   awesome_dialog: ^3.1.0
 
-flutter_icons:
-  android: true
-  ios: true
-  image_path: "assets/perRat_1.png"
-  adaptive_icon_background: "#ffffff"
-  adaptive_icon_foreground: "assets/logo.png"
+
+
   
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+flutter_launcher_icons: 
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/playstore.png"
+  # adaptive_icon_background: "#ffffff"
+  # adaptive_icon_foreground: "assets/icon/logo.png"
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -80,7 +83,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/sign_in/
-    - assets/logo.png
+    - assets/icon/appstore.png
+    - assets/icon/playstore.png
     
   #   - images/a_dot_ham.jpeg
 

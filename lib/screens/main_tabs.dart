@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+
 import 'package:per_rat/data/demographic_info.dart';
 import 'package:per_rat/data/genre_info.dart';
 
@@ -161,29 +161,26 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
       currentPage = const MyListScreen();
     }
 
-    void signUserOut() {
-      GoogleSignIn().signOut();
-      FirebaseAuth.instance.signOut();
-    }
+    // void signUserOut() {
+    //   GoogleSignIn().signOut();
+    //   FirebaseAuth.instance.signOut();
+    // }
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          'Welcome ${user.email!.substring(0, user.email!.indexOf('@'))}',
+        title: const Text(
+          'PERRAT',
+          // style: TextStyle(color: Colors.amberAccent),
         ),
-        actions: [
-          IconButton(
-            onPressed: signUserOut,
-            icon: const Icon(Icons.logout_rounded),
-          ),
-        ],
       ),
       drawer: MainDrawer(onSelectScreen: _setScreen, user1: user),
       body: currentPage,
       bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: Colors.white,
         type: BottomNavigationBarType.fixed,
-        //backgroundColor: Theme.of(context).colorScheme.onSecondary,
+        fixedColor: Colors.amber,
+        backgroundColor: Theme.of(context).colorScheme.background,
         onTap: _selectPage,
         currentIndex: _selectedPageIndex,
         items: const [
