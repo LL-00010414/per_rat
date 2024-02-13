@@ -165,7 +165,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                 ),
                 SizedBox(
                   height: 300,
-                  width: 175,
+                  width: 150,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.center,

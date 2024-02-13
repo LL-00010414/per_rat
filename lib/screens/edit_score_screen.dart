@@ -1,13 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:per_rat/models/anime.dart';
 
-class EditScoreScreen extends StatelessWidget {
+class EditScoreScreen extends StatefulWidget {
   const EditScoreScreen({
     super.key,
     required this.anime,
   });
 
   final Anime anime;
+
+  @override
+  State<EditScoreScreen> createState() => _EditScoreScreenState();
+}
+
+class _EditScoreScreenState extends State<EditScoreScreen> {
+  Color? cCompleted;
+  Color? cWatching;
+  Color? cPTW;
+  Color? cOnHold;
+  Color? cDropped;
+
+  void selectStatus(int statusNumber) {
+    setState(() {
+      cCompleted = null;
+      cWatching = null;
+      cPTW = null;
+      cOnHold = null;
+      cDropped = null;
+      if (statusNumber == 1) {
+        cCompleted = Colors.blue;
+      } else if (statusNumber == 2) {
+        cWatching = Colors.green;
+      } else if (statusNumber == 3) {
+        cPTW = Colors.grey;
+      } else if (statusNumber == 4) {
+        cOnHold = Colors.yellow;
+      } else if (statusNumber == 5) {
+        cDropped = Colors.red;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +59,7 @@ class EditScoreScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                anime.title,
+                widget.anime.title,
                 style: const TextStyle(
                   color: Colors.amber,
                   fontSize: 18,
@@ -50,11 +82,11 @@ class EditScoreScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      anime.status.title,
+                      widget.anime.status.title,
                       style: TextStyle(
-                        color: (anime.status.title.contains('Upcoming')
+                        color: (widget.anime.status.title.contains('Upcoming')
                             ? Colors.blue
-                            : anime.status.title.contains('Ongoing')
+                            : widget.anime.status.title.contains('Ongoing')
                                 ? Colors.green
                                 : Colors.purple),
                         fontSize: 16,
@@ -70,34 +102,44 @@ class EditScoreScreen extends StatelessWidget {
                   OutlinedButton(
                     style: OutlinedButton.styleFrom(
                         foregroundColor: Colors.white,
+                        backgroundColor: cCompleted,
                         //padding: const EdgeInsets.all(16.0),
                         textStyle: const TextStyle(fontSize: buttonFontSize),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
                         )),
-                    onPressed: () {},
+                    onPressed: () {
+                      selectStatus(1);
+                    },
                     child: const Text('Completed'),
                   ),
                   OutlinedButton(
                     style: OutlinedButton.styleFrom(
                         foregroundColor: Colors.white,
+                        backgroundColor: cWatching,
+
                         //padding: const EdgeInsets.all(16.0),
                         textStyle: const TextStyle(fontSize: buttonFontSize),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
                         )),
-                    onPressed: () {},
+                    onPressed: () {
+                      selectStatus(2);
+                    },
                     child: const Text('Watching'),
                   ),
                   OutlinedButton(
                     style: OutlinedButton.styleFrom(
                         foregroundColor: Colors.white,
+                        backgroundColor: cPTW,
                         //padding: const EdgeInsets.all(16.0),
                         textStyle: const TextStyle(fontSize: buttonFontSize),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
                         )),
-                    onPressed: () {},
+                    onPressed: () {
+                      selectStatus(3);
+                    },
                     child: const Text('Plan to Watch'),
                   ),
                 ],
@@ -108,18 +150,26 @@ class EditScoreScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(
                       bottom: 10,
-                      right: 12,
+                      right: 3,
                     ),
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
                           foregroundColor: Colors.white,
+                          backgroundColor: cOnHold,
                           //padding: const EdgeInsets.all(16.0),
                           textStyle: const TextStyle(fontSize: buttonFontSize),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           )),
-                      onPressed: () {},
-                      child: const Text('  On Hold   '),
+                      onPressed: () {
+                        selectStatus(4);
+                      },
+                      child: Container(
+                        child: const Text('On Hold'),
+                        margin: EdgeInsets.symmetric(
+                          horizontal: 9,
+                        ),
+                      ),
                     ),
                   ),
                   Padding(
@@ -130,13 +180,20 @@ class EditScoreScreen extends StatelessWidget {
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
                           foregroundColor: Colors.white,
+                          backgroundColor: cDropped,
                           //padding: const EdgeInsets.all(16.0),
                           textStyle: const TextStyle(fontSize: buttonFontSize),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           )),
-                      onPressed: () {},
-                      child: const Text(' Dropped '),
+                      onPressed: () {
+                        selectStatus(5);
+                      },
+                      child: Container(
+                          margin: EdgeInsets.symmetric(
+                            horizontal: 3,
+                          ),
+                          child: const Text('Dropped')),
                     ),
                   ),
                 ],
@@ -157,9 +214,9 @@ class EditScoreScreen extends StatelessWidget {
                   height: 80,
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: (anime.totalEpisodes > 0)
-                          ? anime.totalEpisodes + 1
-                          : anime.totalEpisodes + 2,
+                      itemCount: (widget.anime.totalEpisodes > 0)
+                          ? widget.anime.totalEpisodes + 1
+                          : widget.anime.totalEpisodes + 2,
                       itemBuilder: (context, index) {
                         int number = index;
                         // if (anime.totalEpisodes == 0) {
@@ -258,7 +315,7 @@ class EditScoreScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 295,
+                height: 290,
                 //width: 500,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -306,7 +363,7 @@ class EditScoreScreen extends StatelessWidget {
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text(anime.title),
+        title: Text(widget.anime.title),
         centerTitle: true,
         actions: [
           IconButton(

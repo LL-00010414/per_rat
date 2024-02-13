@@ -146,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text(anime.title),
         content: Text('Do you want to delete ${anime.title}?'),
         actions: <Widget>[
-          TextButton(
+          OutlinedButton(
             onPressed: () async {
               // setState(() {
               //   _registeredAnime.remove(anime);
@@ -188,14 +188,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               }
             },
-            style: TextButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 118, 118, 157)),
+            style: OutlinedButton.styleFrom(
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
+              ),
+            ),
             child: Text(
               'Yes',
               style: TextStyle(color: Colors.red),
             ),
           ),
-          TextButton(
+          OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
+              ),
+            ),
             onPressed: () => Navigator.pop(context),
             child: const Text(
               'No',
