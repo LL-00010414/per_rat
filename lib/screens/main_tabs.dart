@@ -13,6 +13,7 @@ import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/screens/discover.dart';
 import 'package:per_rat/screens/home.dart';
 import 'package:per_rat/screens/my_list.dart';
+import 'package:per_rat/screens/notifications_screen.dart';
 import 'package:per_rat/screens/profile_screen.dart';
 
 import 'package:per_rat/screens/seasonal.dart';
@@ -173,6 +174,17 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
           'PERRAT',
           // style: TextStyle(color: Colors.amberAccent),
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (ctx) => NotificationsScreen()));
+              },
+              icon: const Icon(
+                Icons.notifications_outlined,
+                size: 30,
+              ))
+        ],
       ),
       drawer: MainDrawer(onSelectScreen: _setScreen, user1: user),
       body: currentPage,

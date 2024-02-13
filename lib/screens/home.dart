@@ -142,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
     await showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.amberAccent,
         title: Text(anime.title),
         content: Text('Do you want to delete ${anime.title}?'),
         actions: <Widget>[
@@ -188,7 +188,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               }
             },
-            child: const Text(
+            style: TextButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 118, 118, 157)),
+            child: Text(
               'Yes',
               style: TextStyle(color: Colors.red),
             ),

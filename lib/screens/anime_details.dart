@@ -7,6 +7,7 @@ import 'package:per_rat/data/genre_info.dart';
 import 'package:per_rat/data/status_info.dart';
 import 'package:per_rat/data/studio_info.dart';
 import 'package:per_rat/models/anime.dart';
+import 'package:per_rat/screens/edit_score_screen.dart';
 
 import 'package:per_rat/widgets/similar_anime_item.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -131,6 +132,22 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
       //backgroundColor: const Color.fromARGB(255, 56, 22, 205),
       appBar: AppBar(
         title: Text(widget.anime.title),
+      ),
+      floatingActionButton: IconButton.outlined(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+                builder: (ctx) => EditScoreScreen(
+                      anime: widget.anime,
+                    )),
+          );
+        },
+        style: IconButton.styleFrom(
+          backgroundColor: const Color.fromARGB(255, 12, 88, 15),
+          iconSize: 40,
+        ),
+        icon: Icon(Icons.add),
+        color: Colors.white,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(18),
