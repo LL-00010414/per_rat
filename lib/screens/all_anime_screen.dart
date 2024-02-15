@@ -33,7 +33,7 @@ class AllAnimeScreen extends StatelessWidget {
 
     Widget content = const Center(
       child: Text(
-        'No anime present for this category!',
+        '...',
         style: TextStyle(color: Colors.amber),
       ),
     );

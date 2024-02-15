@@ -710,7 +710,7 @@ class _NewAnimeState extends State<NewAnime> {
                     style: const TextStyle(
                       color: Colors.white,
                     ),
-                    maxLength: 80,
+                    maxLength: 280,
                     decoration: const InputDecoration(
                       label: Text('Image URL'),
                       labelStyle: TextStyle(color: Colors.amber),
@@ -719,7 +719,7 @@ class _NewAnimeState extends State<NewAnime> {
                       if (value == null ||
                           value.isEmpty ||
                           value.trim().length <= 5 ||
-                          value.trim().length > 80 ||
+                          value.trim().length > 280 ||
                           !value.endsWith('png') && !value.endsWith('jpg')) {
                         return 'Must provide a valid URL';
                       }
@@ -741,7 +741,7 @@ class _NewAnimeState extends State<NewAnime> {
                     style: const TextStyle(
                       color: Colors.white,
                     ),
-                    maxLength: 80,
+                    maxLength: 180,
                     decoration: const InputDecoration(
                       label: Text('Trailer URL'),
                       labelStyle: TextStyle(color: Colors.amber),
@@ -750,7 +750,7 @@ class _NewAnimeState extends State<NewAnime> {
                       if (value == null ||
                           value.isEmpty ||
                           value.trim().length <= 5 ||
-                          value.trim().length > 80 ||
+                          value.trim().length > 180 ||
                           !value.startsWith('https:')) {
                         return 'Must provide a valid URL';
                       }
