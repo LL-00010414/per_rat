@@ -60,7 +60,7 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
   void _loadAnime() async {
     final url = Uri.https(
         'perratauth-default-rtdb.asia-southeast1.firebasedatabase.app',
-        'anime-list.json');
+        'movie-list.json');
     final response = await http.get(url);
 
     if (response.statusCode >= 400) {

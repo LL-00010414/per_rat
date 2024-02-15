@@ -1,13 +1,20 @@
 enum Genres {
   action,
+  adventure,
+  boysLove,
   comedy,
   drama,
   fantasy,
+  girlsLove,
   horror,
   mystery,
   romance,
-  thriller,
-  western,
+  sciFi,
+  sliceOfLife,
+  sports,
+  supernatural,
+  ecchi,
+  hentai,
 }
 
 class Genre {

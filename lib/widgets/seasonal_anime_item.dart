@@ -44,10 +44,10 @@ class SeasonalAnimeItem extends StatelessWidget {
               right: 0,
               child: Container(
                 color: Colors.black54,
-                padding: const EdgeInsets.symmetric(
-                  vertical: 1,
-                  horizontal: 3,
-                ),
+                // padding: const EdgeInsets.symmetric(
+                //   vertical: 1,
+                //   horizontal: 0,
+                // ),
                 child: Column(
                   children: [
                     Text(
@@ -66,7 +66,7 @@ class SeasonalAnimeItem extends StatelessWidget {
                       height: 7,
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         AnimeItemTrait(
                           icon: Icons.star_border_outlined,

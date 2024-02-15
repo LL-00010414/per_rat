@@ -1,9 +1,9 @@
 enum Demographics {
-  josei,
-  kids,
-  seinen,
-  shoujo,
-  shounen,
+  g,
+  pg,
+  pg13,
+  r,
+  nc17,
 }
 
 class Demographic {

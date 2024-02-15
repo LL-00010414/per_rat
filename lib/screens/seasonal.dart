@@ -43,7 +43,7 @@ class _SeasonalScreenState extends State<SeasonalScreen>
   void _loadAnime() async {
     final url = Uri.https(
         'perratauth-default-rtdb.asia-southeast1.firebasedatabase.app',
-        'anime-list.json');
+        'movie-list.json');
     final response = await http.get(url);
 
     if (response.statusCode >= 400) {
@@ -179,8 +179,8 @@ class _SeasonalScreenState extends State<SeasonalScreen>
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 0.5,
-          crossAxisSpacing: 5,
-          mainAxisSpacing: 5,
+          crossAxisSpacing: 0,
+          mainAxisSpacing: 3,
         ),
         itemCount: lastAnime.length,
         itemBuilder: (ctx, index) => SeasonalAnimeItem(

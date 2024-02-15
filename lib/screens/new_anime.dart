@@ -38,7 +38,7 @@ class _NewAnimeState extends State<NewAnime> {
   var _enteredFavorites = 140;
   var _enteredTrailerUrl = '';
   var _selectedGenre = genres[Genres.action]!;
-  var _selectedDemographic = demographics[Demographics.josei]!;
+  var _selectedDemographic = demographics[Demographics.g]!;
   var _selectedStudio = studios[Studios.a1Pictures]!;
   var _selectedStatus = statuses[Statuses.completed]!;
   //DateTimes were done different
@@ -92,7 +92,7 @@ class _NewAnimeState extends State<NewAnime> {
       });
       final url = Uri.https(
           'perratauth-default-rtdb.asia-southeast1.firebasedatabase.app',
-          'anime-list.json');
+          'movie-list.json');
       final response = await http.post(
         url,
         headers: {

@@ -39,7 +39,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
   void loadAnime() async {
     final url = Uri.https(
         'perratauth-default-rtdb.asia-southeast1.firebasedatabase.app',
-        'anime-list.json');
+        'movie-list.json');
     final response = await http.get(url);
 
     final Map<String, dynamic> listAnime = json.decode(response.body);
