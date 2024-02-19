@@ -6,8 +6,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:per_rat/screens/user_profile/user_image_picker.dart';
 
-final _firebase = FirebaseAuth.instance;
-
 class EditUserProfileScreen extends StatefulWidget {
   const EditUserProfileScreen({super.key});
 
@@ -17,18 +15,20 @@ class EditUserProfileScreen extends StatefulWidget {
 
 class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
   final _formkey = GlobalKey<FormState>();
+  final user = FirebaseAuth.instance.currentUser!;
 
-  var _isLogin = true;
-  var _enteredEmail = '';
-  var _enteredPassword = '';
   File? _selectedImage;
   var _isUploading = false;
   var _enteredUsername = '';
+  var _enteredGender = '';
+  var _enteredBD = '';
+  var _enteredLocation = '';
+  var _enteredBio = '';
 
   void _submit() async {
     final isValid = _formkey.currentState!.validate();
 
-    if (!isValid || !_isLogin && _selectedImage == null) {
+    if (!isValid || _selectedImage == null) {
       return;
     }
 
@@ -38,34 +38,24 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
       setState(() {
         _isUploading = true;
       });
-      if (_isLogin) {
-        final userCredential1 = await _firebase.signInWithEmailAndPassword(
-          email: _enteredEmail,
-          password: _enteredPassword,
-        );
-      } else {
-        final userCredentials = await _firebase.createUserWithEmailAndPassword(
-          email: _enteredEmail,
-          password: _enteredPassword,
-        );
 
-        final storageRef = FirebaseStorage.instance
-            .ref()
-            .child('user_images')
-            .child('${userCredentials.user!.uid}.jpg');
+      final storageRef = FirebaseStorage.instance
+          .ref()
+          .child('user_images')
+          .child('${user.uid}.jpg');
 
-        await storageRef.putFile(_selectedImage!);
-        final imageUrl = await storageRef.getDownloadURL();
+      await storageRef.putFile(_selectedImage!);
+      final imageUrl = await storageRef.getDownloadURL();
 
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userCredentials.user!.uid)
-            .set({
-          'username': _enteredUsername,
-          'email': _enteredEmail,
-          'image_url': imageUrl,
-        });
-      }
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+        'username': _enteredUsername,
+        'email': user.email,
+        'image_url': imageUrl,
+        'gender': _enteredGender,
+        'birthday': _enteredBD,
+        'location': _enteredLocation,
+        'bio': _enteredBio,
+      });
     } on FirebaseAuthException catch (error) {
       if (error.code.isNotEmpty) {
         //
@@ -85,22 +75,12 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      //backgroundColor: Theme.of(context).colorScheme.onSecondary,
       body: Center(
           child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              margin: const EdgeInsets.only(
-                top: 30,
-                bottom: 20,
-                left: 20,
-                right: 20,
-              ),
-              width: 200,
-              child: Image.asset('assets/images/chat.png'),
-            ),
             Card(
               margin: const EdgeInsets.all(20),
               child: SingleChildScrollView(
@@ -113,59 +93,73 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        if (!_isLogin)
-                          UserImagePicker(
-                            onPickImage: (pickedImage) {
-                              _selectedImage = pickedImage;
-                            },
-                          ),
-                        TextFormField(
-                          decoration:
-                              const InputDecoration(labelText: 'Email Address'),
-                          keyboardType: TextInputType.emailAddress,
-                          autocorrect: false,
-                          textCapitalization: TextCapitalization.none,
-                          validator: (value) {
-                            if (value == null ||
-                                value.trim().isEmpty ||
-                                !value.contains('@')) {
-                              return 'Please enter a valid email address!';
-                            }
-                            return null;
-                          },
-                          onSaved: (value) {
-                            _enteredEmail = value!;
+                        UserImagePicker(
+                          onPickImage: (pickedImage) {
+                            _selectedImage = pickedImage;
                           },
                         ),
-                        if (!_isLogin)
-                          TextFormField(
-                            decoration:
-                                const InputDecoration(labelText: 'Username'),
-                            enableSuggestions: false,
-                            validator: (value) {
-                              if (value == null ||
-                                  value.isEmpty ||
-                                  value.trim().length < 4) {
-                                return 'Username should contain at least 4 characters!';
-                              }
-                              return null;
-                            },
-                            onSaved: (value) {
-                              _enteredUsername = value!;
-                            },
-                          ),
                         TextFormField(
                           decoration:
-                              const InputDecoration(labelText: 'Password'),
-                          obscureText: true,
+                              const InputDecoration(labelText: 'Username'),
+                          enableSuggestions: false,
                           validator: (value) {
-                            if (value == null || value.trim().length < 8) {
-                              return 'Password should be at least 8 characers long!';
+                            if (value == null ||
+                                value.isEmpty ||
+                                value.trim().length < 4) {
+                              return 'Username should contain at least 4 characters!';
                             }
                             return null;
                           },
                           onSaved: (value) {
-                            _enteredPassword = value!;
+                            _enteredUsername = value!;
+                          },
+                        ),
+                        TextFormField(
+                          decoration:
+                              const InputDecoration(labelText: 'Gender'),
+                          enableSuggestions: false,
+                          validator: (value) {
+                            if (value == null ||
+                                value.isEmpty ||
+                                value.trim().length < 2) {
+                              return 'Username should contain at least 4 characters!';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            _enteredUsername = value!;
+                          },
+                        ),
+                        TextFormField(
+                          decoration:
+                              const InputDecoration(labelText: 'Birthday'),
+                          enableSuggestions: false,
+                          validator: (value) {
+                            if (value == null ||
+                                value.isEmpty ||
+                                value.trim().length < 2) {
+                              return 'Username should contain at least 4 characters!';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            _enteredUsername = value!;
+                          },
+                        ),
+                        TextFormField(
+                          decoration:
+                              const InputDecoration(labelText: 'Location'),
+                          enableSuggestions: false,
+                          validator: (value) {
+                            if (value == null ||
+                                value.isEmpty ||
+                                value.trim().length < 4) {
+                              return 'Username should contain at least 4 characters!';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            _enteredUsername = value!;
                           },
                         ),
                         const SizedBox(
@@ -179,28 +173,11 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10))),
                             onPressed: _submit,
-
-                            // Navigator.of(context).push(MaterialPageRoute(
-                            //     builder: (ctx) => const CoolAnimation()));
-
                             child: Container(
                               margin:
                                   const EdgeInsets.symmetric(horizontal: 20),
-                              child: Text(_isLogin ? 'Log In' : 'Sign Up'),
+                              child: Text('Save'),
                             ),
-                          ),
-                        if (!_isUploading)
-                          TextButton(
-                            style: TextButton.styleFrom(
-                                foregroundColor: Colors.green),
-                            onPressed: () {
-                              setState(() {
-                                _isLogin = !_isLogin;
-                              });
-                            },
-                            child: Text(_isLogin
-                                ? 'Create an account'
-                                : 'Already have an account'),
                           ),
                       ],
                     ),
