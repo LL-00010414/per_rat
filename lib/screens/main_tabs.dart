@@ -14,7 +14,7 @@ import 'package:per_rat/screens/discover.dart';
 import 'package:per_rat/screens/home.dart';
 import 'package:per_rat/screens/my_list.dart';
 import 'package:per_rat/screens/notifications_screen.dart';
-import 'package:per_rat/screens/profile_screen.dart';
+import 'package:per_rat/screens/user_profile/profile_screen.dart';
 
 import 'package:per_rat/screens/seasonal.dart';
 import 'package:per_rat/widgets/main_drawer.dart';

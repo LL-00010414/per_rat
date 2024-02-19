@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:per_rat/screens/account_settings_screen.dart';
+import 'package:per_rat/screens/user_profile/account_settings_screen.dart';
 import 'package:per_rat/screens/clubs_screen.dart';
 import 'package:per_rat/screens/friends_screen.dart';
 import 'package:per_rat/screens/messages_screen.dart';

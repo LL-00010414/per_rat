@@ -9,6 +9,7 @@ import 'package:per_rat/data/studio_info.dart';
 import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/screens/anime_details.dart';
 import 'package:http/http.dart' as http;
+import 'package:per_rat/screens/search_results.dart';
 
 import 'package:per_rat/widgets/discover_anime_item.dart';
 
@@ -30,6 +31,8 @@ class DiscoverScreen extends StatefulWidget {
 
 class _DiscoverScreenState extends State<DiscoverScreen> {
   List<Anime> registeredAnime = [];
+  var searchName = '';
+
   @override
   void initState() {
     super.initState();
@@ -103,47 +106,42 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
     );
   }
 
+  // void tapSearch(BuildContext context) {
+  //   Navigator.of(context).pushReplacement(
+  //       MaterialPageRoute(builder: (ctx) => SearchResultsScreen()));
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(100),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 18, right: 18, top: 18),
-              child: TextField(
-                style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.normal,
-                    ),
-                onTap: () {
-                  showSearch(
-
-                      //useRootNavigator: true,
-                      context: context,
-                      delegate: MySearchDelegate());
-                },
-                decoration: InputDecoration(
-                    filled: true,
-                    fillColor: const Color.fromARGB(31, 133, 157, 177),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide.none,
-                    ),
-                    hintText: 'Type anime name',
-                    hintStyle: TextStyle(
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
-                    prefixIcon: const Icon(
-                      Icons.search_rounded,
-                      color: Colors.amber,
-                    ),
-                    prefixIconColor: Colors.amberAccent),
-              ),
-            ),
-          ],
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: SizedBox(
+          height: 40,
+          child: TextField(
+            onChanged: (value) {
+              setState(() {
+                searchName = value;
+              });
+            },
+            onTap: () {
+              // tapSearch(context);
+            },
+            decoration: InputDecoration(
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide.none),
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                filled: true,
+                fillColor: Color.fromARGB(255, 39, 39, 39),
+                hintText: 'Search',
+                hintStyle: TextStyle(color: Colors.grey),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: Colors.grey,
+                )),
+          ),
         ),
       ),
       body: ListView(

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:per_rat/data/demographic_info.dart';
 import 'package:per_rat/data/genre_info.dart';
-import 'package:per_rat/data/movie_info.dart';
+//import 'package:per_rat/data/movie_info.dart';
 import 'package:per_rat/data/status_info.dart';
 import 'package:per_rat/data/studio_info.dart';
 import 'package:per_rat/models/anime.dart';
