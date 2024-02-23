@@ -775,8 +775,8 @@ class _NewAnimeState extends State<NewAnime> {
                     color: Colors.white,
                   ),
                   //initialValue: 'Synopsis',
-                  maxLength: 500,
-                  maxLines: 8,
+                  maxLength: 1000,
+                  maxLines: 15,
                   decoration: InputDecoration(
                     alignLabelWithHint: true,
                     errorMaxLines: 6,
@@ -798,8 +798,8 @@ class _NewAnimeState extends State<NewAnime> {
                     if (value == null ||
                         value.isEmpty ||
                         value.trim().length <= 10 ||
-                        value.trim().length > 500) {
-                      return 'Must be between 10 and 500 characters.';
+                        value.trim().length > 1000) {
+                      return 'Must be between 10 and 1000 characters.';
                     }
                     return null;
                   },

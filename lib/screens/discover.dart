@@ -9,8 +9,6 @@ import 'package:per_rat/data/studio_info.dart';
 import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/screens/anime_details.dart';
 import 'package:http/http.dart' as http;
-import 'package:per_rat/screens/search_results.dart';
-
 import 'package:per_rat/widgets/discover_anime_item.dart';
 
 class DiscoverScreen extends StatefulWidget {

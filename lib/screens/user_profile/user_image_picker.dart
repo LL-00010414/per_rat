@@ -20,6 +20,11 @@ class _UserImagePickerState extends State<UserImagePicker> {
   File? _pickedImageFile1;
   File? _pickedImageFile2;
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
   void _pickImageCamera() async {
     final pickedImage = await ImagePicker().pickImage(
       source: ImageSource.camera,
@@ -58,7 +63,7 @@ class _UserImagePickerState extends State<UserImagePicker> {
       children: [
         CircleAvatar(
           radius: 100,
-          backgroundColor: Colors.grey,
+          backgroundColor: Colors.white,
           foregroundImage: _pickedImageFile1 != null
               ? FileImage(_pickedImageFile1!)
               : (_pickedImageFile2 != null
