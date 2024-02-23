@@ -75,6 +75,14 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(actions: [
+        IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.save,
+              size: 35,
+            ))
+      ]),
       //backgroundColor: Theme.of(context).colorScheme.onSecondary,
       body: Center(
           child: SingleChildScrollView(
