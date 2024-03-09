@@ -2,12 +2,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:per_rat/screens/user_profile/edit_user_profile.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
+    //final _db = FirebaseFirestore.instance;
 
     return Scaffold(
       //backgroundColor: const Color.fromARGB(255, 56, 22, 205),
@@ -83,7 +89,8 @@ class ProfileScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 28, right: 8),
                         child: Text(
-                          'Gender',
+                          'Male',
+                          //userData.data,
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium!

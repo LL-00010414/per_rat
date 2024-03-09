@@ -58,6 +58,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
       setState(() {
         _isUploading = true;
       });
+      //final userCredential = FirebaseAuth.instance.currentUser;
 
       final storageRef = FirebaseStorage.instance
           .ref()
@@ -76,6 +77,9 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
         'location': _enteredLocation ?? '',
         'bio': _enteredBio ?? '',
       });
+
+      Navigator.of(context).pop();
+      // else
     } on FirebaseAuthException catch (error) {
       if (error.code.isNotEmpty) {
         //
@@ -83,7 +87,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(error.message ?? 'Authentication failed!'),
+          content: Text(error.message!),
         ),
       );
       setState(() {
@@ -275,12 +279,12 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                             if (value == null ||
                                 value.isEmpty ||
                                 value.trim().length < 4) {
-                              return 'Username should contain at least 4 characters!';
+                              return 'Location should contain at least 4 characters!';
                             }
                             return null;
                           },
                           onSaved: (value) {
-                            _enteredUsername = value!;
+                            _enteredLocation = value!;
                           },
                         ),
                         const SizedBox(height: 22),
