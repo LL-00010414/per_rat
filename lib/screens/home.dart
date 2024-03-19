@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:per_rat/data/demographic_info.dart';
 import 'package:per_rat/data/genre_info.dart';
@@ -34,10 +36,47 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Anime> _registeredAnime = [];
   var _isLoading = true;
   String? _error;
+  final user = FirebaseAuth.instance.currentUser!;
+
+  void lastOnline() {
+    var yourRef = FirebaseFirestore.instance.collection('users').doc(user.uid);
+    var getDoc = yourRef.get().then((doc) => {
+          if (!doc.exists)
+            {print('No such document')}
+          else
+            {
+              if (doc.get('last_online') != null)
+                {
+                  FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(user.uid)
+                      .update({
+                    'last_online': Timestamp.now(),
+                  })
+                }
+              else
+                {
+                  FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(user.uid)
+                      .set({
+                    'last_online': Timestamp.now(),
+                  })
+                }
+            }
+        });
+  }
+
+  // void updateUserLastOnline() {
+  //   FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+  //     'last_online': Timestamp.now(),
+  //   });
+  // }
 
   @override
   void initState() {
     super.initState();
+    lastOnline();
     _loadAnime();
   }
 

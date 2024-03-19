@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/screens/user_profile/edit_user_profile.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -10,11 +13,23 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final user = FirebaseAuth.instance.currentUser!;
+
+  //timestamp format function
+  String formatTimestamp(Timestamp timestamp) {
+    DateTime dateTime = timestamp.toDate();
+    // if (dateTime.day == DateTime.now().day) {
+    //   'Today';
+    // } else {
+    //   DateFormat('MMM dd, hh:mm a').format(dateTime);
+    // }
+    return DateFormat('MMM dd, hh:mm a').format(dateTime);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser!;
+    final joinedTime = user.metadata.creationTime!;
     //final _db = FirebaseFirestore.instance;
-
     return Scaffold(
       //backgroundColor: const Color.fromARGB(255, 56, 22, 205),
       appBar: AppBar(
@@ -32,174 +47,390 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
       ),
 
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(18),
-        child: Column(
-          //crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Image.network(
-                  'https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male4-1024.png',
-                  height: 300,
-                  width: 200,
-                  fit: BoxFit.contain,
-                ),
-                SizedBox(
-                  height: 300,
-                  width: 150,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.center,
+      body: FutureBuilder<DocumentSnapshot>(
+        future:
+            FirebaseFirestore.instance.collection('users').doc(user.uid).get(),
+        builder:
+            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (snapshot.hasError) {
+            return Center(
+              child: Text('Error: ${snapshot.error}'),
+            );
+          }
+          if (!snapshot.hasData || !snapshot.data!.exists) {
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(18),
+              child: Column(
+                //crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8, right: 8),
-                        child: Text(
-                          'Last Online',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(
-                                color:
-                                    Theme.of(context).colorScheme.onBackground,
-                                fontWeight: FontWeight.normal,
+                      Image.network(
+                        'https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male4-1024.png',
+                        height: 300,
+                        width: 200,
+                        fit: BoxFit.contain,
+                      ),
+                      SizedBox(
+                        height: 300,
+                        width: 150,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8, right: 8),
+                              child: Text(
+                                'Last Online',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onBackground,
+                                      fontWeight: FontWeight.normal,
+                                    ),
                               ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 8),
+                                  child: Text(
+                                    '',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .tertiary,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 28, right: 8),
+                              child: Text(
+                                'Gender',
+                                //userData.data,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onBackground,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: Text(
+                                '',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onBackground,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 28, right: 8),
+                              child: Text(
+                                'Joined',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onBackground,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: Text(
+                                DateFormat('MMM dd, yyyy')
+                                    .format(user.metadata.creationTime!)
+                                    .toString(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onBackground,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 28, right: 8),
+                              child: Text(
+                                'Completed',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onBackground,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: Text(
+                                '0',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onBackground,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Bio',
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'No bio provided',
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
+              ),
+            );
+          }
+
+          var userData = snapshot.data!;
+          Timestamp lastOnline = userData['last_online'];
+          String lastOnlineStatus = formatTimestamp(lastOnline);
+
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(18),
+            child: Column(
+              //crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Image.network(
+                      userData['image_url'],
+                      height: 300,
+                      width: 200,
+                      fit: BoxFit.contain,
+                    ),
+                    SizedBox(
+                      height: 300,
+                      width: 150,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(right: 8),
+                            padding: const EdgeInsets.only(top: 8, right: 8),
                             child: Text(
-                              '2 hours ago',
+                              'Last Online',
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium!
                                   .copyWith(
-                                    color:
-                                        Theme.of(context).colorScheme.tertiary,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onBackground,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8),
+                                child: Text(
+                                  lastOnlineStatus,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .tertiary,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 28, right: 8),
+                            child: Text(
+                              'Gender',
+                              //userData.data,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onBackground,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: Text(
+                              userData['gender'],
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onBackground,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 28, right: 8),
+                            child: Text(
+                              'Joined',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onBackground,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: Text(
+                              DateFormat('MMM dd, yyyy')
+                                  .format(user.metadata.creationTime!)
+                                  .toString(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onBackground,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 28, right: 8),
+                            child: Text(
+                              'Completed',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onBackground,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: Text(
+                              '310',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onBackground,
                                     fontWeight: FontWeight.normal,
                                   ),
                             ),
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 28, right: 8),
-                        child: Text(
-                          'Male',
-                          //userData.data,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(
-                                color:
-                                    Theme.of(context).colorScheme.onBackground,
-                                fontWeight: FontWeight.normal,
-                              ),
-                        ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Bio',
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8),
-                        child: Text(
-                          'Male',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(
-                                color:
-                                    Theme.of(context).colorScheme.onBackground,
-                                fontWeight: FontWeight.normal,
-                              ),
-                        ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  userData['bio']
+                      .toString()
+                      .replaceAll('[', '"')
+                      .replaceAll(']', '"'),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: Theme.of(context).colorScheme.onBackground,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 28, right: 8),
-                        child: Text(
-                          'Joined',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(
-                                color:
-                                    Theme.of(context).colorScheme.onBackground,
-                                fontWeight: FontWeight.normal,
-                              ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8),
-                        child: Text(
-                          'Oct 21, 2020',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(
-                                color:
-                                    Theme.of(context).colorScheme.onBackground,
-                                fontWeight: FontWeight.normal,
-                              ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 28, right: 8),
-                        child: Text(
-                          'Completed',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(
-                                color:
-                                    Theme.of(context).colorScheme.onBackground,
-                                fontWeight: FontWeight.normal,
-                              ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8),
-                        child: Text(
-                          '310',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(
-                                color:
-                                    Theme.of(context).colorScheme.onBackground,
-                                fontWeight: FontWeight.normal,
-                              ),
-                        ),
-                      ),
-                    ],
-                  ),
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
               ],
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              'Bio',
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              '"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam!"',
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
-                  ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

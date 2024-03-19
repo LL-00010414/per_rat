@@ -75,6 +75,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
         'gender': _enteredGender!.title,
         'birthday': _enteredBD,
         'location': _enteredLocation ?? '',
+        'last_online': Timestamp.now(),
         'bio': _enteredBio ?? '',
       });
 
@@ -339,15 +340,23 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                         if (!_isUploading)
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    Color.fromARGB(255, 69, 116, 39),
+                                backgroundColor: Colors.indigo,
+                                // Color.fromARGB(255, 69, 116, 39),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10))),
                             onPressed: _submit,
                             child: Container(
                               margin:
                                   const EdgeInsets.symmetric(horizontal: 20),
-                              child: Text('Save'),
+                              child: Text(
+                                'Save',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  // Theme.of(context)
+                                  //     .colorScheme
+                                  //     .onBackground,
+                                ),
+                              ),
                             ),
                           ),
                       ],

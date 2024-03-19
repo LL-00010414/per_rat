@@ -76,9 +76,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surfaceTint,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.surfaceTint,
+        backgroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -192,7 +192,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Already a cunt?'),
+                  const Text('Already a user?'),
                   const SizedBox(
                     width: 5,
                   ),

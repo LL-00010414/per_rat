@@ -69,9 +69,9 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surfaceTint,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.surfaceTint,
+        backgroundColor: Colors.white,
         // leading: TextButton(
         //   style: const ButtonStyle(
         //     iconColor: MaterialStatePropertyAll(Colors.white),
