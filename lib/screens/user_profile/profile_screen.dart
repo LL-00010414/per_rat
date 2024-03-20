@@ -385,7 +385,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 8),
                             child: Text(
-                              '310',
+                              '0',
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium!

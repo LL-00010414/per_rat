@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:per_rat/firebase_options.dart';
 import 'package:per_rat/screens/auth_page.dart';
+import 'package:per_rat/screens/home.dart';
 
 // final theme = ThemeData(
 //   useMaterial3: true,
@@ -36,6 +38,15 @@ final theme = ThemeData().copyWith(
   ),
 );
 
+final _router = GoRouter(
+  routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const AuthPage(),
+    ),
+  ],
+);
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -51,9 +62,9 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       theme: theme,
-      home: const AuthPage(),
+      routerConfig: _router,
     );
   }
 }
