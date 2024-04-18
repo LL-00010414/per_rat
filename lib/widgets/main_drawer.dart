@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -7,7 +10,7 @@ import 'package:per_rat/screens/friends_screen.dart';
 import 'package:per_rat/screens/messages_screen.dart';
 import 'package:per_rat/screens/notifications_screen.dart';
 
-class MainDrawer extends StatelessWidget {
+class MainDrawer extends StatefulWidget {
   const MainDrawer({
     super.key,
     required this.onSelectScreen,
@@ -19,13 +22,43 @@ class MainDrawer extends StatelessWidget {
   final User user1;
 
   @override
-  Widget build(BuildContext context) {
-    void signUserOut() {
-      GoogleSignIn().signOut();
-      FirebaseAuth.instance.signOut();
-      Navigator.pop(context);
-    }
+  State<MainDrawer> createState() => _MainDrawerState();
+}
 
+class _MainDrawerState extends State<MainDrawer> {
+  var data;
+
+  void signUserOut() {
+    GoogleSignIn().signOut();
+    FirebaseAuth.instance.signOut();
+    Navigator.pop(context);
+  }
+
+  // void fetchData() {
+  //   FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc(widget.user1.uid)
+  //       .get()
+  //       .then((DocumentSnapshot documentSnapshot) {
+  //     if (documentSnapshot.exists) {
+  //       data = documentSnapshot.data;
+  //       print(data);
+  //     } else {
+  //       print('Document doesnt exist');
+  //     }
+  //   }).catchError((e) {
+  //     print('Error: $e');
+  //   });
+  // }
+
+  @override
+  void initState() {
+    //fetchData();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Drawer(
       backgroundColor: const Color.fromARGB(255, 32, 28, 6),
       child: Column(
@@ -40,25 +73,70 @@ class MainDrawer extends StatelessWidget {
             ])),
             child: GestureDetector(
               onTap: () {
-                onSelectScreen();
+                widget.onSelectScreen();
               },
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.person_rounded,
-                    size: 50,
-                    color: Theme.of(context).colorScheme.onBackground,
-                  ),
-                  const SizedBox(width: 15),
-                  Text(
-                    user1.email!.substring(0, user1.email!.indexOf('@')),
-                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                          color:
-                              Theme.of(context).colorScheme.onPrimaryContainer,
+              child: FutureBuilder<DocumentSnapshot>(
+                  future: FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(widget.user1.uid)
+                      .get(),
+                  builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text('Error: ${snapshot.error}'),
+                      );
+                    }
+                    if (!snapshot.hasData || !snapshot.data!.exists) {
+                      return Row(
+                        children: [
+                          Icon(
+                            Icons.person_rounded,
+                            size: 50,
+                            color: Theme.of(context).colorScheme.onBackground,
+                          ),
+                          const SizedBox(width: 15),
+                          Text(
+                            widget.user1.email!
+                                .substring(0, widget.user1.email!.indexOf('@')),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimaryContainer,
+                                ),
+                          ),
+                        ],
+                      );
+                    }
+
+                    var userData = snapshot.data!;
+
+                    return Row(
+                      children: [
+                        Image.network(
+                          userData['image_url'],
                         ),
-                  ),
-                ],
-              ),
+                        const SizedBox(width: 15),
+                        Text(
+                          widget.user1.email!
+                              .substring(0, widget.user1.email!.indexOf('@')),
+                          style:
+                              Theme.of(context).textTheme.titleLarge!.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryContainer,
+                                  ),
+                        ),
+                      ],
+                    );
+                  }),
             ),
           ),
           ListTile(

@@ -290,6 +290,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(right: 8),
                                 child: Text(
+                                  //'${DateTime.parse(lastOnlineStatus).isAtSameMomentAs(DateTime.now()) ? 'today' : lastOnlineStatus}',
                                   lastOnlineStatus,
                                   style: Theme.of(context)
                                       .textTheme

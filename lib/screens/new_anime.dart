@@ -717,10 +717,12 @@ class _NewAnimeState extends State<NewAnime> {
                     ),
                     validator: (value) {
                       if (value == null ||
-                          value.isEmpty ||
-                          value.trim().length <= 5 ||
-                          value.trim().length > 280 ||
-                          !value.endsWith('png') && !value.endsWith('jpg')) {
+                              value.isEmpty ||
+                              value.trim().length <= 5 ||
+                              value.trim().length > 280
+                          // ||
+                          // !value.endsWith('png') && !value.endsWith('jpg')
+                          ) {
                         return 'Must provide a valid URL';
                       }
                       return null;
@@ -776,7 +778,7 @@ class _NewAnimeState extends State<NewAnime> {
                   ),
                   //initialValue: 'Synopsis',
                   maxLength: 1000,
-                  maxLines: 15,
+                  maxLines: null,
                   decoration: InputDecoration(
                     alignLabelWithHint: true,
                     errorMaxLines: 6,
