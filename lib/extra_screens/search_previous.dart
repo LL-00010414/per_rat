@@ -39,7 +39,7 @@ class _SearchPreviousState extends State<SearchPrevious> {
                     ),
                     hintText: 'Type anime name',
                     hintStyle: TextStyle(
-                      color: Theme.of(context).colorScheme.onBackground,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                     prefixIcon: const Icon(
                       Icons.search_rounded,

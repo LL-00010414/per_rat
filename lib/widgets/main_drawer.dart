@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -97,7 +95,7 @@ class _MainDrawerState extends State<MainDrawer> {
                           Icon(
                             Icons.person_rounded,
                             size: 50,
-                            color: Theme.of(context).colorScheme.onBackground,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                           const SizedBox(width: 15),
                           Text(
@@ -143,12 +141,12 @@ class _MainDrawerState extends State<MainDrawer> {
             leading: Icon(
               Icons.people_outline_rounded,
               size: 24,
-              color: Theme.of(context).colorScheme.onBackground,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
             title: Text(
               'Friends',
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
             ),
             onTap: () {
@@ -161,12 +159,12 @@ class _MainDrawerState extends State<MainDrawer> {
             leading: Icon(
               Icons.nature_people,
               size: 24,
-              color: Theme.of(context).colorScheme.onBackground,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
             title: Text(
               'Clubs',
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
             ),
             onTap: () {
@@ -179,12 +177,12 @@ class _MainDrawerState extends State<MainDrawer> {
             leading: Icon(
               Icons.message,
               size: 24,
-              color: Theme.of(context).colorScheme.onBackground,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
             title: Text(
               'Messages',
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
             ),
             onTap: () {
@@ -197,12 +195,12 @@ class _MainDrawerState extends State<MainDrawer> {
             leading: Icon(
               Icons.notifications,
               size: 24,
-              color: Theme.of(context).colorScheme.onBackground,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
             title: Text(
               'Notifications',
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
             ),
             onTap: () {
@@ -215,12 +213,12 @@ class _MainDrawerState extends State<MainDrawer> {
             leading: Icon(
               Icons.admin_panel_settings_outlined,
               size: 24,
-              color: Theme.of(context).colorScheme.onBackground,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
             title: Text(
               'Account Settings',
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
             ),
             onTap: () {
@@ -239,12 +237,12 @@ class _MainDrawerState extends State<MainDrawer> {
                   leading: Icon(
                     Icons.logout,
                     size: 24,
-                    color: Theme.of(context).colorScheme.onBackground,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                   title: Text(
                     'Logout',
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          color: Theme.of(context).colorScheme.onBackground,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                   ),
                   onTap: signUserOut,

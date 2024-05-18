@@ -156,7 +156,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 child: Text(
                   'Ongoing',
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.onBackground,
+                        color: Theme.of(context).colorScheme.onSurface,
                         fontWeight: FontWeight.normal,
                       ),
                 ),
@@ -188,7 +188,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 child: Text(
                   'Trending',
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.onBackground,
+                        color: Theme.of(context).colorScheme.onSurface,
                         fontWeight: FontWeight.normal,
                       ),
                 ),
@@ -220,7 +220,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 child: Text(
                   'Upcoming',
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.onBackground,
+                        color: Theme.of(context).colorScheme.onSurface,
                         fontWeight: FontWeight.normal,
                       ),
                 ),

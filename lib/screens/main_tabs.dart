@@ -192,7 +192,7 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
         unselectedItemColor: Colors.white,
         type: BottomNavigationBarType.fixed,
         fixedColor: Colors.amber,
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         onTap: _selectPage,
         currentIndex: _selectedPageIndex,
         items: const [

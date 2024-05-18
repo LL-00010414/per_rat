@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:per_rat/firebase_options.dart';
 import 'package:per_rat/screens/auth_page.dart';
-import 'package:per_rat/screens/home.dart';
 
 // final theme = ThemeData(
 //   useMaterial3: true,
@@ -19,11 +18,11 @@ import 'package:per_rat/screens/home.dart';
 final colorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
   seedColor: const Color.fromARGB(255, 102, 6, 247),
-  background: const Color.fromARGB(255, 56, 49, 66),
+  surface: const Color.fromARGB(255, 56, 49, 66),
 );
 
 final theme = ThemeData().copyWith(
-  scaffoldBackgroundColor: colorScheme.background,
+  scaffoldBackgroundColor: colorScheme.surface,
   colorScheme: colorScheme,
   textTheme: GoogleFonts.robotoSerifTextTheme().copyWith(
     titleSmall: GoogleFonts.robotoSerif(

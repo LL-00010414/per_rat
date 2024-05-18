@@ -178,8 +178,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                               .textTheme
                               .titleMedium!
                               .copyWith(
-                                color:
-                                    Theme.of(context).colorScheme.onBackground,
+                                color: Theme.of(context).colorScheme.onSurface,
                                 fontWeight: FontWeight.normal,
                               ),
                         ),
@@ -202,9 +201,8 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                                   .textTheme
                                   .titleMedium!
                                   .copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onBackground,
+                                    color:
+                                        Theme.of(context).colorScheme.onSurface,
                                     fontWeight: FontWeight.normal,
                                   ),
                             ),
@@ -219,8 +217,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                               .textTheme
                               .titleMedium!
                               .copyWith(
-                                color:
-                                    Theme.of(context).colorScheme.onBackground,
+                                color: Theme.of(context).colorScheme.onSurface,
                                 fontWeight: FontWeight.normal,
                               ),
                         ),
@@ -243,9 +240,8 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                                   .textTheme
                                   .titleMedium!
                                   .copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onBackground,
+                                    color:
+                                        Theme.of(context).colorScheme.onSurface,
                                     fontWeight: FontWeight.normal,
                                   ),
                             ),
@@ -260,8 +256,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                               .textTheme
                               .titleMedium!
                               .copyWith(
-                                color:
-                                    Theme.of(context).colorScheme.onBackground,
+                                color: Theme.of(context).colorScheme.onSurface,
                                 fontWeight: FontWeight.normal,
                               ),
                         ),
@@ -274,8 +269,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                               .textTheme
                               .titleMedium!
                               .copyWith(
-                                color:
-                                    Theme.of(context).colorScheme.onBackground,
+                                color: Theme.of(context).colorScheme.onSurface,
                                 fontWeight: FontWeight.normal,
                               ),
                         ),
@@ -288,8 +282,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                               .textTheme
                               .titleMedium!
                               .copyWith(
-                                color:
-                                    Theme.of(context).colorScheme.onBackground,
+                                color: Theme.of(context).colorScheme.onSurface,
                                 fontWeight: FontWeight.normal,
                               ),
                         ),
@@ -302,8 +295,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                               .textTheme
                               .titleMedium!
                               .copyWith(
-                                color:
-                                    Theme.of(context).colorScheme.onBackground,
+                                color: Theme.of(context).colorScheme.onSurface,
                                 fontWeight: FontWeight.normal,
                               ),
                         ),
@@ -384,7 +376,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                   .replaceAll('[', '"')
                   .replaceAll(']', '"'),
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
             ),
             const SizedBox(

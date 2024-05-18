@@ -354,7 +354,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                                   color: Colors.white,
                                   // Theme.of(context)
                                   //     .colorScheme
-                                  //     .onBackground,
+                                  //     .onSurface,
                                 ),
                               ),
                             ),
