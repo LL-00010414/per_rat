@@ -178,73 +178,76 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // OutlinedButton(
-                  //   style: OutlinedButton.styleFrom(
-                  //       foregroundColor: Colors.white,
-                  //       backgroundColor: cCompleted,
-                  //       //padding: const EdgeInsets.all(16.0),
-                  //       textStyle: const TextStyle(fontSize: buttonFontSize),
-                  //       shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(5),
-                  //       )),
-                  //   onPressed: () {
-                  //     selectStatus(1);
-                  //   },
-                  //   child: const Text('Completed'),
-                  // ),
-                  StatusButton(
-                      statusColor: cCompleted,
-                      status: 'Completed',
-                      onPressed: () {
-                        setState(() {
-                          selectStatus(1);
-                        });
-                      }),
-                  StatusButton(
-                      statusColor: cWatching,
-                      status: 'Watching',
-                      onPressed: () {
-                        setState(() {
-                          selectStatus(2);
-                        });
-                      }),
-                  StatusButton(
-                      statusColor: cPTW,
-                      status: 'Plan to Watch',
-                      onPressed: () {
-                        setState(() {
-                          selectStatus(3);
-                        });
-                      }),
-                  // OutlinedButton(
-                  //   style: OutlinedButton.styleFrom(
-                  //       foregroundColor: Colors.white,
-                  //       backgroundColor: cWatching,
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: cCompleted,
+                        //padding: const EdgeInsets.all(16.0),
+                        textStyle: const TextStyle(fontSize: buttonFontSize),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        )),
+                    onPressed: () {
+                      selectStatus(1);
+                    },
+                    child: const Text('Completed'),
+                  ),
 
-                  //       //padding: const EdgeInsets.all(16.0),
-                  //       textStyle: const TextStyle(fontSize: buttonFontSize),
-                  //       shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(5),
-                  //       )),
-                  //   onPressed: () {
-                  //     selectStatus(2);
-                  //   },
-                  //   child: const Text('Watching'),
-                  // ),
-                  // OutlinedButton(
-                  //   style: OutlinedButton.styleFrom(
-                  //       foregroundColor: Colors.white,
-                  //       backgroundColor: cPTW,
-                  //       //padding: const EdgeInsets.all(16.0),
-                  //       textStyle: const TextStyle(fontSize: buttonFontSize),
-                  //       shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(5),
-                  //       )),
-                  //   onPressed: () {
-                  //     selectStatus(3);
-                  //   },
-                  //   child: const Text('Plan to Watch'),
-                  // ),
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: cWatching,
+
+                        //padding: const EdgeInsets.all(16.0),
+                        textStyle: const TextStyle(fontSize: buttonFontSize),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        )),
+                    onPressed: () {
+                      selectStatus(2);
+                    },
+                    child: const Text('Watching'),
+                  ),
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: cPTW,
+                        //padding: const EdgeInsets.all(16.0),
+                        textStyle: const TextStyle(fontSize: buttonFontSize),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        )),
+                    onPressed: () {
+                      selectStatus(3);
+                    },
+                    child: const Text('Plan to Watch'),
+                  ),
+
+                  //failed new responsive buttons
+                  // StatusButton(
+                  //     statusColor: cCompleted,
+                  //     status: 'Completed',
+                  //     onPressed: () {
+                  //       setState(() {
+                  //         selectStatus(1);
+                  //       });
+                  //     }),
+                  // StatusButton(
+                  //     statusColor: cWatching,
+                  //     status: 'Watching',
+                  //     onPressed: () {
+                  //       setState(() {
+                  //         selectStatus(2);
+                  //       });
+                  //     }),
+                  // StatusButton(
+                  //     statusColor: cPTW,
+                  //     status: 'Plan to Watch',
+                  //     onPressed: () {
+                  //       setState(() {
+                  //         selectStatus(3);
+                  //       });
+                  //     }),
                 ],
               ),
               Row(
