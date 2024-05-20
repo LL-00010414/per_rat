@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:per_rat/components/status_button.dart';
 import 'package:per_rat/models/anime.dart';
@@ -15,11 +17,69 @@ class EditScoreScreen extends StatefulWidget {
 }
 
 class _EditScoreScreenState extends State<EditScoreScreen> {
+  final _formkey = GlobalKey<FormState>();
+  final user = FirebaseAuth.instance.currentUser!;
+
   Color? cCompleted;
   Color? cWatching;
   Color? cPTW;
   Color? cOnHold;
   Color? cDropped;
+
+  //user score variables
+  String? _selectedStatus = '';
+  String? _selectedProgress = '';
+  String? _selectedScore = '';
+
+  //color
+  Color? prColor;
+
+  void _submit() async {
+    //final isValid = _formkey.currentState!.validate();
+
+    // if (!isValid ||
+    //     _selectedStatus == null ||
+    //     _selectedProgress == null ||
+    //     _selectedScore == null) {
+    //   return;
+    // }
+
+    //_formkey.currentState!.save();
+
+    try {
+      DocumentReference userDocRef =
+          FirebaseFirestore.instance.collection('users').doc(user.uid);
+      CollectionReference ratingCollectionRef =
+          userDocRef.collection('ratings');
+
+      //
+      await ratingCollectionRef.doc(widget.anime.title).set({
+        'status': _selectedStatus,
+        'progress': _selectedProgress,
+        'score': _selectedScore,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('The movie rating has been edited!'),
+        ),
+      );
+
+      Navigator.of(context).pop();
+    } on FirebaseAuthException catch (error) {
+      if (error.code.isNotEmpty) {
+        //
+      }
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(error.message!),
+        ),
+      );
+    }
+  }
 
   void selectStatus(int statusNumber) {
     setState(() {
@@ -30,21 +90,39 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
       cDropped = null;
       if (statusNumber == 1) {
         cCompleted = Colors.blue;
+        _selectedStatus = 'Completed';
       } else if (statusNumber == 2) {
         cWatching = Colors.green;
+        _selectedStatus = 'Watching';
       } else if (statusNumber == 3) {
         cPTW = Colors.grey;
+        _selectedStatus = 'Plan to Watch';
       } else if (statusNumber == 4) {
         cOnHold = Colors.yellow;
+        _selectedStatus = 'On Hold';
       } else if (statusNumber == 5) {
         cDropped = Colors.red;
+        _selectedStatus = 'Dropped';
       }
+    });
+  }
+
+  void selectProgress(int progress) {
+    setState(() {
+      _selectedProgress = progress.toString();
+    });
+  }
+
+  void selectScore(int score) {
+    setState(() {
+      _selectedScore = score.toString();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     const double buttonFontSize = 14;
+
     Widget content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -268,8 +346,14 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
                         // }
 
                         return GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            selectProgress(number);
+                            // setState(() {
+                            //   prColor = Colors.orange;
+                            // });
+                          },
                           child: Container(
+                            //color: prColor,
                             width:
                                 50, // Adjust the width of each item as needed
                             height:
@@ -278,6 +362,9 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.blue),
                               borderRadius: BorderRadius.circular(10),
+                              color: _selectedProgress == number.toString()
+                                  ? Colors.blue
+                                  : null,
                             ),
                             child: Center(
                               child: Text(
@@ -314,7 +401,9 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
                         int number =
                             index + 1; // Assuming you want to start from 1
                         return GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            selectScore(number);
+                          },
                           child: Container(
                             width:
                                 50, // Adjust the width of each item as needed
@@ -324,6 +413,9 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.blue),
                               borderRadius: BorderRadius.circular(10),
+                              color: _selectedScore == number.toString()
+                                  ? Colors.blue
+                                  : null,
                             ),
                             child: Center(
                               child: Text(
@@ -357,7 +449,7 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5),
                                 )),
-                            onPressed: () {},
+                            onPressed: _submit,
                             child: const Padding(
                               padding: EdgeInsets.all(14.0),
                               child: Text('Submit'),
@@ -392,7 +484,7 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: _submit,
             icon: const Icon(
               Icons.save_outlined,
               size: 35,

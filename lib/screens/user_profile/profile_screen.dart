@@ -28,7 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final joinedTime = user.metadata.creationTime!;
+    //final joinedTime = user.metadata.creationTime!;
     //final _db = FirebaseFirestore.instance;
     return Scaffold(
       //backgroundColor: const Color.fromARGB(255, 56, 22, 205),
