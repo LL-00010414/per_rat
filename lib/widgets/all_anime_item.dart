@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:per_rat/models/anime.dart';
+import 'package:per_rat/models/show_rating.dart';
 
 class AllAnimeItem extends StatelessWidget {
   const AllAnimeItem({
     super.key,
-    required this.anime,
-    required this.onSelectAnime,
-    required this.onEditScore,
+    required this.showRating,
+    required this.onSelectRating,
+    required this.onEditRating,
   });
 
-  final Anime anime;
-  final void Function(Anime anime) onSelectAnime;
-  final void Function(Anime anime) onEditScore;
+  final ShowRating showRating;
+
+  final void Function(ShowRating showRating) onSelectRating;
+  final void Function(ShowRating showRating) onEditRating;
 
   @override
   Widget build(BuildContext context) {
@@ -21,19 +23,17 @@ class AllAnimeItem extends StatelessWidget {
         tileColor: const Color.fromARGB(255, 79, 53, 45),
         contentPadding: const EdgeInsets.all(5),
         title: Text(
-          anime.title,
+          showRating.showName,
           style: const TextStyle(fontSize: 18),
         ),
-        leading: Image.network(
-          anime.imageUrl,
-        ),
+        leading: Text(showRating.score),
         // Tab(
         //   icon: Image.network(anime.imageUrl),
         //   height: 572,
         // ),
         visualDensity: VisualDensity.comfortable,
         subtitle: Text(
-          anime.genre.title,
+          showRating.progress,
           style: const TextStyle(color: Color.fromARGB(248, 214, 99, 33)),
         ),
         isThreeLine: true,
@@ -44,11 +44,11 @@ class AllAnimeItem extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              onEditScore(anime);
+              onEditRating(showRating);
             },
             icon: const Icon(Icons.edit_note_sharp)),
         onTap: () {
-          onSelectAnime(anime);
+          onSelectRating(showRating);
         },
       ),
     );

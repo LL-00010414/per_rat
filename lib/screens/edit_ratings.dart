@@ -3,20 +3,21 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:per_rat/components/status_button.dart';
 import 'package:per_rat/models/anime.dart';
+import 'package:per_rat/models/show_rating.dart';
 
-class EditScoreScreen extends StatefulWidget {
-  const EditScoreScreen({
+class EditRatingsScreen extends StatefulWidget {
+  const EditRatingsScreen({
     super.key,
-    required this.anime,
+    required this.showRating,
   });
 
-  final Anime anime;
+  final ShowRating showRating;
 
   @override
-  State<EditScoreScreen> createState() => _EditScoreScreenState();
+  State<EditRatingsScreen> createState() => _EditRatingsScreenState();
 }
 
-class _EditScoreScreenState extends State<EditScoreScreen> {
+class _EditRatingsScreenState extends State<EditRatingsScreen> {
   //final _formkey = GlobalKey<FormState>();
   final user = FirebaseAuth.instance.currentUser!;
 
@@ -58,12 +59,12 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
           .get();
 
       final bool showExists = showDoc.docs
-          .where((show) => show.id.contains(widget.anime.title))
+          .where((show) => show.id.contains(widget.showRating.showName))
           .isNotEmpty;
 
       if (showExists) {
         //
-        await ratingCollectionRef.doc(widget.anime.title).set({
+        await ratingCollectionRef.doc(widget.showRating.showName).set({
           'status': _selectedStatus,
           'progress': _selectedProgress,
           'score': _selectedScore,
@@ -80,7 +81,7 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
         Navigator.of(context).pop();
       }
       if (!showExists) {
-        await ratingCollectionRef.doc(widget.anime.title).set({
+        await ratingCollectionRef.doc(widget.showRating.showName).set({
           'status': _selectedStatus,
           'progress': _selectedProgress,
           'score': _selectedScore,
@@ -185,7 +186,7 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget.anime.title,
+                widget.showRating.showName,
                 style: const TextStyle(
                   color: Colors.amber,
                   fontSize: 18,
@@ -208,11 +209,11 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
                       ),
                     ),
                     Text(
-                      widget.anime.status.title,
+                      widget.showRating.status,
                       style: TextStyle(
-                        color: (widget.anime.status.title.contains('Upcoming')
+                        color: (widget.showRating.status.contains('Upcoming')
                             ? Colors.blue
-                            : widget.anime.status.title.contains('Ongoing')
+                            : widget.showRating.status.contains('Ongoing')
                                 ? Colors.green
                                 : Colors.purple),
                         fontSize: 16,
@@ -367,9 +368,9 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
                   height: 80,
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: (widget.anime.totalEpisodes > 0)
-                          ? widget.anime.totalEpisodes + 1
-                          : widget.anime.totalEpisodes + 2,
+                      itemCount: (int.parse(widget.showRating.progress) > 0)
+                          ? int.parse(widget.showRating.progress) + 1
+                          : int.parse(widget.showRating.progress) + 2,
                       itemBuilder: (context, index) {
                         int number = index;
                         // if (anime.totalEpisodes == 0) {
@@ -530,7 +531,7 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.anime.title),
+        title: Text(widget.showRating.showName),
         centerTitle: true,
         actions: [
           IconButton(
