@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:per_rat/components/status_button.dart';
 import 'package:per_rat/models/anime.dart';
 
 class EditScoreScreen extends StatefulWidget {
@@ -17,8 +16,8 @@ class EditScoreScreen extends StatefulWidget {
 }
 
 class _EditScoreScreenState extends State<EditScoreScreen> {
-  //final _formkey = GlobalKey<FormState>();
   final user = FirebaseAuth.instance.currentUser!;
+  late ScrollController _scrollController;
 
   Color? cCompleted;
   Color? cWatching;
@@ -27,25 +26,23 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
   Color? cDropped;
 
   //user score variables
-  String? _selectedStatus = '';
-  String? _selectedProgress = '';
+  String? _selectedStatus = 'Watching';
+  String? _selectedProgress = '0';
   String? _selectedScore = '';
 
-  //color
-  Color? prColor;
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   void _submit() async {
-    //final isValid = _formkey.currentState!.validate();
-
-    // if (!isValid ||
-    //     _selectedStatus == null ||
-    //     _selectedProgress == null ||
-    //     _selectedScore == null) {
-    //   return;
-    // }
-
-    //_formkey.currentState!.save();
-
     try {
       DocumentReference userDocRef =
           FirebaseFirestore.instance.collection('users').doc(user.uid);
@@ -97,23 +94,6 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
         Navigator.of(context).pop();
       }
 
-      //
-
-      //
-      // await ratingCollectionRef.doc(widget.anime.title).set({
-      //   'status': _selectedStatus,
-      //   'progress': _selectedProgress,
-      //   'score': _selectedScore,
-      //   'timestamp': FieldValue.serverTimestamp(),
-      // });
-
-      // ScaffoldMessenger.of(context).clearSnackBars();
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     content: Text('The movie rating has been added!'),
-      //   ),
-      // );
-
       // Navigator.of(context).pop();
     } on FirebaseAuthException catch (error) {
       if (error.code.isNotEmpty) {
@@ -138,12 +118,24 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
       if (statusNumber == 1) {
         cCompleted = Colors.blue;
         _selectedStatus = 'Completed';
+        _selectedProgress = widget.anime.totalEpisodes.toString();
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: Duration(seconds: 1),
+          curve: Curves.easeInOut,
+        );
       } else if (statusNumber == 2) {
         cWatching = Colors.green;
         _selectedStatus = 'Watching';
       } else if (statusNumber == 3) {
         cPTW = Colors.grey;
         _selectedStatus = 'Plan to Watch';
+        _selectedProgress = '0';
+        _scrollController.animateTo(
+          0.0,
+          duration: Duration(seconds: 1),
+          curve: Curves.easeInOut,
+        );
       } else if (statusNumber == 4) {
         cOnHold = Colors.yellow;
         _selectedStatus = 'On Hold';
@@ -366,34 +358,13 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
                 child: SizedBox(
                   height: 80,
                   child: ListView.builder(
+                      controller: _scrollController,
                       scrollDirection: Axis.horizontal,
                       itemCount: (widget.anime.totalEpisodes > 0)
                           ? widget.anime.totalEpisodes + 1
                           : widget.anime.totalEpisodes + 2,
                       itemBuilder: (context, index) {
                         int number = index;
-                        // if (anime.totalEpisodes == 0) {
-                        //   return Container(
-                        //     width:
-                        //         50, // Adjust the width of each item as needed
-                        //     height:
-                        //         50, // Adjust the height of each item as needed
-                        //     margin: const EdgeInsets.all(8),
-                        //     decoration: BoxDecoration(
-                        //       border: Border.all(color: Colors.blue),
-                        //       borderRadius: BorderRadius.circular(10),
-                        //     ),
-                        //     child: const Center(
-                        //       child: Text(
-                        //         '0',
-                        //         style: TextStyle(
-                        //           fontSize: 18,
-                        //           color: Colors.white,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   );
-                        // }
 
                         return GestureDetector(
                           onTap: () {

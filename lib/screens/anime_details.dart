@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:per_rat/data/demographic_info.dart';
 import 'package:per_rat/data/genre_info.dart';
@@ -29,6 +31,10 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
   late YoutubePlayerController _controller;
   List<Anime> registeredAnime = [];
 
+  //changing button type
+  final user = FirebaseAuth.instance.currentUser!;
+  bool movieExists = false;
+
   @override
   void initState() {
     //final animeIndex = dummyAnime.indexOf(widget.anime);
@@ -47,6 +53,24 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
     );
     super.initState();
     loadAnime();
+    checkIfMovieExists();
+  }
+
+  Future<void> checkIfMovieExists() async {
+    try {
+      DocumentReference userDocRef =
+          FirebaseFirestore.instance.collection('users').doc(user.uid);
+      CollectionReference ratingCollectionRef =
+          userDocRef.collection('ratings');
+
+      DocumentSnapshot docSnapshot =
+          await ratingCollectionRef.doc(widget.anime.title).get();
+      setState(() {
+        movieExists = docSnapshot.exists;
+      });
+    } catch (error) {
+      print("Error checking movie existence: $error");
+    }
   }
 
   void loadAnime() async {
@@ -146,7 +170,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
           backgroundColor: const Color.fromARGB(255, 12, 88, 15),
           iconSize: 40,
         ),
-        icon: Icon(Icons.add),
+        icon: Icon(movieExists ? Icons.edit : Icons.add),
         color: Colors.white,
       ),
       body: SingleChildScrollView(

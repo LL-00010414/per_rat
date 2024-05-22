@@ -15,19 +15,7 @@ class ShowRating {
     required this.timestamp,
   });
 
-  // factory ShowRating.fromFirestore(
-  //   DocumentSnapshot<Map<String, dynamic>> snapshot,
-  //   SnapshotOptions? options,
-  // ) {
-  //   final data = snapshot.data();
-  //   return ShowRating(
-  //     showName: snapshot.id,
-  //     status: data!['status'] ?? '',
-  //     progress: data['progress'] ?? '',
-  //     score: data['score'] ?? '',
-  //     timestamp: data['timestamp'] ?? Timestamp.now(),
-  //   );
-  // }
+
 
   factory ShowRating.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data() as Map<String, dynamic>;
