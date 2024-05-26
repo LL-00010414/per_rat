@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:per_rat/models/anime.dart';
+
 import 'package:per_rat/models/show_rating.dart';
 
 class AllAnimeItem extends StatelessWidget {

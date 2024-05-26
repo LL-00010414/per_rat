@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+
 import 'package:per_rat/models/show_rating.dart';
 
 class ShowDetailsScreen extends StatelessWidget {
-  final ShowRating showRating;
+  const ShowDetailsScreen({
+    super.key,
+    required this.showRating,
+  });
 
-  const ShowDetailsScreen({Key? key, required this.showRating})
-      : super(key: key);
+  final ShowRating showRating;
 
   @override
   Widget build(BuildContext context) {

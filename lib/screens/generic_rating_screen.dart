@@ -1,27 +1,25 @@
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 import 'package:per_rat/models/show_rating.dart';
-
 import 'package:per_rat/screens/edit_ratings.dart';
-
 import 'package:per_rat/screens/show_rating_details.dart';
 import 'package:per_rat/widgets/all_anime_item.dart';
 
-class AllAnimeScreen extends StatefulWidget {
-  const AllAnimeScreen({
+class GenericAnimeScreen extends StatefulWidget {
+  const GenericAnimeScreen({
     super.key,
-    //required this.myAnimeList,
+    required this.filterStatus,
   });
 
-  //final List<Anime> myAnimeList;
+  final String filterStatus;
 
   @override
-  State<AllAnimeScreen> createState() => _AllAnimeScreenState();
+  State<GenericAnimeScreen> createState() => _GenericAnimeScreenState();
 }
 
-class _AllAnimeScreenState extends State<AllAnimeScreen> {
+class _GenericAnimeScreenState extends State<GenericAnimeScreen> {
   final user = FirebaseAuth.instance.currentUser!;
   List<ShowRating> _showratings = [];
 
@@ -30,6 +28,7 @@ class _AllAnimeScreenState extends State<AllAnimeScreen> {
         .collection('users')
         .doc(user.uid)
         .collection('ratings')
+        .where('status', isEqualTo: widget.filterStatus)
         .orderBy('timestamp', descending: true)
         .get();
 
@@ -61,9 +60,7 @@ class _AllAnimeScreenState extends State<AllAnimeScreen> {
 
     void editRating(BuildContext context, ShowRating showRating) {
       Navigator.of(context).push(MaterialPageRoute(
-          builder: (ctx) => EditRatingsScreen(
-                showRating: showRating,
-              )));
+          builder: (ctx) => EditRatingsScreen(showRating: showRating)));
     }
 
     Widget content = ListView.builder(
@@ -85,6 +82,7 @@ class _AllAnimeScreenState extends State<AllAnimeScreen> {
         .collection('users')
         .doc(user.uid)
         .collection('ratings')
+        .where('status', isEqualTo: widget.filterStatus)
         .orderBy('timestamp', descending: true)
         .snapshots();
 

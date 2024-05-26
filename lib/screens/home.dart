@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void lastOnline() {
     var yourRef = FirebaseFirestore.instance.collection('users').doc(user.uid);
-    var getDoc = yourRef.get().then((doc) => {
+    yourRef.get().then((doc) => {
           if (!doc.exists)
             {print('No such document')}
           else

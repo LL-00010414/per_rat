@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:per_rat/components/status_button.dart';
-import 'package:per_rat/models/anime.dart';
+
 import 'package:per_rat/models/show_rating.dart';
 
 class EditRatingsScreen extends StatefulWidget {
