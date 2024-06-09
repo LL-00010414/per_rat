@@ -1,19 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-
-import 'package:per_rat/data/demographic_info.dart';
-import 'package:per_rat/data/genre_info.dart';
-
-import 'package:per_rat/data/status_info.dart';
-import 'package:per_rat/data/studio_info.dart';
+import 'package:per_rat/data/firestore_data.dart';
 import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/screens/anime_details.dart';
 import 'package:per_rat/screens/dated_anime_screen.dart';
 import 'package:per_rat/screens/edit_score_screen.dart';
 import 'package:per_rat/widgets/archive_anime_item.dart';
 import 'package:per_rat/widgets/seasonal_anime_item.dart';
-import 'package:http/http.dart' as http;
 
 class SeasonalScreen extends StatefulWidget {
   const SeasonalScreen({
@@ -37,71 +29,13 @@ class _SeasonalScreenState extends State<SeasonalScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
-    _loadAnime();
+    _fetchAnime();
   }
 
-  void _loadAnime() async {
-    final url = Uri.https(
-        'perratauth-default-rtdb.asia-southeast1.firebasedatabase.app',
-        'movie-list.json');
-    final response = await http.get(url);
-
-    if (response.statusCode >= 400) {
-      setState(() {
-        _error = 'Failed to load data. Please try again later!';
-      });
-    }
-
-    final Map<String, dynamic> listAnime = json.decode(response.body);
-    final List<Anime> loadedAnime = [];
-
-    for (final show in listAnime.entries) {
-      final genre = genres.entries
-          .firstWhere((genItem) => genItem.value.title == show.value['genre'])
-          .value;
-      final demographic = demographics.entries
-          .firstWhere(
-              (demItem) => demItem.value.title == show.value['demographics'])
-          .value;
-      final studio = studios.entries
-          .firstWhere(
-              (studItem) => studItem.value.title == show.value['studio'])
-          .value;
-      final status = statuses.entries
-          .firstWhere(
-              (statItem) => statItem.value.title == show.value['status'])
-          .value;
-      final DateTime startDate = formatter.parse(show.value['startDate']);
-      final DateTime endDate = formatter.parse(show.value['startDate']);
-      final String description = show.value['synopsis'].toString();
-      final List<String> synopsis = description.split(',');
-
-      //the logic part
-      loadedAnime.add(
-        Anime(
-          id: show.key,
-          title: show.value['title'],
-          imageUrl: show.value['imageUrl'],
-          synopsis: synopsis,
-          totalEpisodes: show.value['totalEpisodes'],
-          score: show.value['score'].toString(),
-          rank: show.value['rank'].toString(),
-          popularity: show.value['popularity'].toString(),
-          favorites: show.value['favorites'],
-          trailerUrl: show.value['trailerUrl'],
-          genre: genre,
-          demographic: demographic,
-          studio: studio,
-          status: status,
-          startDate: startDate,
-          endDate: endDate,
-        ),
-      );
-      //final animeSeasonIn = formatterMY.format(startDate);
-    }
+  void _fetchAnime() async {
+    List<Anime> loadedAnime = await loadAnimeFromFirestore();
     setState(() {
       _registeredAnime = loadedAnime;
-      _isLoading = false;
     });
   }
 
