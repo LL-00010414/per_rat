@@ -13,11 +13,15 @@ class ShowDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: Text(showRating.showName),
       ),
       body: Center(
-        child: Text('Details for ${showRating.showName}'),
+        child: Text(
+          'Details for ${showRating.showName}',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
     );
   }
