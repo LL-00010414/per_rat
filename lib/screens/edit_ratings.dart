@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:per_rat/data/firestore_data.dart';
+import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/models/show_rating.dart';
 
 class EditRatingsScreen extends StatefulWidget {
@@ -19,6 +20,8 @@ class EditRatingsScreen extends StatefulWidget {
 class _EditRatingsScreenState extends State<EditRatingsScreen> {
   //final _formkey = GlobalKey<FormState>();
   final user = FirebaseAuth.instance.currentUser!;
+  List<Anime> _registeredAnime = [];
+  Anime? animeSet;
 
   Color? cCompleted;
   Color? cWatching;
@@ -34,18 +37,35 @@ class _EditRatingsScreenState extends State<EditRatingsScreen> {
   //color
   Color? prColor;
 
+  @override
+  void initState() {
+    super.initState();
+    _fetchAnime();
+  }
+
+  void _fetchAnime() async {
+    List<Anime> loadedAnime = await loadAnimeFromFirestore();
+    setState(() {
+      _registeredAnime = loadedAnime;
+      animeSet = getAnimeFromShowrating(
+          widget.showRating); // Update animeSet after fetching anime list
+    });
+  }
+
+  Anime? getAnimeFromShowrating(ShowRating showrating) {
+    for (Anime anime in _registeredAnime) {
+      if (anime.title == showrating.showName) {
+        return anime;
+      }
+    }
+    return null;
+  }
+
+  // void setAnime(ShowRating showrating) {
+  //   Anime? animeSet = getAnimeFromShowrating(showrating);
+  // }
+
   void _submit() async {
-    //final isValid = _formkey.currentState!.validate();
-
-    // if (!isValid ||
-    //     _selectedStatus == null ||
-    //     _selectedProgress == null ||
-    //     _selectedScore == null) {
-    //   return;
-    // }
-
-    //_formkey.currentState!.save();
-
     try {
       DocumentReference userDocRef =
           FirebaseFirestore.instance.collection('users').doc(user.uid);
@@ -170,6 +190,10 @@ class _EditRatingsScreenState extends State<EditRatingsScreen> {
   Widget build(BuildContext context) {
     const double buttonFontSize = 14;
 
+    //setting Anime object
+
+    //Anime? animeSet = getAnimeFromShowrating(widget.showRating);
+
     Widget content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -185,7 +209,7 @@ class _EditRatingsScreenState extends State<EditRatingsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget.showRating.showName,
+                animeSet?.title ?? '...',
                 style: const TextStyle(
                   color: Colors.amber,
                   fontSize: 18,
@@ -208,11 +232,16 @@ class _EditRatingsScreenState extends State<EditRatingsScreen> {
                       ),
                     ),
                     Text(
+                      //animeSet?.status.toString() ?? '...',
                       widget.showRating.status,
                       style: TextStyle(
-                        color: (widget.showRating.status.contains('Upcoming')
+                        color: (widget.showRating.status
+                                .toString()
+                                .contains('Upcoming')
                             ? Colors.blue
-                            : widget.showRating.status.contains('Ongoing')
+                            : widget.showRating.status
+                                    .toString()
+                                    .contains('Ongoing')
                                 ? Colors.green
                                 : Colors.purple),
                         fontSize: 16,
@@ -367,40 +396,15 @@ class _EditRatingsScreenState extends State<EditRatingsScreen> {
                   height: 80,
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: (int.parse(widget.showRating.progress) > 0)
-                          ? int.parse(widget.showRating.progress) + 1
-                          : int.parse(widget.showRating.progress) + 2,
+                      itemCount: ((animeSet?.totalEpisodes ?? 0) > 0)
+                          ? (animeSet?.totalEpisodes ?? 0) + 1
+                          : (animeSet?.totalEpisodes ?? 0) + 2,
                       itemBuilder: (context, index) {
                         int number = index;
-                        // if (anime.totalEpisodes == 0) {
-                        //   return Container(
-                        //     width:
-                        //         50, // Adjust the width of each item as needed
-                        //     height:
-                        //         50, // Adjust the height of each item as needed
-                        //     margin: const EdgeInsets.all(8),
-                        //     decoration: BoxDecoration(
-                        //       border: Border.all(color: Colors.blue),
-                        //       borderRadius: BorderRadius.circular(10),
-                        //     ),
-                        //     child: const Center(
-                        //       child: Text(
-                        //         '0',
-                        //         style: TextStyle(
-                        //           fontSize: 18,
-                        //           color: Colors.white,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   );
-                        // }
 
                         return GestureDetector(
                           onTap: () {
                             selectProgress(number);
-                            // setState(() {
-                            //   prColor = Colors.orange;
-                            // });
                           },
                           child: Container(
                             //color: prColor,
@@ -530,7 +534,7 @@ class _EditRatingsScreenState extends State<EditRatingsScreen> {
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.showRating.showName),
+        title: Text(animeSet?.title ?? '...'),
         centerTitle: true,
         actions: [
           IconButton(
