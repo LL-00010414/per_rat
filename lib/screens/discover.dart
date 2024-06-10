@@ -1,14 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:per_rat/data/demographic_info.dart';
-import 'package:per_rat/data/genre_info.dart';
-
-import 'package:per_rat/data/status_info.dart';
-import 'package:per_rat/data/studio_info.dart';
+import 'package:per_rat/data/firestore_data.dart';
 import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/screens/anime_details.dart';
-import 'package:http/http.dart' as http;
 import 'package:per_rat/widgets/discover_anime_item.dart';
 
 class DiscoverScreen extends StatefulWidget {
@@ -28,69 +21,19 @@ class DiscoverScreen extends StatefulWidget {
 }
 
 class _DiscoverScreenState extends State<DiscoverScreen> {
-  List<Anime> registeredAnime = [];
+  List<Anime> _registeredAnime = [];
   var searchName = '';
 
   @override
   void initState() {
     super.initState();
-    loadAnime();
+    _fetchAnime();
   }
 
-  void loadAnime() async {
-    final url = Uri.https(
-        'perratauth-default-rtdb.asia-southeast1.firebasedatabase.app',
-        'movie-list.json');
-    final response = await http.get(url);
-
-    final Map<String, dynamic> listAnime = json.decode(response.body);
-    final List<Anime> loadedAnime = [];
-
-    for (final show in listAnime.entries) {
-      final genre = genres.entries
-          .firstWhere((genItem) => genItem.value.title == show.value['genre'])
-          .value;
-      final demographic = demographics.entries
-          .firstWhere(
-              (demItem) => demItem.value.title == show.value['demographics'])
-          .value;
-      final studio = studios.entries
-          .firstWhere(
-              (studItem) => studItem.value.title == show.value['studio'])
-          .value;
-      final status = statuses.entries
-          .firstWhere(
-              (statItem) => statItem.value.title == show.value['status'])
-          .value;
-      final DateTime startDate = formatter.parse(show.value['startDate']);
-      final DateTime endDate = formatter.parse(show.value['startDate']);
-      final String description = show.value['synopsis'].toString();
-      final List<String> synopsis = description.split(',');
-
-      //the logic part
-      loadedAnime.add(
-        Anime(
-          id: show.key,
-          title: show.value['title'],
-          imageUrl: show.value['imageUrl'],
-          synopsis: synopsis,
-          totalEpisodes: show.value['totalEpisodes'],
-          score: show.value['score'].toString(),
-          rank: show.value['rank'].toString(),
-          popularity: show.value['popularity'].toString(),
-          favorites: show.value['favorites'],
-          trailerUrl: show.value['trailerUrl'],
-          genre: genre,
-          demographic: demographic,
-          studio: studio,
-          status: status,
-          startDate: startDate,
-          endDate: endDate,
-        ),
-      );
-    }
+  void _fetchAnime() async {
+    List<Anime> loadedAnime = await loadAnimeFromFirestore();
     setState(() {
-      registeredAnime = loadedAnime;
+      _registeredAnime = loadedAnime;
     });
   }
 
@@ -269,12 +212,12 @@ class MySearchDelegate extends SearchDelegate {
   }
 
   List<String> searchTerms = _DiscoverScreenState()
-      .registeredAnime
+      ._registeredAnime
       .map((anime) => anime.title)
       .toList();
 
   List<String> searchHistory = _DiscoverScreenState()
-      .registeredAnime
+      ._registeredAnime
       .map((anime1) => anime1.title)
       .take(4)
       .toList();
@@ -334,7 +277,7 @@ class MySearchDelegate extends SearchDelegate {
         itemBuilder: (context, index) {
           var result = matchQuery[index];
           final List<Anime> searchResult = _DiscoverScreenState()
-              .registeredAnime
+              ._registeredAnime
               .where((a) => a.title.contains(result))
               .toList();
           return ListTile(
@@ -372,7 +315,7 @@ class MySearchDelegate extends SearchDelegate {
       itemBuilder: (context, index) {
         final result = matchQuery[index];
         final List<Anime> searchResult = _DiscoverScreenState()
-            .registeredAnime
+            ._registeredAnime
             .where((a1) => a1.title.contains(result))
             .toList();
         return ListTile(
