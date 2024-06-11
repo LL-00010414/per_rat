@@ -9,20 +9,23 @@ class EditRatingsScreen extends StatefulWidget {
   const EditRatingsScreen({
     super.key,
     required this.showRating,
+    required this.refreshParent,
   });
 
   final ShowRating showRating;
+  final VoidCallback refreshParent;
 
   @override
   State<EditRatingsScreen> createState() => _EditRatingsScreenState();
 }
 
 class _EditRatingsScreenState extends State<EditRatingsScreen> {
-  //final _formkey = GlobalKey<FormState>();
   final user = FirebaseAuth.instance.currentUser!;
   List<Anime> _registeredAnime = [];
   Anime? animeSet;
+  late ScrollController _scrollController;
 
+  //colors for statuses
   Color? cCompleted;
   Color? cWatching;
   Color? cPTW;
@@ -34,13 +37,17 @@ class _EditRatingsScreenState extends State<EditRatingsScreen> {
   String? _selectedProgress = '';
   String? _selectedScore = '';
 
-  //color
-  Color? prColor;
-
   @override
   void initState() {
     super.initState();
     _fetchAnime();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   void _fetchAnime() async {
@@ -114,27 +121,9 @@ class _EditRatingsScreenState extends State<EditRatingsScreen> {
           ),
         );
 
+        widget.refreshParent;
         Navigator.of(context).pop();
       }
-
-      //
-
-      //
-      // await ratingCollectionRef.doc(widget.anime.title).set({
-      //   'status': _selectedStatus,
-      //   'progress': _selectedProgress,
-      //   'score': _selectedScore,
-      //   'timestamp': FieldValue.serverTimestamp(),
-      // });
-
-      // ScaffoldMessenger.of(context).clearSnackBars();
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     content: Text('The movie rating has been added!'),
-      //   ),
-      // );
-
-      // Navigator.of(context).pop();
     } on FirebaseAuthException catch (error) {
       if (error.code.isNotEmpty) {
         //
@@ -158,12 +147,24 @@ class _EditRatingsScreenState extends State<EditRatingsScreen> {
       if (statusNumber == 1) {
         cCompleted = Colors.blue;
         _selectedStatus = 'Completed';
+        _selectedProgress = animeSet?.totalEpisodes.toString();
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: Duration(seconds: 1),
+          curve: Curves.easeInOut,
+        );
       } else if (statusNumber == 2) {
         cWatching = Colors.green;
         _selectedStatus = 'Watching';
       } else if (statusNumber == 3) {
         cPTW = Colors.grey;
         _selectedStatus = 'Plan to Watch';
+        _selectedProgress = '0';
+        _scrollController.animateTo(
+          0.0,
+          duration: Duration(seconds: 1),
+          curve: Curves.easeInOut,
+        );
       } else if (statusNumber == 4) {
         cOnHold = Colors.yellow;
         _selectedStatus = 'On Hold';
@@ -395,6 +396,7 @@ class _EditRatingsScreenState extends State<EditRatingsScreen> {
                 child: SizedBox(
                   height: 80,
                   child: ListView.builder(
+                      controller: _scrollController,
                       scrollDirection: Axis.horizontal,
                       itemCount: ((animeSet?.totalEpisodes ?? 0) > 0)
                           ? (animeSet?.totalEpisodes ?? 0) + 1
@@ -407,7 +409,6 @@ class _EditRatingsScreenState extends State<EditRatingsScreen> {
                             selectProgress(number);
                           },
                           child: Container(
-                            //color: prColor,
                             width:
                                 50, // Adjust the width of each item as needed
                             height:

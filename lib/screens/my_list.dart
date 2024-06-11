@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-
-//import 'package:per_rat/data/movie_info.dart';
-
 import 'package:per_rat/screens/all_anime_screen.dart';
-//import 'package:http/http.dart' as http;
 import 'package:per_rat/screens/generic_rating_screen.dart';
 
 class MyListScreen extends StatefulWidget {
   const MyListScreen({
     super.key,
   });
-
-  //final List<Anime> lastAnime;
 
   @override
   State<MyListScreen> createState() => _MyListScreenState();
@@ -32,6 +26,12 @@ class _MyListScreenState extends State<MyListScreen>
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  void _refresh() {
+    setState(() {
+      // This will trigger a rebuild
+    });
   }
 
   @override
@@ -66,12 +66,29 @@ class _MyListScreenState extends State<MyListScreen>
       body: TabBarView(
         controller: _tabController,
         children: <Widget>[
-          AllAnimeScreen(),
-          GenericAnimeScreen(filterStatus: 'Watching'),
-          GenericAnimeScreen(filterStatus: 'Completed'),
-          GenericAnimeScreen(filterStatus: 'On Hold'),
-          GenericAnimeScreen(filterStatus: 'Dropped'),
-          GenericAnimeScreen(filterStatus: 'Plan to Watch'),
+          AllAnimeScreen(
+            refreshParent: _refresh,
+          ),
+          GenericAnimeScreen(
+            filterStatus: 'Watching',
+            refreshParent: _refresh,
+          ),
+          GenericAnimeScreen(
+            filterStatus: 'Completed',
+            refreshParent: _refresh,
+          ),
+          GenericAnimeScreen(
+            filterStatus: 'On Hold',
+            refreshParent: _refresh,
+          ),
+          GenericAnimeScreen(
+            filterStatus: 'Dropped',
+            refreshParent: _refresh,
+          ),
+          GenericAnimeScreen(
+            filterStatus: 'Plan to Watch',
+            refreshParent: _refresh,
+          ),
         ],
       ),
     );

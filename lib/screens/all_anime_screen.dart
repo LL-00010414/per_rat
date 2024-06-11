@@ -1,21 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'package:per_rat/models/show_rating.dart';
-
 import 'package:per_rat/screens/edit_ratings.dart';
-
 import 'package:per_rat/screens/show_rating_details.dart';
 import 'package:per_rat/widgets/all_anime_item.dart';
 
 class AllAnimeScreen extends StatefulWidget {
   const AllAnimeScreen({
     super.key,
-    //required this.myAnimeList,
+    required this.refreshParent,
   });
 
-  //final List<Anime> myAnimeList;
+  final VoidCallback refreshParent;
 
   @override
   State<AllAnimeScreen> createState() => _AllAnimeScreenState();
@@ -63,6 +60,7 @@ class _AllAnimeScreenState extends State<AllAnimeScreen> {
       Navigator.of(context).push(MaterialPageRoute(
           builder: (ctx) => EditRatingsScreen(
                 showRating: showRating,
+                refreshParent: widget.refreshParent,
               )));
     }
 

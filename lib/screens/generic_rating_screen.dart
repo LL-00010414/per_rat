@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:flutter/material.dart';
 import 'package:per_rat/models/show_rating.dart';
 import 'package:per_rat/screens/edit_ratings.dart';
 import 'package:per_rat/screens/show_rating_details.dart';
@@ -11,9 +10,11 @@ class GenericAnimeScreen extends StatefulWidget {
   const GenericAnimeScreen({
     super.key,
     required this.filterStatus,
+    required this.refreshParent,
   });
 
   final String filterStatus;
+  final VoidCallback refreshParent;
 
   @override
   State<GenericAnimeScreen> createState() => _GenericAnimeScreenState();
@@ -60,7 +61,10 @@ class _GenericAnimeScreenState extends State<GenericAnimeScreen> {
 
     void editRating(BuildContext context, ShowRating showRating) {
       Navigator.of(context).push(MaterialPageRoute(
-          builder: (ctx) => EditRatingsScreen(showRating: showRating)));
+          builder: (ctx) => EditRatingsScreen(
+                showRating: showRating,
+                refreshParent: widget.refreshParent,
+              )));
     }
 
     Widget content = ListView.builder(
