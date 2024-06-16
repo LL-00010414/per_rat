@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:per_rat/screens/user_profile/account_settings_screen.dart';
 import 'package:per_rat/screens/clubs_screen.dart';
 import 'package:per_rat/screens/friends_screen.dart';
 import 'package:per_rat/screens/messages_screen.dart';
 import 'package:per_rat/screens/notifications_screen.dart';
+import 'package:per_rat/screens/user_profile/account_settings_screen.dart';
 
 class MainDrawer extends StatefulWidget {
   const MainDrawer({
@@ -31,23 +31,6 @@ class _MainDrawerState extends State<MainDrawer> {
     FirebaseAuth.instance.signOut();
     Navigator.pop(context);
   }
-
-  // void fetchData() {
-  //   FirebaseFirestore.instance
-  //       .collection('users')
-  //       .doc(widget.user1.uid)
-  //       .get()
-  //       .then((DocumentSnapshot documentSnapshot) {
-  //     if (documentSnapshot.exists) {
-  //       data = documentSnapshot.data;
-  //       print(data);
-  //     } else {
-  //       print('Document doesnt exist');
-  //     }
-  //   }).catchError((e) {
-  //     print('Error: $e');
-  //   });
-  // }
 
   @override
   void initState() {
@@ -120,6 +103,7 @@ class _MainDrawerState extends State<MainDrawer> {
                       children: [
                         Image.network(
                           userData['image_url'],
+                          width: MediaQuery.of(context).size.width * 0.25,
                         ),
                         const SizedBox(width: 15),
                         Text(

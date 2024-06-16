@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'package:per_rat/screens/user_profile/edit_user_profile.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -258,13 +257,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Image.network(
                       userData['image_url'],
-                      height: 300,
-                      width: 200,
+                      height: MediaQuery.of(context).size.height * 0.25,
+                      width: MediaQuery.of(context).size.width * 0.48,
                       fit: BoxFit.contain,
                     ),
                     SizedBox(
-                      height: 300,
-                      width: 150,
+                      height: MediaQuery.of(context).size.height * 0.35,
+                      width: MediaQuery.of(context).size.width * 0.42,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisAlignment: MainAxisAlignment.center,

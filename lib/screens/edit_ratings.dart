@@ -540,10 +540,9 @@ class _EditRatingsScreenState extends State<EditRatingsScreen> {
         actions: [
           IconButton(
             onPressed: _submit,
-            icon: const Icon(
-              Icons.save_outlined,
-              size: 35,
-              color: Colors.blueAccent,
+            icon: Icon(
+              Icons.save_outlined, size: 35, color: Colors.amber,
+              //Theme.of(context).colorScheme.primary,
             ),
           )
         ],
