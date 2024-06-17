@@ -61,6 +61,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
         title: SizedBox(
           height: 40,
           child: TextField(
+            canRequestFocus: false,
             onChanged: (value) {
               setState(() {
                 searchName = value;

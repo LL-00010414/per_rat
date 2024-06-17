@@ -24,8 +24,7 @@ class MainTabsScreen extends StatefulWidget {
 class _MainTabsScreenState extends State<MainTabsScreen> {
   int _selectedPageIndex = 0;
   List<Anime> _registeredAnime = [];
-  //var _isLoading = true;
-  //String? _error;
+  //final user = FirebaseAuth.instance.currentUser!;
 
   @override
   void initState() {

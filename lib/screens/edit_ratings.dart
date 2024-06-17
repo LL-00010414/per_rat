@@ -9,11 +9,9 @@ class EditRatingsScreen extends StatefulWidget {
   const EditRatingsScreen({
     super.key,
     required this.showRating,
-    required this.refreshParent,
   });
 
   final ShowRating showRating;
-  final VoidCallback refreshParent;
 
   @override
   State<EditRatingsScreen> createState() => _EditRatingsScreenState();
@@ -121,7 +119,6 @@ class _EditRatingsScreenState extends State<EditRatingsScreen> {
           ),
         );
 
-        widget.refreshParent;
         Navigator.of(context).pop();
       }
     } on FirebaseAuthException catch (error) {

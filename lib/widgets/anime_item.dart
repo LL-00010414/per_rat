@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
-
 import 'package:per_rat/models/anime.dart';
+import 'package:per_rat/models/show_rating.dart';
 import 'package:per_rat/widgets/anime_item_trait.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class AnimeItem extends StatelessWidget {
   const AnimeItem({
     super.key,
+    required this.showRating,
     required this.anime,
-    required this.onSelectAnime,
-    required this.onDeleteAnime,
+    required this.onSelectRating,
+    required this.onDeleteRating,
   });
 
+  final ShowRating showRating;
   final Anime anime;
-  final void Function(Anime anime) onSelectAnime;
-  final void Function(Anime anime) onDeleteAnime;
+
+  final void Function(ShowRating showRating) onSelectRating;
+  final void Function(ShowRating showRating) onDeleteRating;
+
+  //final void Function(ShowRating showRating) onEditRating;
+  //final void Function(Anime anime) onSelectAnime;
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +39,10 @@ class AnimeItem extends StatelessWidget {
         label: const Text('new'),
         child: InkWell(
           onTap: () {
-            onSelectAnime(anime);
+            onSelectRating(showRating);
           },
           onLongPress: () {
-            onDeleteAnime(anime);
+            onDeleteRating(showRating);
           },
           child: Stack(
             children: [

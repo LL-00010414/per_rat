@@ -60,7 +60,6 @@ class _AllAnimeScreenState extends State<AllAnimeScreen> {
       Navigator.of(context).push(MaterialPageRoute(
           builder: (ctx) => EditRatingsScreen(
                 showRating: showRating,
-                refreshParent: widget.refreshParent,
               )));
     }
 

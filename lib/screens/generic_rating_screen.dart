@@ -63,7 +63,6 @@ class _GenericAnimeScreenState extends State<GenericAnimeScreen> {
       Navigator.of(context).push(MaterialPageRoute(
           builder: (ctx) => EditRatingsScreen(
                 showRating: showRating,
-                refreshParent: widget.refreshParent,
               )));
     }
 
