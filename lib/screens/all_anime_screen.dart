@@ -94,7 +94,13 @@ class _AllAnimeScreenState extends State<AllAnimeScreen> {
           }
 
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return Center(child: Text('No ratings found.'));
+            return Center(
+                child: Text(
+              'No ratings found.',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ));
           }
 
           return content;

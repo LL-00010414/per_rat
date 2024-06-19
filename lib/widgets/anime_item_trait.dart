@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AnimeItemTrait extends StatelessWidget {
-  const AnimeItemTrait({
+class HomeAnimeItemTrait extends StatelessWidget {
+  const HomeAnimeItemTrait({
     super.key,
     required this.icon,
     required this.label,

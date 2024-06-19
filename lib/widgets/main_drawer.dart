@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:per_rat/components/constants.dart';
 import 'package:per_rat/screens/clubs_screen.dart';
 import 'package:per_rat/screens/friends_screen.dart';
 import 'package:per_rat/screens/messages_screen.dart';
@@ -24,7 +25,7 @@ class MainDrawer extends StatefulWidget {
 }
 
 class _MainDrawerState extends State<MainDrawer> {
-  var data;
+  //var data;
 
   void signUserOut() {
     GoogleSignIn().signOut();
@@ -40,6 +41,9 @@ class _MainDrawerState extends State<MainDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    String? email = widget.user1.email;
+    // String displayEmail =
+    //     email.length <= 12 ? email : email.substring(0, 12) + '...';
     return Drawer(
       backgroundColor: const Color.fromARGB(255, 32, 28, 6),
       child: Column(
@@ -82,8 +86,7 @@ class _MainDrawerState extends State<MainDrawer> {
                           ),
                           const SizedBox(width: 15),
                           Text(
-                            widget.user1.email!
-                                .substring(0, widget.user1.email!.indexOf('@')),
+                            getDisplayEmail(email!),
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge!

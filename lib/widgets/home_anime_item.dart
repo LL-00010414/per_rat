@@ -4,8 +4,8 @@ import 'package:per_rat/models/show_rating.dart';
 import 'package:per_rat/widgets/anime_item_trait.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class AnimeItem extends StatelessWidget {
-  const AnimeItem({
+class HomeAnimeItem extends StatelessWidget {
+  const HomeAnimeItem({
     super.key,
     required this.showRating,
     required this.anime,
@@ -83,18 +83,18 @@ class AnimeItem extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          AnimeItemTrait(
+                          HomeAnimeItemTrait(
                               icon: Icons.star_border_outlined,
                               label: (double.tryParse(anime.score) == 0)
                                   ? 'N/A'
                                   : anime.score),
                           const SizedBox(width: 5),
-                          AnimeItemTrait(
+                          HomeAnimeItemTrait(
                             icon: Icons.movie_outlined,
                             label: anime.genre.title,
                           ),
                           const SizedBox(width: 5),
-                          AnimeItemTrait(
+                          HomeAnimeItemTrait(
                             icon: Icons.numbers_outlined,
                             label: (anime.totalEpisodes == 0)
                                 ? 'N/A'

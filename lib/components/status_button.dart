@@ -9,7 +9,7 @@ class StatusButton extends StatefulWidget {
   });
 
   final String status;
-  Color? statusColor;
+  final Color? statusColor;
   final void Function() onPressed;
 
   @override

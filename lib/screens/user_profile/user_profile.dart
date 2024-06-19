@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:per_rat/components/constants.dart';
 import 'package:per_rat/screens/user_profile/edit_user_profile.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -27,13 +28,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //final joinedTime = user.metadata.creationTime!;
-    //final _db = FirebaseFirestore.instance;
+    final String email = user.email!;
     return Scaffold(
       //backgroundColor: const Color.fromARGB(255, 56, 22, 205),
       appBar: AppBar(
         title: Text(
-          user.email!.substring(0, user.email!.indexOf('@')),
+          getDisplayEmail(email),
         ),
         actions: [
           IconButton(

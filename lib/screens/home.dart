@@ -6,7 +6,7 @@ import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/models/show_rating.dart';
 import 'package:per_rat/screens/new_anime.dart';
 import 'package:per_rat/screens/show_rating_details.dart';
-import 'package:per_rat/widgets/anime_item.dart';
+import 'package:per_rat/widgets/home_anime_item.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -190,11 +190,11 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
 
-    if (_isLoading) {
-      content = const Center(
-        child: CircularProgressIndicator(),
-      );
-    }
+    // if (_isLoading) {
+    //   content = const Center(
+    //     child: CircularProgressIndicator(),
+    //   );
+    // }
     if (_showratings.isNotEmpty) {
       content = GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -213,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
           if (animeSet == null) {
             return const Text('No ratings added');
           }
-          return AnimeItem(
+          return HomeAnimeItem(
             showRating: rating,
             anime: animeSet!,
             onSelectRating: (rating) {

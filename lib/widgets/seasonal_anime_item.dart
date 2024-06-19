@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/widgets/anime_item_trait.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -68,12 +67,12 @@ class SeasonalAnimeItem extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        AnimeItemTrait(
+                        HomeAnimeItemTrait(
                           icon: Icons.star_border_outlined,
                           label: '${anime.score} ',
                         ),
                         const SizedBox(width: 5),
-                        AnimeItemTrait(
+                        HomeAnimeItemTrait(
                           icon: Icons.movie_outlined,
                           label: anime.genre.title,
                         ),
