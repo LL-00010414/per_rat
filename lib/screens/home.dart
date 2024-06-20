@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:per_rat/data/firestore_data.dart';
 import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/models/show_rating.dart';
-import 'package:per_rat/screens/new_anime.dart';
+
 import 'package:per_rat/screens/show_rating_details.dart';
 import 'package:per_rat/widgets/home_anime_item.dart';
 
@@ -19,7 +19,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Anime> _registeredAnime = [];
-  var _isLoading = true;
+  //var _isLoading = true;
   String? _error;
 
   //getting user Ratings
@@ -125,27 +125,29 @@ class _HomeScreenState extends State<HomeScreen> {
     lastOnline();
   }
 
-  void _addAnime(Anime anime) {
-    setState(() {
-      _registeredAnime.add(anime);
-    });
-  }
+  //anime adding page
 
-  void _addAnimePage() async {
-    final newAnime = await Navigator.of(context).push<Anime>(
-      MaterialPageRoute(
-        builder: (ctx) => NewAnime(onAddAnime: _addAnime),
-      ),
-    );
+  // void _addAnime(Anime anime) {
+  //   setState(() {
+  //     _registeredAnime.add(anime);
+  //   });
+  // }
 
-    if (newAnime == null) {
-      return;
-    }
+  // void _addAnimePage() async {
+  //   final newAnime = await Navigator.of(context).push<Anime>(
+  //     MaterialPageRoute(
+  //       builder: (ctx) => NewAnime(onAddAnime: _addAnime),
+  //     ),
+  //   );
 
-    setState(() {
-      _registeredAnime.add(newAnime);
-    });
-  }
+  //   if (newAnime == null) {
+  //     return;
+  //   }
+
+  //   setState(() {
+  //     _registeredAnime.add(newAnime);
+  //   });
+  // }
 
   // void _removeAnime(Anime anime) async {
   //   await removeAnime(context, _registeredAnime, anime);
@@ -247,10 +249,10 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('HOME'),
         actions: [
-          IconButton(
-            onPressed: _addAnimePage,
-            icon: const Icon(Icons.add_sharp),
-          )
+          // IconButton(
+          //   onPressed: _addAnimePage,
+          //   icon: const Icon(Icons.add_sharp),
+          // ),
         ],
       ),
       body: content,

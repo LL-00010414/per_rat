@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/models/show_rating.dart';
@@ -42,7 +43,25 @@ class HomeAnimeItem extends StatelessWidget {
             onSelectRating(showRating);
           },
           onLongPress: () {
-            onDeleteRating(showRating);
+            AwesomeDialog(
+              context: context,
+              dialogType: DialogType.question,
+              animType: AnimType.bottomSlide,
+              title: 'Do you want to delete your rating?',
+              titleTextStyle: TextStyle(
+                fontSize: 22,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+              desc: 'Do you really want to delete ${anime.title} ?',
+              btnCancelOnPress: () {
+                Navigator.of(context).focusNode;
+              },
+              btnOkOnPress: () {
+                onDeleteRating(showRating);
+              },
+              btnOkText: 'Yes',
+              btnCancelText: 'No',
+            ).show();
           },
           child: Stack(
             children: [
@@ -85,9 +104,10 @@ class HomeAnimeItem extends StatelessWidget {
                         children: [
                           HomeAnimeItemTrait(
                               icon: Icons.star_border_outlined,
-                              label: (double.tryParse(anime.score) == 0)
-                                  ? 'N/A'
-                                  : anime.score),
+                              label: showRating.score == 0 || showRating.score == '' ? 'N/A' : showRating.score),
+                              // (double.tryParse(anime.score) == 0)
+                              //     ? 'N/A'
+                              //     : anime.score),
                           const SizedBox(width: 5),
                           HomeAnimeItemTrait(
                             icon: Icons.movie_outlined,
@@ -96,9 +116,9 @@ class HomeAnimeItem extends StatelessWidget {
                           const SizedBox(width: 5),
                           HomeAnimeItemTrait(
                             icon: Icons.numbers_outlined,
-                            label: (anime.totalEpisodes == 0)
+                            label: (showRating.progress == 0 || showRating.progress == '')
                                 ? 'N/A'
-                                : anime.totalEpisodes.toString(),
+                                : '${showRating.progress.toString()} / ${anime.totalEpisodes}',
                           )
                         ],
                       ),

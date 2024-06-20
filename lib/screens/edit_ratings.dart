@@ -5,6 +5,8 @@ import 'package:per_rat/data/firestore_data.dart';
 import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/models/show_rating.dart';
 
+import '../components/constants.dart';
+
 class EditRatingsScreen extends StatefulWidget {
   const EditRatingsScreen({
     super.key,
@@ -186,11 +188,11 @@ class _EditRatingsScreenState extends State<EditRatingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const double buttonFontSize = 14;
+    //const double buttonFontSize = 14;
 
     //setting Anime object
 
-    //Anime? animeSet = getAnimeFromShowrating(widget.showRating);
+    //Anime? animeSet = getAnimeFromShowRating(widget.showRating);
 
     Widget content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,

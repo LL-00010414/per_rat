@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:per_rat/data/firestore_data.dart';
 import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/screens/anime_details.dart';
 import 'package:per_rat/screens/realtime_search.dart';
@@ -22,21 +21,21 @@ class DiscoverScreen extends StatefulWidget {
 }
 
 class _DiscoverScreenState extends State<DiscoverScreen> {
-  List<Anime> _registeredAnime = [];
+  // List<Anime> _registeredAnime = [];
   var searchName = '';
 
   @override
   void initState() {
     super.initState();
-    _fetchAnime();
+    // _fetchAnime();
   }
 
-  void _fetchAnime() async {
-    List<Anime> loadedAnime = await loadAnimeFromFirestore();
-    setState(() {
-      _registeredAnime = loadedAnime;
-    });
-  }
+  // void _fetchAnime() async {
+  //   List<Anime> loadedAnime = await loadAnimeFromFirestore();
+  //   setState(() {
+  //     _registeredAnime = loadedAnime;
+  //   });
+  // }
 
   void pickAnime(BuildContext context, Anime anime) {
     Navigator.of(context).push(
