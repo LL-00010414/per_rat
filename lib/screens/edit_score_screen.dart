@@ -200,11 +200,11 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
                       ),
                     ),
                     Text(
-                      widget.anime.status.title,
+                      widget.anime.status,
                       style: TextStyle(
-                        color: (widget.anime.status.title.contains('Upcoming')
+                        color: (widget.anime.status.contains('Upcoming')
                             ? Colors.blue
-                            : widget.anime.status.title.contains('Ongoing')
+                            : widget.anime.status.contains('Ongoing')
                                 ? Colors.green
                                 : Colors.purple),
                         fontSize: 16,

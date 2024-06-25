@@ -1,8 +1,4 @@
 import 'package:intl/intl.dart';
-import 'package:per_rat/models/demographics.dart';
-import 'package:per_rat/models/genres.dart';
-import 'package:per_rat/models/statuses.dart';
-import 'package:per_rat/models/studios.dart';
 // import 'package:uuid/uuid.dart';
 
 final formatter = DateFormat.yMd();
@@ -41,10 +37,10 @@ class Anime {
   final String popularity;
   final int favorites;
   final String trailerUrl;
-  final Genre genre;
-  final Demographic demographic;
-  final Studio studio;
-  final Status status;
+  final String genre;
+  final String demographic;
+  final String studio;
+  final String status;
   final DateTime startDate;
   final DateTime endDate;
 

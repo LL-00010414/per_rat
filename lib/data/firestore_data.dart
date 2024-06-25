@@ -1,10 +1,6 @@
 // database_provider.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:per_rat/data/demographic_info.dart';
-import 'package:per_rat/data/genre_info.dart';
-import 'package:per_rat/data/status_info.dart';
-import 'package:per_rat/data/studio_info.dart';
 import 'package:per_rat/models/anime.dart';
 
 Future<List<Anime>> loadAnimeFromFirestore() async {
@@ -30,19 +26,10 @@ Future<List<Anime>> loadAnimeFromFirestore() async {
           popularity: data['popularity'] ?? '0',
           favorites: data['favorites'] ?? 0,
           trailerUrl: data['trailerUrl'] ?? '',
-          genre: genres.entries
-              .firstWhere((genItem) => genItem.value.title == data['genre'])
-              .value,
-          demographic: demographics.entries
-              .firstWhere(
-                  (demItem) => demItem.value.title == data['demographic'])
-              .value,
-          studio: studios.entries
-              .firstWhere((studItem) => studItem.value.title == data['studio'])
-              .value,
-          status: statuses.entries
-              .firstWhere((statItem) => statItem.value.title == data['status'])
-              .value,
+          genre: data['genre'] ?? 'unknown',
+          demographic: data['demographic'] ?? 'unknown',
+          studio: data['studio'] ?? 'unknown',
+          status: data['status'] ?? 'unknown',
           startDate:
               DateTime.parse(data['startDate']), // Parse startDate as DateTime
           endDate: DateTime.parse(data['endDate']), // Parse endDate as DateTime

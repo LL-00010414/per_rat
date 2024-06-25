@@ -1,14 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:per_rat/data/firestore_data.dart';
+import 'package:per_rat/drawer_screens/notifications_screen.dart';
 import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/screens/discover.dart';
 import 'package:per_rat/screens/home.dart';
 import 'package:per_rat/screens/my_list.dart';
-import 'package:per_rat/screens/notifications_screen.dart';
 import 'package:per_rat/screens/seasonal.dart';
-import 'package:per_rat/screens/user_profile/user_profile.dart';
 import 'package:per_rat/widgets/main_drawer.dart';
+
+import '../../user_profile_screens/user_profile.dart';
 
 class MainTabsScreen extends StatefulWidget {
   const MainTabsScreen({
@@ -53,13 +54,13 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
   @override
   Widget build(BuildContext context) {
     final ongoingAnime1 = _registeredAnime
-        .where((anime) => anime.status.title.contains('Ongoing'))
+        .where((anime) => anime.status.contains('Ongoing'))
         .toList();
     final trendingAnime1 = _registeredAnime
         .where((anime1) => int.parse(anime1.popularity) < 1000)
         .toList();
     final upcomingAnime1 = _registeredAnime
-        .where((anime3) => anime3.status.title.contains('Upcoming'))
+        .where((anime3) => anime3.status.contains('Upcoming'))
         .toList();
 
     final user = FirebaseAuth.instance.currentUser!;

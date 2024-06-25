@@ -92,7 +92,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final List<Anime> similarAnime = _registeredAnime
-        .where((anime) => anime.genre.title.contains(widget.anime.genre.title))
+        .where((anime) => anime.genre.contains(widget.anime.genre))
         .where((anime) => anime.title != widget.anime.title)
         .toList();
     return Scaffold(
@@ -291,7 +291,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                         ),
                   ),
                   Text(
-                    widget.anime.status.title,
+                    widget.anime.status,
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           color: Colors.greenAccent,
                           fontWeight: FontWeight.normal,
@@ -315,7 +315,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Genre: ${widget.anime.genre.title.toUpperCase()}',
+                    'Genre: ${widget.anime.genre.toUpperCase()}',
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           color: Colors.red,
                           fontWeight: FontWeight.w500,

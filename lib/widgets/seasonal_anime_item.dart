@@ -74,7 +74,7 @@ class SeasonalAnimeItem extends StatelessWidget {
                         const SizedBox(width: 5),
                         HomeAnimeItemTrait(
                           icon: Icons.movie_outlined,
-                          label: anime.genre.title,
+                          label: anime.genre,
                         ),
                         const SizedBox(width: 4),
                         IconButton.outlined(

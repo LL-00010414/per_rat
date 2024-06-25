@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'package:per_rat/models/show_rating.dart';
 import 'package:per_rat/screens/edit_ratings.dart';
 
@@ -63,7 +62,7 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final List<Anime> similarAnime = _registeredAnime
-        .where((anime) => anime.genre.title.contains(animeSet!.genre.title))
+        .where((anime) => anime.genre.contains(animeSet!.genre))
         .where((anime) => anime.title != animeSet!.title)
         .toList();
     return Scaffold(
@@ -76,8 +75,8 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
           Navigator.of(context).push(
             MaterialPageRoute(
                 builder: (ctx) => EditRatingsScreen(
-                  showRating: widget.showRating,
-                )),
+                      showRating: widget.showRating,
+                    )),
           );
         },
         style: IconButton.styleFrom(
@@ -116,9 +115,9 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
                               .textTheme
                               .titleMedium!
                               .copyWith(
-                            color: Theme.of(context).colorScheme.onSurface,
-                            fontWeight: FontWeight.normal,
-                          ),
+                                color: Theme.of(context).colorScheme.onSurface,
+                                fontWeight: FontWeight.normal,
+                              ),
                         ),
                       ),
                       Row(
@@ -127,7 +126,7 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
                           Icon(
                             Icons.star_border_rounded,
                             color:
-                            Theme.of(context).colorScheme.onErrorContainer,
+                                Theme.of(context).colorScheme.onErrorContainer,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(right: 8),
@@ -139,10 +138,10 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
                                   .textTheme
                                   .titleMedium!
                                   .copyWith(
-                                color:
-                                Theme.of(context).colorScheme.onSurface,
-                                fontWeight: FontWeight.normal,
-                              ),
+                                    color:
+                                        Theme.of(context).colorScheme.onSurface,
+                                    fontWeight: FontWeight.normal,
+                                  ),
                             ),
                           ),
                         ],
@@ -155,9 +154,9 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
                               .textTheme
                               .titleMedium!
                               .copyWith(
-                            color: Theme.of(context).colorScheme.onSurface,
-                            fontWeight: FontWeight.normal,
-                          ),
+                                color: Theme.of(context).colorScheme.onSurface,
+                                fontWeight: FontWeight.normal,
+                              ),
                         ),
                       ),
                       Row(
@@ -166,7 +165,7 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
                           Icon(
                             Icons.radar,
                             color:
-                            Theme.of(context).colorScheme.onErrorContainer,
+                                Theme.of(context).colorScheme.onErrorContainer,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(right: 8),
@@ -178,10 +177,10 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
                                   .textTheme
                                   .titleMedium!
                                   .copyWith(
-                                color:
-                                Theme.of(context).colorScheme.onSurface,
-                                fontWeight: FontWeight.normal,
-                              ),
+                                    color:
+                                        Theme.of(context).colorScheme.onSurface,
+                                    fontWeight: FontWeight.normal,
+                                  ),
                             ),
                           ),
                         ],
@@ -194,9 +193,9 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
                               .textTheme
                               .titleMedium!
                               .copyWith(
-                            color: Theme.of(context).colorScheme.onSurface,
-                            fontWeight: FontWeight.normal,
-                          ),
+                                color: Theme.of(context).colorScheme.onSurface,
+                                fontWeight: FontWeight.normal,
+                              ),
                         ),
                       ),
                       Padding(
@@ -207,9 +206,9 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
                               .textTheme
                               .titleMedium!
                               .copyWith(
-                            color: Theme.of(context).colorScheme.onSurface,
-                            fontWeight: FontWeight.normal,
-                          ),
+                                color: Theme.of(context).colorScheme.onSurface,
+                                fontWeight: FontWeight.normal,
+                              ),
                         ),
                       ),
                       Padding(
@@ -220,9 +219,9 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
                               .textTheme
                               .titleMedium!
                               .copyWith(
-                            color: Theme.of(context).colorScheme.onSurface,
-                            fontWeight: FontWeight.normal,
-                          ),
+                                color: Theme.of(context).colorScheme.onSurface,
+                                fontWeight: FontWeight.normal,
+                              ),
                         ),
                       ),
                       Padding(
@@ -233,9 +232,9 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
                               .textTheme
                               .titleMedium!
                               .copyWith(
-                            color: Theme.of(context).colorScheme.onSurface,
-                            fontWeight: FontWeight.normal,
-                          ),
+                                color: Theme.of(context).colorScheme.onSurface,
+                                fontWeight: FontWeight.normal,
+                              ),
                         ),
                       ),
                     ],
@@ -257,23 +256,23 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
                   Text(
                     'Premiered: ${formatterMY.format(animeSet!.startDate)}',
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: Colors.greenAccent,
-                      fontWeight: FontWeight.normal,
-                    ),
+                          color: Colors.greenAccent,
+                          fontWeight: FontWeight.normal,
+                        ),
                   ),
                   Text(
-                    animeSet!.status.title,
+                    animeSet!.status,
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: Colors.greenAccent,
-                      fontWeight: FontWeight.normal,
-                    ),
+                          color: Colors.greenAccent,
+                          fontWeight: FontWeight.normal,
+                        ),
                   ),
                   Text(
                     'Episodes: ${animeSet!.totalEpisodes.toString()}',
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: Colors.greenAccent,
-                      fontWeight: FontWeight.normal,
-                    ),
+                          color: Colors.greenAccent,
+                          fontWeight: FontWeight.normal,
+                        ),
                   ),
                 ],
               ),
@@ -286,11 +285,11 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Genre: ${animeSet!.genre.title.toUpperCase()}',
+                    'Genre: ${animeSet!.genre.toUpperCase()}',
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: Colors.red,
-                      fontWeight: FontWeight.w500,
-                    ),
+                          color: Colors.red,
+                          fontWeight: FontWeight.w500,
+                        ),
                   ),
                 ],
               ),
@@ -298,9 +297,9 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
             Text(
               'Synopsis',
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.bold,
-              ),
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(
               height: 10,
@@ -314,8 +313,8 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
                   .replaceAll('[', '"')
                   .replaceAll(']', '"'),
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
             ),
             const SizedBox(
               height: 20,
@@ -328,9 +327,9 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
                   child: Text(
                     'Similar Titles:',
                     style:
-                    Theme.of(context).primaryTextTheme.titleLarge!.copyWith(
-                      color: Colors.amber,
-                    ),
+                        Theme.of(context).primaryTextTheme.titleLarge!.copyWith(
+                              color: Colors.amber,
+                            ),
                   ),
                 ),
               ],

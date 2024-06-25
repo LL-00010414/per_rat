@@ -1,9 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:per_rat/data/demographic_info.dart';
-import 'package:per_rat/data/genre_info.dart';
-import 'package:per_rat/data/status_info.dart';
-import 'package:per_rat/data/studio_info.dart';
 import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/screens/anime_details.dart';
 import 'package:per_rat/screens/edit_score_screen.dart';
@@ -124,23 +120,10 @@ class _RealtimeSearchScreenState extends State<RealtimeSearchScreen> {
                               popularity: data['popularity'],
                               favorites: data['favorites'],
                               trailerUrl: data['trailerUrl'],
-                              genre: genres.entries
-                                  .firstWhere((genItem) =>
-                                      genItem.value.title == data['genre'])
-                                  .value,
-                              demographic: demographics.entries
-                                  .firstWhere((demItem) =>
-                                      demItem.value.title ==
-                                      data['demographic'])
-                                  .value,
-                              studio: studios.entries
-                                  .firstWhere((studItem) =>
-                                      studItem.value.title == data['studio'])
-                                  .value,
-                              status: statuses.entries
-                                  .firstWhere((statItem) =>
-                                      statItem.value.title == data['status'])
-                                  .value,
+                              genre: data['genre'],
+                              demographic: data['demographic'],
+                              studio: data['studio'],
+                              status: data['status'],
                               startDate: DateTime.parse(data[
                                   'startDate']), // Parse startDate as DateTime
                               endDate: DateTime.parse(
@@ -189,7 +172,7 @@ class _RealtimeSearchScreenState extends State<RealtimeSearchScreen> {
                               children: [
                                 Text('${anime.totalEpisodes.toString()} ep.'),
                                 Text(
-                                  ' ${anime.status.title}',
+                                  ' ${anime.status}',
                                   style: TextStyle(
                                       color: Theme.of(context)
                                           .colorScheme

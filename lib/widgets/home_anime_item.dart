@@ -104,19 +104,23 @@ class HomeAnimeItem extends StatelessWidget {
                         children: [
                           HomeAnimeItemTrait(
                               icon: Icons.star_border_outlined,
-                              label: showRating.score == 0 || showRating.score == '' ? 'N/A' : showRating.score),
-                              // (double.tryParse(anime.score) == 0)
-                              //     ? 'N/A'
-                              //     : anime.score),
+                              label: showRating.score == 0 ||
+                                      showRating.score == ''
+                                  ? 'N/A'
+                                  : showRating.score),
+                          // (double.tryParse(anime.score) == 0)
+                          //     ? 'N/A'
+                          //     : anime.score),
                           const SizedBox(width: 5),
                           HomeAnimeItemTrait(
                             icon: Icons.movie_outlined,
-                            label: anime.genre.title,
+                            label: anime.genre,
                           ),
                           const SizedBox(width: 5),
                           HomeAnimeItemTrait(
                             icon: Icons.numbers_outlined,
-                            label: (showRating.progress == 0 || showRating.progress == '')
+                            label: (showRating.progress == 0 ||
+                                    showRating.progress == '')
                                 ? 'N/A'
                                 : '${showRating.progress.toString()} / ${anime.totalEpisodes}',
                           )
