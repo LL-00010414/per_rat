@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "374741660385",
+    "firebase_url": "https://perratauth-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "perratauth",
     "storage_bucket": "perratauth.appspot.com"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.example.per_rat"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "374741660385-mjuh98m094j6jfu48hrf7csvqs71c6u0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.per_rat",
+            "certificate_hash": "a34bd0c29b2a1120fa42912834ed3b70ced296bc"
+          }
+        },
+        {
+          "client_id": "374741660385-d3n3vh02hvr5jd8tl2ces7u93luf1fv6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBFuAVilVwpEUDhth8YkA9NWmnCzzdgByY"
@@ -20,7 +34,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "374741660385-d3n3vh02hvr5jd8tl2ces7u93luf1fv6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "374741660385-pe2lshbv9dh2hqap0ts5tu33f1pbnmt0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.perRat"
+              }
+            }
+          ]
         }
       }
     }
