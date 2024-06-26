@@ -37,7 +37,7 @@ class Anime {
   final String popularity;
   final int favorites;
   final String trailerUrl;
-  final String genre;
+  final List<String> genre;
   final String demographic;
   final String studio;
   final String status;

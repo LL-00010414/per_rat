@@ -10,11 +10,9 @@ class GenericAnimeScreen extends StatefulWidget {
   const GenericAnimeScreen({
     super.key,
     required this.filterStatus,
-    required this.refreshParent,
   });
 
   final String filterStatus;
-  final VoidCallback refreshParent;
 
   @override
   State<GenericAnimeScreen> createState() => _GenericAnimeScreenState();

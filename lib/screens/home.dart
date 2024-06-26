@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:per_rat/data/firestore_data.dart';
 import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/models/show_rating.dart';
-
 import 'package:per_rat/screens/show_rating_details.dart';
 import 'package:per_rat/widgets/home_anime_item.dart';
 
@@ -125,37 +124,6 @@ class _HomeScreenState extends State<HomeScreen> {
     lastOnline();
   }
 
-  //anime adding page
-
-  // void _addAnime(Anime anime) {
-  //   setState(() {
-  //     _registeredAnime.add(anime);
-  //   });
-  // }
-
-  // void _addAnimePage() async {
-  //   final newAnime = await Navigator.of(context).push<Anime>(
-  //     MaterialPageRoute(
-  //       builder: (ctx) => NewAnime(onAddAnime: _addAnime),
-  //     ),
-  //   );
-
-  //   if (newAnime == null) {
-  //     return;
-  //   }
-
-  //   setState(() {
-  //     _registeredAnime.add(newAnime);
-  //   });
-  // }
-
-  // void _removeAnime(Anime anime) async {
-  //   await removeAnime(context, _registeredAnime, anime);
-  //   setState(() {
-  //     _registeredAnime = _registeredAnime;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     void selectRating(BuildContext context, ShowRating showRating) {
@@ -167,23 +135,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
     }
-
-    // void editRating(BuildContext context, ShowRating showRating) {
-    //   Navigator.of(context).push(MaterialPageRoute(
-    //       builder: (ctx) => EditRatingsScreen(
-    //             showRating: showRating,
-    //           )));
-    // }
-
-    // void selectAnime(BuildContext context, Anime anime) {
-    //   Navigator.of(context).push(
-    //     MaterialPageRoute(
-    //       builder: (ctx) => AnimeDetailsScreen(
-    //         anime: anime,
-    //       ),
-    //     ),
-    //   );
-    // }
 
     Widget content = const Center(
       child: Text(

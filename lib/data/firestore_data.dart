@@ -26,7 +26,7 @@ Future<List<Anime>> loadAnimeFromFirestore() async {
           popularity: data['popularity'] ?? '0',
           favorites: data['favorites'] ?? 0,
           trailerUrl: data['trailerUrl'] ?? '',
-          genre: data['genre'] ?? 'unknown',
+          genre: List<String>.from(data['genre'] ?? []),
           demographic: data['demographic'] ?? 'unknown',
           studio: data['studio'] ?? 'unknown',
           status: data['status'] ?? 'unknown',

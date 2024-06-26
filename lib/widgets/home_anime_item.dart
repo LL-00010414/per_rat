@@ -114,7 +114,7 @@ class HomeAnimeItem extends StatelessWidget {
                           const SizedBox(width: 5),
                           HomeAnimeItemTrait(
                             icon: Icons.movie_outlined,
-                            label: anime.genre,
+                            label: anime.genre.first,
                           ),
                           const SizedBox(width: 5),
                           HomeAnimeItemTrait(

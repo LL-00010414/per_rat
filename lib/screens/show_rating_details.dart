@@ -61,10 +61,16 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // final List<Anime> similarAnime = _registeredAnime
+    //     .where((anime) => anime.genre.contains(animeSet!.genre))
+    //     .where((anime) => anime.title != animeSet!.title)
+    //     .toList();
+
     final List<Anime> similarAnime = _registeredAnime
-        .where((anime) => anime.genre.contains(animeSet!.genre))
+        .where((anime) => anime.genre.any((g) => animeSet!.genre.contains(g)))
         .where((anime) => anime.title != animeSet!.title)
         .toList();
+
     return Scaffold(
       //backgroundColor: Colors.transparent,
       appBar: AppBar(
@@ -285,7 +291,7 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Genre: ${animeSet!.genre.toUpperCase()}',
+                    'Genre: ${animeSet!.genre.map((g) => g.toUpperCase()).join(', ')}',
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           color: Colors.red,
                           fontWeight: FontWeight.w500,

@@ -9,10 +9,8 @@ import 'package:per_rat/widgets/all_anime_item.dart';
 class AllAnimeScreen extends StatefulWidget {
   const AllAnimeScreen({
     super.key,
-    required this.refreshParent,
+    nt,
   });
-
-  final VoidCallback refreshParent;
 
   @override
   State<AllAnimeScreen> createState() => _AllAnimeScreenState();

@@ -28,12 +28,6 @@ class _MyListScreenState extends State<MyListScreen>
     super.dispose();
   }
 
-  void _refresh() {
-    setState(() {
-      // This will trigger a rebuild
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,28 +60,21 @@ class _MyListScreenState extends State<MyListScreen>
       body: TabBarView(
         controller: _tabController,
         children: <Widget>[
-          AllAnimeScreen(
-            refreshParent: _refresh,
-          ),
+          AllAnimeScreen(),
           GenericAnimeScreen(
             filterStatus: 'Watching',
-            refreshParent: _refresh,
           ),
           GenericAnimeScreen(
             filterStatus: 'Completed',
-            refreshParent: _refresh,
           ),
           GenericAnimeScreen(
             filterStatus: 'On Hold',
-            refreshParent: _refresh,
           ),
           GenericAnimeScreen(
             filterStatus: 'Dropped',
-            refreshParent: _refresh,
           ),
           GenericAnimeScreen(
             filterStatus: 'Plan to Watch',
-            refreshParent: _refresh,
           ),
         ],
       ),
