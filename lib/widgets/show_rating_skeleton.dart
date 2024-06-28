@@ -4,8 +4,13 @@ import 'package:per_rat/components/constants.dart';
 import 'package:shimmer/shimmer.dart';
 
 Widget showRatingSkeleton = Shimmer.fromColors(
-  baseColor: Color.fromARGB(255, 193, 189, 166),
-  highlightColor: Colors.grey[100]!,
+  //new colors
+  baseColor: baseColor,
+  highlightColor: highlightColor,
+
+  //previous colors
+  // baseColor: Color.fromARGB(255, 193, 189, 166),
+  // highlightColor: Colors.grey[100]!,
   child: Column(
     children: [
       Row(

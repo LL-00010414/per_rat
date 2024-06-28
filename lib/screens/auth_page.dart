@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'package:per_rat/screens/main_tabs.dart';
 import 'package:per_rat/screens/register_or_login.dart';
 

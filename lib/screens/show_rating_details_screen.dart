@@ -1,50 +1,32 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:per_rat/data/firestore_data.dart';
 import 'package:per_rat/models/anime.dart';
-import 'package:per_rat/screens/edit_score_screen.dart';
+import 'package:per_rat/models/show_rating.dart';
+import 'package:per_rat/screens/anime_details.dart';
+import 'package:per_rat/screens/edit_ratings.dart';
 import 'package:per_rat/widgets/showDetailsSkeleton.dart';
 import 'package:per_rat/widgets/similar_anime_item.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class AnimeDetailsScreen extends StatefulWidget {
-  const AnimeDetailsScreen({
+class ShowRatingDetails extends StatefulWidget {
+  const ShowRatingDetails({
     super.key,
-    required this.anime,
+    required this.showRating,
   });
 
-  final Anime anime;
+  final ShowRating showRating;
 
   @override
-  State<AnimeDetailsScreen> createState() => _AnimeDetailsScreenState();
+  State<ShowRatingDetails> createState() => _ShowRatingDetailsState();
 }
 
-class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
-  late YoutubePlayerController _controller;
+class _ShowRatingDetailsState extends State<ShowRatingDetails> {
   List<Anime> _registeredAnime = [];
+  Anime? animeSet;
   bool _isLoading = true; // Add a loading state
-
-  final user = FirebaseAuth.instance.currentUser!;
-  bool movieExists = false;
 
   @override
   void initState() {
-    final videoID = YoutubePlayer.convertUrlToId(widget.anime.trailerUrl);
-
-    _controller = YoutubePlayerController(
-      initialVideoId: videoID!,
-      flags: const YoutubePlayerFlags(
-        autoPlay: false,
-        //controlsVisibleAtStart: true,
-        loop: false,
-        forceHD: false,
-        showLiveFullscreenButton: false,
-      ),
-    );
     super.initState();
-
-    checkIfMovieExists();
     _fetchAnime();
   }
 
@@ -52,25 +34,18 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
     List<Anime> loadedAnime = await loadAnimeFromFirestore();
     setState(() {
       _registeredAnime = loadedAnime;
-      _isLoading = false;
+      animeSet = getAnimeFromShowRating(widget.showRating);
+      _isLoading = false; // Update loading state
     });
   }
 
-  Future<void> checkIfMovieExists() async {
-    try {
-      DocumentReference userDocRef =
-          FirebaseFirestore.instance.collection('users').doc(user.uid);
-      CollectionReference ratingCollectionRef =
-          userDocRef.collection('ratings');
-
-      DocumentSnapshot docSnapshot =
-          await ratingCollectionRef.doc(widget.anime.title).get();
-      setState(() {
-        movieExists = docSnapshot.exists;
-      });
-    } catch (error) {
-      print("Error checking movie existence: $error");
+  Anime? getAnimeFromShowRating(ShowRating showRating) {
+    for (Anime anime in _registeredAnime) {
+      if (anime.title == showRating.showName) {
+        return anime;
+      }
     }
+    return null;
   }
 
   void pickAnime(BuildContext context, Anime anime) {
@@ -84,23 +59,16 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
   }
 
   @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final List<Anime> similarAnime = _registeredAnime
-        .where(
-            (anime) => anime.genre.any((g) => widget.anime.genre.contains(g)))
-        .where((anime) => anime.title != widget.anime.title)
+        .where((anime) => anime.genre.any((g) => animeSet!.genre.contains(g)))
+        .where((anime) => anime.title != animeSet!.title)
         .toList();
 
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
-        title: Text(widget.anime.title),
+        title: Text(widget.showRating.showName),
         backgroundColor: Colors.black,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -123,13 +91,12 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                    builder: (ctx) => EditScoreScreen(
-                          anime: widget.anime,
+                    builder: (ctx) => EditRatingsScreen(
+                          showRating: widget.showRating,
                         )),
               );
             },
-            //icon: Icon(movieExists ? Icons.edit : Icons.add),
-            child: Icon(movieExists ? Icons.edit : Icons.add),
+            child: Icon(Icons.edit),
           ),
         ),
       ),
@@ -142,14 +109,14 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                 children: [
                   Center(
                     child: Image.network(
-                      widget.anime.imageUrl,
+                      animeSet!.imageUrl,
                       height: 300,
                     ),
                   ),
                   SizedBox(height: 16),
                   Center(
                     child: Text(
-                      widget.anime.title,
+                      widget.showRating.showName,
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
@@ -163,38 +130,38 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                     children: [
                       _buildInfoColumn(
                         'Score',
-                        (double.tryParse(widget.anime.score) == 0)
+                        (double.tryParse(animeSet!.score) == 0)
                             ? 'N/A'
-                            : widget.anime.score,
+                            : animeSet!.score,
                         Icons.star_border,
                       ),
                       _buildInfoColumn(
                         'Rank',
-                        (int.tryParse(widget.anime.rank) == 0)
+                        (int.tryParse(animeSet!.rank) == 0)
                             ? 'N/A'
-                            : widget.anime.rank,
+                            : animeSet!.rank,
                         Icons.leaderboard,
                       ),
                       _buildInfoColumn(
                         'Popularity',
-                        widget.anime.popularity,
+                        animeSet!.popularity,
                         Icons.people,
                       ),
                       _buildInfoColumn(
                         'Favorites',
-                        widget.anime.favorites.toString(),
+                        animeSet!.favorites.toString(),
                         Icons.favorite,
                       ),
                     ],
                   ),
                   SizedBox(height: 16),
                   _buildStatusRow('Premiered',
-                      '${formatterMY.format(widget.anime.startDate)}'),
-                  _buildStatusRow('Status', widget.anime.status),
+                      '${formatterMY.format(animeSet!.startDate)}'),
+                  _buildStatusRow('Status', animeSet!.status),
                   _buildStatusRow(
-                      'Episodes', '${widget.anime.totalEpisodes.toString()}'),
+                      'Episodes', '${animeSet!.totalEpisodes.toString()}'),
                   SizedBox(height: 16),
-                  _buildGenreChips(widget.anime.genre),
+                  _buildGenreChips(animeSet!.genre),
                   SizedBox(height: 16),
                   Text(
                     'Synopsis',
@@ -206,37 +173,13 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    widget.anime.synopsis
+                    animeSet!.synopsis
                         .join()
                         .replaceAll('[', '"')
                         .replaceAll(']', '"'),
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  AspectRatio(
-                    aspectRatio: 16 / 9,
-                    child: YoutubePlayer(
-                      //actionsPadding: const EdgeInsets.all(15),
-                      controller: _controller,
-                      showVideoProgressIndicator: true,
-                      aspectRatio: PlaybackRate.normal,
-                      bottomActions: [
-                        CurrentPosition(),
-                        ProgressBar(
-                          isExpanded: true,
-                          colors: const ProgressBarColors(
-                            playedColor: Colors.amber,
-                            handleColor: Colors.red,
-                          ),
-                        ),
-                        const PlaybackSpeedButton(),
-                        PlayPauseButton(),
-                      ],
                     ),
                   ),
                   SizedBox(height: 16),
@@ -278,9 +221,6 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
                         },
                       ),
                     ),
-                  const SizedBox(
-                    height: 30,
-                  ),
 
                   // SizedBox(height: 8),
                   // _buildSimilarAnimeList(similarAnime),
@@ -338,6 +278,26 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
       ),
     );
   }
+
+  // Widget _buildGenreChips() {
+  //   return Wrap(
+  //     spacing: 8,
+  //     children: [
+  //       Chip(
+  //         label: Text('DRAMA'),
+  //         backgroundColor: Colors.redAccent,
+  //       ),
+  //       Chip(
+  //         label: Text('SCI-FI'),
+  //         backgroundColor: Colors.redAccent,
+  //       ),
+  //       Chip(
+  //         label: Text('SUPERNATURAL'),
+  //         backgroundColor: Colors.redAccent,
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget _buildGenreChips(List<String> genres) {
     return Wrap(

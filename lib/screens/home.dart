@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:per_rat/data/firestore_data.dart';
 import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/models/show_rating.dart';
-import 'package:per_rat/screens/show_rating_details.dart';
+import 'package:per_rat/screens/show_rating_details_screen.dart';
 import 'package:per_rat/widgets/home_anime_item.dart';
 import 'package:per_rat/widgets/home_anime_skeleton.dart';
 
@@ -131,10 +131,13 @@ class _HomeScreenState extends State<HomeScreen> {
     void selectRating(BuildContext context, ShowRating showRating) {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (ctx) => ShowDetailsScreen(
-            showRating: showRating,
-          ),
-        ),
+            builder: (ctx) => ShowRatingDetails(
+                  showRating: showRating,
+                )
+            // ShowDetailsScreen(
+            //   showRating: showRating,
+            // ),
+            ),
       );
     }
 

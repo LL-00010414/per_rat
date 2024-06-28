@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:per_rat/models/show_rating.dart';
 import 'package:per_rat/screens/edit_ratings.dart';
-import 'package:per_rat/screens/show_rating_details.dart';
+import 'package:per_rat/screens/show_rating_details_screen.dart';
 import 'package:per_rat/widgets/all_anime_item.dart';
 
 class GenericAnimeScreen extends StatefulWidget {
@@ -50,7 +50,7 @@ class _GenericAnimeScreenState extends State<GenericAnimeScreen> {
     void selectRating(BuildContext context, ShowRating showRating) {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (ctx) => ShowDetailsScreen(
+          builder: (ctx) => ShowRatingDetails(
             showRating: showRating,
           ),
         ),

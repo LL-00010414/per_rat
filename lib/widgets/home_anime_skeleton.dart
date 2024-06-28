@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:per_rat/components/constants.dart';
 import 'package:shimmer/shimmer.dart';
 
 Widget homeAnimeSkeleton = Shimmer.fromColors(
-  baseColor: Color.fromARGB(255, 193, 189, 166),
-  highlightColor: Colors.grey[100]!,
+  //new colors
+  baseColor: baseColor,
+  highlightColor: highlightColor,
+
+  //previous colors
+  // baseColor: Color.fromARGB(255, 107, 106, 99),
+  // highlightColor: Colors.grey[100]!,
   child: Container(
     margin: const EdgeInsets.all(8),
     decoration: BoxDecoration(
-      color: Colors.white,
+      color: Colors.grey[700],
       borderRadius: BorderRadius.circular(8),
     ),
     height: 400,
