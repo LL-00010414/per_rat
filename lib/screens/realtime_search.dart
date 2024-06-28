@@ -120,7 +120,7 @@ class _RealtimeSearchScreenState extends State<RealtimeSearchScreen> {
                               popularity: data['popularity'],
                               favorites: data['favorites'],
                               trailerUrl: data['trailerUrl'],
-                              genre: data['genre'],
+                              genre: List<String>.from(data['genre']),
                               demographic: data['demographic'],
                               studio: data['studio'],
                               status: data['status'],

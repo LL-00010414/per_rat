@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:per_rat/models/show_rating.dart';
 import 'package:per_rat/screens/edit_ratings.dart';
+import 'package:per_rat/widgets/show_rating_skeleton.dart';
 
 import '../data/firestore_data.dart';
 import '../models/anime.dart';
@@ -24,6 +25,7 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
   final user = FirebaseAuth.instance.currentUser!;
   List<Anime> _registeredAnime = [];
   Anime? animeSet;
+  bool _isLoading = true; // Add a loading state
 
   @override
   void initState() {
@@ -35,8 +37,8 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
     List<Anime> loadedAnime = await loadAnimeFromFirestore();
     setState(() {
       _registeredAnime = loadedAnime;
-      animeSet = getAnimeFromShowRating(
-          widget.showRating); // Update animeSet after fetching anime list
+      animeSet = getAnimeFromShowRating(widget.showRating);
+      _isLoading = false; // Update loading state
     });
   }
 
@@ -61,10 +63,17 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final List<Anime> similarAnime = _registeredAnime
-    //     .where((anime) => anime.genre.contains(animeSet!.genre))
-    //     .where((anime) => anime.title != animeSet!.title)
-    //     .toList();
+    if (_isLoading) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(widget.showRating.showName),
+        ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(18),
+          child: showRatingSkeleton,
+        ),
+      );
+    }
 
     final List<Anime> similarAnime = _registeredAnime
         .where((anime) => anime.genre.any((g) => animeSet!.genre.contains(g)))
@@ -72,7 +81,6 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
         .toList();
 
     return Scaffold(
-      //backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: Text(widget.showRating.showName),
       ),
@@ -95,7 +103,6 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(18),
         child: Column(
-          //crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -310,10 +317,7 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
             const SizedBox(
               height: 10,
             ),
-            //the loop was for displaying List<String>
-            //for (final description in widget.anime.synopsis)
             Text(
-              //textAlign: TextAlign.left,
               animeSet!.synopsis
                   .join()
                   .replaceAll('[', '"')
@@ -325,7 +329,6 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
             const SizedBox(
               height: 20,
             ),
-
             Row(
               children: [
                 Container(
