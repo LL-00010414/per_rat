@@ -78,16 +78,24 @@ class _RealtimeSearchScreenState extends State<RealtimeSearchScreen> {
                     child: Text(
                       'No results found',
                       style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: Theme.of(context).colorScheme.error,
                       ),
                     ),
                   ) // Display nothing if searchName is empty
                 : StreamBuilder<QuerySnapshot>(
+                    //new algorithm
                     stream: FirebaseFirestore.instance
                         .collection('anime')
-                        .orderBy('title')
-                        .startAt([searchName]).endAt(
-                            [searchName + "\uf8ff"]).snapshots(),
+                        .where('title', isGreaterThanOrEqualTo: searchName)
+                        .where('title',
+                            isLessThanOrEqualTo: searchName + '\uf8ff')
+                        .snapshots(),
+                    //previous method
+                    // stream: FirebaseFirestore.instance
+                    //     .collection('anime')
+                    //     .orderBy('title')
+                    //     .startAt([searchName]).endAt(
+                    //         [searchName + "\uf8ff"]).snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.hasError) {
                         return Center(child: Text('Something went wrong'));
@@ -98,7 +106,13 @@ class _RealtimeSearchScreenState extends State<RealtimeSearchScreen> {
                       }
 
                       if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                        return Center(child: Text('No results found'));
+                        return Center(
+                            child: Text(
+                          'No results found!',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.error,
+                          ),
+                        ));
                       }
 
                       final results = snapshot.data!.docs

@@ -18,7 +18,6 @@ class MainDrawer extends StatefulWidget {
   });
 
   final void Function() onSelectScreen;
-
   final User user1;
 
   @override
@@ -26,8 +25,6 @@ class MainDrawer extends StatefulWidget {
 }
 
 class _MainDrawerState extends State<MainDrawer> {
-  //var data;
-
   void signUserOut() {
     GoogleSignIn().signOut();
     FirebaseAuth.instance.signOut();
@@ -36,15 +33,13 @@ class _MainDrawerState extends State<MainDrawer> {
 
   @override
   void initState() {
-    //fetchData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     String? email = widget.user1.email;
-    // String displayEmail =
-    //     email.length <= 12 ? email : email.substring(0, 12) + '...';
+
     return Drawer(
       backgroundColor: const Color.fromARGB(255, 32, 28, 6),
       child: Column(
@@ -52,67 +47,45 @@ class _MainDrawerState extends State<MainDrawer> {
           DrawerHeader(
             padding: const EdgeInsets.all(20),
             decoration: const BoxDecoration(
-                gradient: LinearGradient(colors: [
-              Color.fromARGB(255, 94, 11, 220),
-              Color.fromARGB(198, 95, 11, 220),
-              Color.fromARGB(100, 95, 11, 220),
-            ])),
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 94, 11, 220),
+                  Color.fromARGB(198, 95, 11, 220),
+                  Color.fromARGB(100, 95, 11, 220),
+                ],
+              ),
+            ),
             child: GestureDetector(
               onTap: () {
                 widget.onSelectScreen();
               },
               child: FutureBuilder<DocumentSnapshot>(
-                  future: FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(widget.user1.uid)
-                      .get(),
-                  builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    if (snapshot.hasError) {
-                      return Center(
-                        child: Text('Error: ${snapshot.error}'),
-                      );
-                    }
-                    if (!snapshot.hasData || !snapshot.data!.exists) {
-                      return Row(
-                        children: [
-                          Icon(
-                            Icons.person_rounded,
-                            size: 50,
-                            color: Theme.of(context).colorScheme.onSurface,
-                          ),
-                          const SizedBox(width: 15),
-                          Text(
-                            getDisplayEmail(email!),
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge!
-                                .copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onPrimaryContainer,
-                                ),
-                          ),
-                        ],
-                      );
-                    }
-
-                    var userData = snapshot.data!;
-
+                future: FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(widget.user1.uid)
+                    .get(),
+                builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text('Error: ${snapshot.error}'),
+                    );
+                  }
+                  if (!snapshot.hasData || !snapshot.data!.exists) {
                     return Row(
                       children: [
-                        Image.network(
-                          userData['image_url'],
-                          width: MediaQuery.of(context).size.width * 0.25,
+                        Icon(
+                          Icons.person_rounded,
+                          size: 50,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
-                        const SizedBox(width: 15),
+                        const SizedBox(width: 10),
                         Text(
-                          widget.user1.email!
-                              .substring(0, widget.user1.email!.indexOf('@')),
+                          getDisplayEmail(email!),
                           style:
                               Theme.of(context).textTheme.titleLarge!.copyWith(
                                     color: Theme.of(context)
@@ -122,7 +95,36 @@ class _MainDrawerState extends State<MainDrawer> {
                         ),
                       ],
                     );
-                  }),
+                  }
+
+                  var userData = snapshot.data!.data() as Map<String, dynamic>;
+
+                  return Row(
+                    children: [
+                      CircleAvatar(
+                          radius: 30,
+                          backgroundImage: userData['image_url'] != null
+                              ? NetworkImage(userData['image_url'])
+                              : NetworkImage(
+                                  'https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male4-1024.png',
+                                )
+                          //as ImageProvider,
+                          ),
+                      const SizedBox(width: 15),
+                      Text(
+                        getDisplayEmail(widget.user1.email!),
+                        // widget.user1.email!
+                        //     .substring(0, widget.user1.email!.indexOf('@')),
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
+                            ),
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
           ),
           ListTile(
@@ -215,31 +217,28 @@ class _MainDrawerState extends State<MainDrawer> {
             },
           ),
           const Divider(),
-          SizedBox(
-            height: 290,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                const Divider(),
-                ListTile(
-                  leading: Icon(
-                    Icons.logout,
-                    size: 24,
+          Spacer(),
+          const Divider(),
+          ListTile(
+            leading: Icon(
+              Icons.logout,
+              size: 24,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+            title: Text(
+              'Logout',
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     color: Theme.of(context).colorScheme.onSurface,
                   ),
-                  title: Text(
-                    'Logout',
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
-                  ),
-                  onTap: signUserOut,
-                ),
-              ],
             ),
-          )
+            onTap: signUserOut,
+          ),
         ],
       ),
     );
   }
+
+  // String getDisplayEmail(String email) {
+  //   return email.length <= 12 ? email : email.substring(0, 12) + '...';
+  // }
 }

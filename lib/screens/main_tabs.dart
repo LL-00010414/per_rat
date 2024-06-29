@@ -7,9 +7,8 @@ import 'package:per_rat/screens/discover.dart';
 import 'package:per_rat/screens/home.dart';
 import 'package:per_rat/screens/my_list.dart';
 import 'package:per_rat/screens/seasonal.dart';
+import 'package:per_rat/user_profile_screens/user_profile.dart';
 import 'package:per_rat/widgets/main_drawer.dart';
-
-import '../../user_profile_screens/user_profile.dart';
 
 class MainTabsScreen extends StatefulWidget {
   const MainTabsScreen({
@@ -48,7 +47,7 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
 
   void _setScreen() {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (ctx) => const ProfileScreen()));
+        .push(MaterialPageRoute(builder: (ctx) => const UserProfileScreen()));
   }
 
   @override
