@@ -108,35 +108,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     }
   }
 
-  // void lastOnline() {
-  //   var yourRef = FirebaseFirestore.instance.collection('users').doc(user.uid);
-  //   yourRef.get().then((doc) => {
-  //         if (!doc.exists)
-  //           {print('No such document')}
-  //         else
-  //           {
-  //             if (doc.get('last_online') != null)
-  //               {
-  //                 FirebaseFirestore.instance
-  //                     .collection('users')
-  //                     .doc(user.uid)
-  //                     .update({
-  //                   'last_online': Timestamp.now(),
-  //                 })
-  //               }
-  //             else
-  //               {
-  //                 FirebaseFirestore.instance
-  //                     .collection('users')
-  //                     .doc(user.uid)
-  //                     .set({
-  //                   'last_online': Timestamp.now(),
-  //                 })
-  //               }
-  //           }
-  //       });
-  // }
-
   @override
   void initState() {
     super.initState();

@@ -81,7 +81,9 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
     }
 
     return Scaffold(
+      //backgroundColor: Colors.black,
       appBar: AppBar(
+        //backgroundColor: Colors.black,
         centerTitle: true,
         title: const Text(
           'PERRAT',
@@ -105,6 +107,8 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
         type: BottomNavigationBarType.fixed,
         fixedColor: Colors.amber,
         backgroundColor: Theme.of(context).colorScheme.surface,
+
+        //Theme.of(context).colorScheme.surface,
         onTap: _selectPage,
         currentIndex: _selectedPageIndex,
         items: const [

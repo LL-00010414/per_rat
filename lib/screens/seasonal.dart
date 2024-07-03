@@ -5,7 +5,7 @@ import 'package:per_rat/screens/anime_details.dart';
 import 'package:per_rat/screens/dated_anime_screen.dart';
 import 'package:per_rat/screens/edit_score_screen.dart';
 import 'package:per_rat/widgets/archive_anime_item.dart';
-import 'package:per_rat/widgets/seasonal_anime_item.dart';
+import 'package:per_rat/widgets/seasonal_anime_test.dart';
 
 class SeasonalScreen extends StatefulWidget {
   const SeasonalScreen({
@@ -117,12 +117,12 @@ class _SeasonalScreenState extends State<SeasonalScreen>
           mainAxisSpacing: 3,
         ),
         itemCount: lastAnime.length,
-        itemBuilder: (ctx, index) => SeasonalAnimeItem(
+        itemBuilder: (ctx, index) => SeasonalAnimeTest(
           anime: lastAnime[index],
-          onPickAnime: (anime) {
+          onSelectAnime: (anime) {
             pickAnime(context, anime);
           },
-          onEditScore: (anime) {
+          onEditRating: (anime) {
             editScore(context, anime);
           },
         ),
@@ -159,12 +159,12 @@ class _SeasonalScreenState extends State<SeasonalScreen>
           mainAxisSpacing: 5,
         ),
         itemCount: thisSeaAnime.length,
-        itemBuilder: (ctx, index) => SeasonalAnimeItem(
+        itemBuilder: (ctx, index) => SeasonalAnimeTest(
           anime: thisSeaAnime[index],
-          onPickAnime: (anime) {
+          onSelectAnime: (anime) {
             pickAnime(context, anime);
           },
-          onEditScore: (anime) {
+          onEditRating: (anime) {
             editScore(context, anime);
           },
         ),
@@ -201,12 +201,12 @@ class _SeasonalScreenState extends State<SeasonalScreen>
           mainAxisSpacing: 5,
         ),
         itemCount: nextAnime.length,
-        itemBuilder: (ctx, index) => SeasonalAnimeItem(
+        itemBuilder: (ctx, index) => SeasonalAnimeTest(
           anime: nextAnime[index],
-          onPickAnime: (anime) {
+          onSelectAnime: (anime) {
             pickAnime(context, anime);
           },
-          onEditScore: (anime) {
+          onEditRating: (anime) {
             editScore(context, anime);
           },
         ),
@@ -297,7 +297,9 @@ class _SeasonalScreenState extends State<SeasonalScreen>
     );
 
     return Scaffold(
+      //backgroundColor: Colors.black,
       appBar: AppBar(
+        //backgroundColor: Colors.black,
         flexibleSpace: TabBar(
           // indicatorWeight: 2,
           // //padding: const EdgeInsets.all(0),
@@ -308,7 +310,7 @@ class _SeasonalScreenState extends State<SeasonalScreen>
           // fontWeight: FontWeight.normal,
           // fontStyle: FontStyle.normal,
           // ,
-          isScrollable: false,
+          isScrollable: true,
           controller: _tabController,
           tabs: const <Widget>[
             Tab(

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:per_rat/components/constants.dart';
 import 'package:per_rat/models/anime.dart';
 
 class EditScoreScreen extends StatefulWidget {
@@ -160,7 +161,8 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const double buttonFontSize = 14;
+    final double buttonWidth = MediaQuery.sizeOf(context).width * 0.29;
+    final double buttonHeight = MediaQuery.sizeOf(context).height * 0.05;
 
     Widget content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -214,135 +216,208 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
                   ],
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Wrap(
+                spacing: 8.0, // Horizontal spacing between buttons
+                runSpacing: 8.0, // Vertical spacing between buttons
                 children: [
-                  OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: cCompleted,
-                        //padding: const EdgeInsets.all(16.0),
-                        textStyle: const TextStyle(fontSize: buttonFontSize),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        )),
-                    onPressed: () {
-                      selectStatus(1);
-                    },
-                    child: const Text('Completed'),
-                  ),
-
-                  OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: cWatching,
-
-                        //padding: const EdgeInsets.all(16.0),
-                        textStyle: const TextStyle(fontSize: buttonFontSize),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        )),
-                    onPressed: () {
-                      selectStatus(2);
-                    },
-                    child: const Text('Watching'),
-                  ),
-                  OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: cPTW,
-                        //padding: const EdgeInsets.all(16.0),
-                        textStyle: const TextStyle(fontSize: buttonFontSize),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        )),
-                    onPressed: () {
-                      selectStatus(3);
-                    },
-                    child: const Text('Plan to Watch'),
-                  ),
-
-                  //failed new responsive buttons
-                  // StatusButton(
-                  //     statusColor: cCompleted,
-                  //     status: 'Completed',
-                  //     onPressed: () {
-                  //       setState(() {
-                  //         selectStatus(1);
-                  //       });
-                  //     }),
-                  // StatusButton(
-                  //     statusColor: cWatching,
-                  //     status: 'Watching',
-                  //     onPressed: () {
-                  //       setState(() {
-                  //         selectStatus(2);
-                  //       });
-                  //     }),
-                  // StatusButton(
-                  //     statusColor: cPTW,
-                  //     status: 'Plan to Watch',
-                  //     onPressed: () {
-                  //       setState(() {
-                  //         selectStatus(3);
-                  //       });
-                  //     }),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      bottom: 10,
-                      right: 3,
-                    ),
+                  SizedBox(
+                    width: buttonWidth,
+                    height: buttonHeight,
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: cOnHold,
-                          //padding: const EdgeInsets.all(16.0),
-                          textStyle: const TextStyle(fontSize: buttonFontSize),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          )),
+                        foregroundColor: Colors.white,
+                        backgroundColor: cCompleted,
+                        textStyle: const TextStyle(fontSize: buttonFontSize),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      onPressed: () {
+                        selectStatus(1);
+                      },
+                      child: const Text('Completed'),
+                    ),
+                  ),
+                  SizedBox(
+                    width: buttonWidth,
+                    height: buttonHeight,
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: cWatching,
+                        textStyle: const TextStyle(fontSize: buttonFontSize),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      onPressed: () {
+                        selectStatus(2);
+                      },
+                      child: const Text('Watching'),
+                    ),
+                  ),
+                  SizedBox(
+                    width: buttonWidth,
+                    height: buttonHeight,
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: cPTW,
+                        textStyle: const TextStyle(fontSize: buttonFontSize),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      onPressed: () {
+                        selectStatus(3);
+                      },
+                      child: const Text('Plan to Watch'),
+                    ),
+                  ),
+                  SizedBox(
+                    width: buttonWidth,
+                    height: buttonHeight,
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: cOnHold,
+                        textStyle: const TextStyle(fontSize: buttonFontSize),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
                       onPressed: () {
                         selectStatus(4);
                       },
-                      child: Container(
-                        child: const Text('On Hold'),
-                        margin: EdgeInsets.symmetric(
-                          horizontal: 9,
-                        ),
-                      ),
+                      child: const Text('On Hold'),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      bottom: 10,
-                      right: 12,
-                    ),
+                  SizedBox(
+                    width: buttonWidth,
+                    height: buttonHeight,
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: cDropped,
-                          //padding: const EdgeInsets.all(16.0),
-                          textStyle: const TextStyle(fontSize: buttonFontSize),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          )),
+                        foregroundColor: Colors.white,
+                        backgroundColor: cDropped,
+                        textStyle: const TextStyle(fontSize: buttonFontSize),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
                       onPressed: () {
                         selectStatus(5);
                       },
-                      child: Container(
-                          margin: EdgeInsets.symmetric(
-                            horizontal: 3,
-                          ),
-                          child: const Text('Dropped')),
+                      child: const Text('Dropped'),
                     ),
                   ),
                 ],
               ),
+              SizedBox(
+                height: 20,
+              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     OutlinedButton(
+              //       style: OutlinedButton.styleFrom(
+              //           foregroundColor: Colors.white,
+              //           backgroundColor: cCompleted,
+              //           //padding: const EdgeInsets.all(16.0),
+              //           textStyle: const TextStyle(fontSize: buttonFontSize),
+              //           shape: RoundedRectangleBorder(
+              //             borderRadius: BorderRadius.circular(5),
+              //           )),
+              //       onPressed: () {
+              //         selectStatus(1);
+              //       },
+              //       child: const Text('Completed'),
+              //     ),
+
+              //     OutlinedButton(
+              //       style: OutlinedButton.styleFrom(
+              //           foregroundColor: Colors.white,
+              //           backgroundColor: cWatching,
+
+              //           //padding: const EdgeInsets.all(16.0),
+              //           textStyle: const TextStyle(fontSize: buttonFontSize),
+              //           shape: RoundedRectangleBorder(
+              //             borderRadius: BorderRadius.circular(5),
+              //           )),
+              //       onPressed: () {
+              //         selectStatus(2);
+              //       },
+              //       child: const Text('Watching'),
+              //     ),
+              //     OutlinedButton(
+              //       style: OutlinedButton.styleFrom(
+              //           foregroundColor: Colors.white,
+              //           backgroundColor: cPTW,
+              //           //padding: const EdgeInsets.all(16.0),
+              //           textStyle: const TextStyle(fontSize: buttonFontSize),
+              //           shape: RoundedRectangleBorder(
+              //             borderRadius: BorderRadius.circular(5),
+              //           )),
+              //       onPressed: () {
+              //         selectStatus(3);
+              //       },
+              //       child: const Text('Plan to Watch'),
+              //     ),
+              //   ],
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.start,
+              //   children: [
+              //     Padding(
+              //       padding: const EdgeInsets.only(
+              //         bottom: 10,
+              //         right: 3,
+              //       ),
+              //       child: OutlinedButton(
+              //         style: OutlinedButton.styleFrom(
+              //             foregroundColor: Colors.white,
+              //             backgroundColor: cOnHold,
+              //             //padding: const EdgeInsets.all(16.0),
+              //             textStyle: const TextStyle(fontSize: buttonFontSize),
+              //             shape: RoundedRectangleBorder(
+              //               borderRadius: BorderRadius.circular(5),
+              //             )),
+              //         onPressed: () {
+              //           selectStatus(4);
+              //         },
+              //         child: Container(
+              //           child: const Text('On Hold'),
+              //           margin: EdgeInsets.symmetric(
+              //             horizontal: 9,
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //     Padding(
+              //       padding: const EdgeInsets.only(
+              //         bottom: 10,
+              //         right: 12,
+              //       ),
+              //       child: OutlinedButton(
+              //         style: OutlinedButton.styleFrom(
+              //             foregroundColor: Colors.white,
+              //             backgroundColor: cDropped,
+              //             //padding: const EdgeInsets.all(16.0),
+              //             textStyle: const TextStyle(fontSize: buttonFontSize),
+              //             shape: RoundedRectangleBorder(
+              //               borderRadius: BorderRadius.circular(5),
+              //             )),
+              //         onPressed: () {
+              //           selectStatus(5);
+              //         },
+              //         child: Container(
+              //             margin: EdgeInsets.symmetric(
+              //               horizontal: 3,
+              //             ),
+              //             child: const Text('Dropped')),
+              //       ),
+              //     ),
+              //   ],
+              // ),
               const Text(
                 'Progress',
                 style: TextStyle(
@@ -401,6 +476,9 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
                       }),
                 ),
               ),
+              SizedBox(
+                height: 15,
+              ),
               const Text(
                 'Score',
                 style: TextStyle(
@@ -453,43 +531,51 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
                 ),
               ),
               SizedBox(
-                height: 290,
+                height: MediaQuery.sizeOf(context).height * 0.315,
                 //width: 500,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                                foregroundColor: Colors.green,
-                                //padding: const EdgeInsets.all(16.0),
-                                textStyle:
-                                    const TextStyle(fontSize: buttonFontSize),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                                )),
-                            onPressed: _submit,
-                            child: const Padding(
-                              padding: EdgeInsets.all(14.0),
-                              child: Text('Submit'),
-                            )),
-                        OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                                foregroundColor: Colors.red,
-                                //padding: const EdgeInsets.all(16.0),
-                                textStyle:
-                                    const TextStyle(fontSize: buttonFontSize),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                                )),
-                            onPressed: () {},
-                            child: const Padding(
-                              padding: EdgeInsets.all(14.0),
-                              child: Text('Delete'),
-                            )),
-                      ],
+                    Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                  backgroundColor: Colors.green,
+                                  //padding: const EdgeInsets.all(16.0),
+                                  textStyle:
+                                      const TextStyle(fontSize: buttonFontSize),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                  )),
+                              onPressed: _submit,
+                              child: const Padding(
+                                padding: EdgeInsets.all(14.0),
+                                child: Text(
+                                  'Submit',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              )),
+                          OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                  backgroundColor: Colors.red,
+                                  //padding: const EdgeInsets.all(16.0),
+                                  textStyle:
+                                      const TextStyle(fontSize: buttonFontSize),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                  )),
+                              onPressed: () {},
+                              child: const Padding(
+                                padding: EdgeInsets.all(14.0),
+                                child: Text(
+                                  'Delete',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              )),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -508,13 +594,13 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
             onPressed: _submit,
             icon: const Icon(
               Icons.save_outlined,
-              size: 35,
-              color: Colors.blueAccent,
+              size: 30,
+              color: Colors.green,
             ),
           )
         ],
       ),
-      body: content,
+      body: SafeArea(child: content),
     );
   }
 }
