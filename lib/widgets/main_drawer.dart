@@ -176,8 +176,8 @@ class _MainDrawerState extends State<MainDrawer> {
                   ),
             ),
             onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (ctx) => const MessagesScreen()));
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (ctx) => MessagesScreen()));
             },
           ),
           const Divider(),

@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:per_rat/data/firestore_data.dart';
 import 'package:per_rat/data/firestore_service.dart';
+import 'package:per_rat/data/messaging_service.dart';
 import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/models/show_rating.dart';
 import 'package:per_rat/screens/show_rating_details_screen.dart';
@@ -33,6 +34,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   //getting Anime
   Anime? animeSet;
+
+  //chat
+  final MessagingService _messagingService = MessagingService();
 
   void _fetchAnime() async {
     try {
@@ -115,6 +119,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     _firestoreService.setUserOnlineStatus(true); // Set user status to online
     _fetchAnime();
     displayRating();
+    _messagingService.initialize();
+
     //lastOnline();
 
     // Set a timer to stop showing the skeleton after a limited time

@@ -5,15 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:per_rat/firebase_options.dart';
 import 'package:per_rat/screens/auth_page.dart';
 
-// final theme = ThemeData(
-//   useMaterial3: true,
-//   colorScheme: ColorScheme.fromSeed(
-//     brightness: Brightness.dark,
-//     seedColor: const Color.fromARGB(255, 109, 95, 7),
-//   ),
-//   textTheme: GoogleFonts.robotoSerifTextTheme(),
-// );
-
 // new color update
 final colorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
