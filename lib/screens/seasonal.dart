@@ -73,13 +73,24 @@ class _SeasonalScreenState extends State<SeasonalScreen>
   @override
   Widget build(BuildContext context) {
     final List<Anime> lastAnime = _registeredAnime
-        .where((anime) => anime.status.contains('Completed'))
+        .where((anime) =>
+            anime.startDate.isBefore(DateTime.now()) &&
+            anime.endDate.isBefore(DateTime.now()) &&
+            anime.endDate.year != 0 &&
+            anime.startDate.year != 0)
         .toList();
+
     final List<Anime> thisSeaAnime = _registeredAnime
-        .where((anime1) => anime1.status.contains('Ongoing'))
+        .where((anime) =>
+            anime.startDate.isAtSameMomentAs(DateTime.now()) ||
+            anime.startDate.isBefore(DateTime.now()) && anime.endDate.year == 0)
         .toList();
+
     final List<Anime> nextAnime = _registeredAnime
-        .where((anime1) => anime1.status.contains('Upcoming'))
+        .where((anime) =>
+            anime.startDate.isAfter(DateTime.now()) &&
+                anime.endDate.year == 0 ||
+            anime.startDate.year == 0)
         .toList();
 
     //archive tab
@@ -88,12 +99,6 @@ class _SeasonalScreenState extends State<SeasonalScreen>
         _registeredAnime.map((anime) => anime.startDate.year).toSet().toList();
     numOfYears.sort((a, b) => b.compareTo(a));
     _registeredAnime.sort((a, b) => b.startDate.compareTo(a.startDate));
-    // final numOfSeasons =
-    //     _registeredAnime.map((anime) => anime.startDate).toList();
-    // numOfSeasons.sort((a, b) => b.compareTo(a));
-
-    // _registeredAnime
-    //     .forEach((element) => print('${element.title}: ${element.startDate}'));
 
     //Last season tab
     Widget lastContent = const Center(

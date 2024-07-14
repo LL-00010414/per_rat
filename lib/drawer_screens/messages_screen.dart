@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:per_rat/components/constants.dart';
 
 import 'chat_screen.dart';
 
@@ -11,19 +12,6 @@ class MessagesScreen extends StatefulWidget {
 
 class _MessagesScreenState extends State<MessagesScreen> {
   final user = FirebaseAuth.instance.currentUser!;
-
-  Future<String> getRecipientName(String recipientId) async {
-    var recipientDoc = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(recipientId)
-        .get();
-    if (recipientDoc.exists) {
-      var recipientData = recipientDoc.data()!;
-      return recipientData['username'] ?? recipientData['email'];
-    } else {
-      return recipientId; // Fallback to recipientId if user document doesn't exist
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

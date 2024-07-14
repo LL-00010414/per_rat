@@ -52,14 +52,21 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final ongoingAnime1 = _registeredAnime
-        .where((anime) => anime.status.contains('Ongoing'))
+    final ongoingAnime = _registeredAnime
+        .where((anime) =>
+            anime.startDate.isAtSameMomentAs(DateTime.now()) ||
+            anime.startDate.isBefore(DateTime.now()) && anime.endDate.year == 0)
         .toList();
+
     final trendingAnime1 = _registeredAnime
         .where((anime1) => int.parse(anime1.popularity) < 1000)
         .toList();
-    final upcomingAnime1 = _registeredAnime
-        .where((anime3) => anime3.status.contains('Upcoming'))
+
+    final upcomingAnime = _registeredAnime
+        .where((anime) =>
+            anime.startDate.isAfter(DateTime.now()) &&
+                anime.endDate.year == 0 ||
+            anime.startDate.year == 0)
         .toList();
 
     final user = FirebaseAuth.instance.currentUser!;
@@ -68,9 +75,9 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
 
     if (_selectedPageIndex == 1) {
       currentPage = DiscoverScreen(
-        ongoingAnime: ongoingAnime1,
+        ongoingAnime: ongoingAnime,
         trendingAnime: trendingAnime1,
-        upcomingAnime: upcomingAnime1,
+        upcomingAnime: upcomingAnime,
       );
     }
     if (_selectedPageIndex == 2) {

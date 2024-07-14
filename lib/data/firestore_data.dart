@@ -30,9 +30,11 @@ Future<List<Anime>> loadAnimeFromFirestore() async {
           demographic: data['demographic'] ?? 'unknown',
           studio: data['studio'] ?? 'unknown',
           status: data['status'] ?? 'unknown',
-          startDate:
-              DateTime.parse(data['startDate']), // Parse startDate as DateTime
-          endDate: DateTime.parse(data['endDate']), // Parse endDate as DateTime
+          startDate: DateTime.parse(
+              data['startDate'] ?? DateTime(0)), // Parse startDate as DateTime
+          endDate: data['endDate'] == ''
+              ? DateTime(0)
+              : DateTime.parse(data['endDate']), // Parse endDate as DateTime
         );
       })
       .where((anime) => anime != null)

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:per_rat/components/constants.dart';
 
 class ChatScreen extends StatefulWidget {
   final String chatId;
@@ -15,6 +16,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
   final User user = FirebaseAuth.instance.currentUser!;
+  String recName = '';
 
   void _sendMessage() {
     if (_controller.text.trim().isEmpty) return;
@@ -28,11 +30,28 @@ class _ChatScreenState extends State<ChatScreen> {
     _controller.clear();
   }
 
+  void setRecipientName() async {
+    String recipientName = await getRecipientName(
+        widget.recipientId); // Use await to get the actual String
+    setState(() {
+      recName = recipientName;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setRecipientName();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chat'),
+        centerTitle: true,
+        title: Text(
+          recName,
+        ),
       ),
       body: Column(
         children: [
@@ -64,13 +83,17 @@ class _ChatScreenState extends State<ChatScreen> {
               children: [
                 Expanded(
                   child: TextField(
+                    style: TextStyle(color: Colors.white),
                     controller: _controller,
                     decoration: InputDecoration(labelText: 'Send a message...'),
                     onSubmitted: (_) => _sendMessage(),
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.send),
+                  icon: Icon(
+                    Icons.send,
+                    color: const Color.fromARGB(255, 149, 143, 158),
+                  ),
                   onPressed: _sendMessage,
                 ),
               ],
@@ -95,7 +118,7 @@ class MessageBubble extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-            color: isMe ? Colors.grey[300] : Colors.blue[300],
+            color: isMe ? Colors.blue[300] : Colors.grey[300],
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(12),
               topRight: Radius.circular(12),
@@ -103,13 +126,13 @@ class MessageBubble extends StatelessWidget {
               bottomRight: isMe ? Radius.circular(0) : Radius.circular(12),
             ),
           ),
-          width: 140,
+          width: 180,
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
           margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
           child: Text(
             message,
             style: TextStyle(
-              color: isMe ? Colors.black : Colors.white,
+              color: isMe ? Colors.white : Colors.black,
             ),
           ),
         ),

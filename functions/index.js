@@ -15,7 +15,7 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 
 exports.sendNotification = functions.firestore
-  .document('chats/{chatId}/messages/{messageId}')
+  .document('conversations/{conversationId}/messages/{messageId}')
   .onCreate((snap, context) => {
     const message = snap.data();
     const recipientId = message.recipientId;
@@ -35,6 +35,7 @@ exports.sendNotification = functions.firestore
       return admin.messaging().sendToDevice(token, payload);
     });
   });
+
 
 
 // Create and deploy your first functions

@@ -19,6 +19,20 @@ String getDisplayEmail(String email) {
       : email.substring(0, 12) + '...';
 }
 
+//recipient name
+Future<String> getRecipientName(String recipientId) async {
+  var recipientDoc = await FirebaseFirestore.instance
+      .collection('users')
+      .doc(recipientId)
+      .get();
+  if (recipientDoc.exists) {
+    var recipientData = recipientDoc.data()!;
+    return recipientData['username'] ?? recipientData['email'];
+  } else {
+    return recipientId; // Fallback to recipientId if user document doesn't exist
+  }
+}
+
 //timestamp format function
 String formatTimestamp(Timestamp timestamp) {
   DateTime dateTime = timestamp.toDate();

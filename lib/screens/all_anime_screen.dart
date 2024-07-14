@@ -86,11 +86,11 @@ class _AllAnimeScreenState extends State<AllAnimeScreen> {
     displayRating();
 
     // Set a timer to stop showing the skeleton after a limited time
-    Timer(Duration(seconds: 3), () {
-      setState(() {
-        _isLoading = false;
-      });
+    // Timer(Duration(seconds: 3), () {
+    setState(() {
+      _isLoading = false;
     });
+    // });
   }
 
   @override
