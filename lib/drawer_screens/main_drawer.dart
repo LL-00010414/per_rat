@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:per_rat/components/constants.dart';
-import 'package:per_rat/drawer_screens/clubs_screen.dart';
+import 'package:per_rat/drawer_screens/communities_screen.dart';
 import 'package:per_rat/drawer_screens/friends_screen.dart';
-import 'package:per_rat/drawer_screens/messages_screen.dart';
+import 'package:per_rat/drawer_screens/message_new.dart';
 import 'package:per_rat/drawer_screens/notifications_screen.dart';
 
 import '../../user_profile_screens/account_settings_screen.dart';
@@ -152,14 +152,14 @@ class _MainDrawerState extends State<MainDrawer> {
               color: Theme.of(context).colorScheme.onSurface,
             ),
             title: Text(
-              'Clubs',
+              'Communities',
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     color: Theme.of(context).colorScheme.onSurface,
                   ),
             ),
             onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (ctx) => const ClubsScreen()));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (ctx) => const CommunitiesScreen()));
             },
           ),
           const Divider(),
@@ -176,8 +176,8 @@ class _MainDrawerState extends State<MainDrawer> {
                   ),
             ),
             onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (ctx) => MessagesScreen()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (ctx) => MessageNewScreen()));
             },
           ),
           const Divider(),

@@ -124,11 +124,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     //lastOnline();
 
     // Set a timer to stop showing the skeleton after a limited time
-    Timer(Duration(seconds: 3), () {
-      setState(() {
-        _isLoading = false;
-      });
+    // Timer(Duration(seconds: 3), () {
+    setState(() {
+      _isLoading = false;
     });
+    // });
   }
 
   @override

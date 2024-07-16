@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:per_rat/data/firestore_data.dart';
+import 'package:per_rat/drawer_screens/new_drawer.dart';
 import 'package:per_rat/drawer_screens/notifications_screen.dart';
 import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/screens/discover.dart';
@@ -8,7 +9,6 @@ import 'package:per_rat/screens/home.dart';
 import 'package:per_rat/screens/my_list.dart';
 import 'package:per_rat/screens/seasonal.dart';
 import 'package:per_rat/user_profile_screens/profile.dart';
-import 'package:per_rat/widgets/main_drawer.dart';
 
 class MainTabsScreen extends StatefulWidget {
   const MainTabsScreen({
@@ -107,7 +107,8 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
               )),
         ],
       ),
-      drawer: MainDrawer(onSelectScreen: _setScreen, user1: user),
+      drawer: NewDrawer(onSelectScreen: _setScreen, user1: user),
+      //MainDrawer(onSelectScreen: _setScreen, user1: user),
       body: currentPage,
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: Colors.white,
