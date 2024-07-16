@@ -27,7 +27,7 @@ Future<String> getRecipientName(String recipientId) async {
       .get();
   if (recipientDoc.exists) {
     var recipientData = recipientDoc.data()!;
-    return recipientData['username'] ?? recipientData['email'];
+    return recipientData['username'] ?? '...';
   } else {
     return recipientId; // Fallback to recipientId if user document doesn't exist
   }

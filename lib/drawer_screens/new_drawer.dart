@@ -1,18 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:per_rat/components/constants.dart';
+import 'package:per_rat/data/firestore_service.dart';
 import 'package:per_rat/drawer_screens/friends_screen.dart';
-import 'package:per_rat/drawer_screens/message_new.dart';
+import 'package:per_rat/drawer_screens/messages.dart';
 import 'package:per_rat/drawer_screens/new_communities.dart';
 import 'package:per_rat/drawer_screens/notifications_screen.dart';
 import 'package:per_rat/user_profile_screens/account_settings_screen.dart';
 
 class NewDrawer extends StatefulWidget {
   const NewDrawer({
-    Key? key,
+    super.key,
     required this.onSelectScreen,
     required this.user1,
-  }) : super(key: key);
+  });
 
   final void Function() onSelectScreen;
   final User user1;
@@ -22,7 +25,12 @@ class NewDrawer extends StatefulWidget {
 }
 
 class _NewDrawerState extends State<NewDrawer> {
+  final FirestoreService _firestoreService =
+      FirestoreService(); // Initialize the Firestore service
+
   void signUserOut() {
+    _firestoreService.setUserOnlineStatus(false);
+    GoogleSignIn().signOut();
     FirebaseAuth.instance.signOut();
     Navigator.pop(context);
   }
@@ -80,7 +88,7 @@ class _NewDrawerState extends State<NewDrawer> {
                         ),
                         const SizedBox(width: 15),
                         Text(
-                          email!.split('@')[0],
+                          getDisplayEmail(email!),
                           style:
                               Theme.of(context).textTheme.titleLarge!.copyWith(
                                     color: Colors.white,
@@ -95,14 +103,17 @@ class _NewDrawerState extends State<NewDrawer> {
                   return Row(
                     children: [
                       CircleAvatar(
-                        radius: 30,
-                        backgroundImage: NetworkImage(
-                          userData['image_url'],
-                        ),
-                      ),
+                          radius: 30,
+                          backgroundImage: userData['image_url'] != null
+                              ? NetworkImage(userData['image_url'])
+                              : NetworkImage(
+                                  'https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male4-1024.png',
+                                )
+                          //as ImageProvider,
+                          ),
                       const SizedBox(width: 15),
                       Text(
-                        email!.split('@')[0],
+                        getDisplayEmail(widget.user1.email!),
                         style: Theme.of(context).textTheme.titleLarge!.copyWith(
                               color: Colors.white,
                             ),
@@ -172,8 +183,8 @@ class _NewDrawerState extends State<NewDrawer> {
                         ),
                   ),
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (ctx) => MessageNewScreen()));
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (ctx) => MessagesScreen()));
                   },
                 ),
                 ListTile(

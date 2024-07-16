@@ -4,31 +4,93 @@ import 'package:flutter/material.dart';
 import 'package:per_rat/components/constants.dart';
 
 class ChatScreen extends StatefulWidget {
-  final String chatId;
+  // final String chatId;
   final String recipientId;
 
-  ChatScreen({required this.chatId, required this.recipientId});
+  const ChatScreen({
+    super.key,
+    //required this.chatId,
+    required this.recipientId,
+  });
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
   final User user = FirebaseAuth.instance.currentUser!;
+  String? chatId;
+
   String recName = '';
 
-  void _sendMessage() {
-    if (_controller.text.trim().isEmpty) return;
-    FirebaseFirestore.instance
-        .collection('conversations/${widget.chatId}/messages')
-        .add({
-      'senderId': user.uid,
-      'text': _controller.text,
-      'timestamp': FieldValue.serverTimestamp(),
-    });
-    _controller.clear();
+  @override
+  void initState() {
+    super.initState();
+    _setChatId();
+    setRecipientName();
   }
+
+  Future<void> _setChatId() async {
+    var conversationQuery = await FirebaseFirestore.instance
+        .collection('conversations')
+        .where('participants', arrayContains: user.uid)
+        .get();
+
+    for (var doc in conversationQuery.docs) {
+      var participants = doc['participants'] as List<dynamic>;
+      if (participants.contains(widget.recipientId)) {
+        setState(() {
+          chatId = doc.id;
+        });
+        return;
+      }
+    }
+
+    // If conversation does not exist, set chatId to null
+    setState(() {
+      chatId = null;
+    });
+  }
+
+  Future<void> _sendMessage() async {
+    if (_messageController.text.trim().isEmpty) {
+      return;
+    }
+
+    if (chatId == null) {
+      // Create a new conversation document if it doesn't exist
+      var newChatDoc =
+          await FirebaseFirestore.instance.collection('conversations').add({
+        'participants': [user.uid, widget.recipientId],
+      });
+      chatId = newChatDoc.id;
+    }
+
+    var message = {
+      'text': _messageController.text.trim(),
+      'senderId': user.uid,
+      'recipientId': widget.recipientId,
+      'timestamp': FieldValue.serverTimestamp(),
+    };
+
+    await FirebaseFirestore.instance
+        .collection('conversations')
+        .doc(chatId)
+        .collection('messages')
+        .add(message);
+
+    _messageController.clear();
+  }
+  //   FirebaseFirestore.instance
+  //       .collection('conversations/${widget.chatId}/messages')
+  //       .add({
+  //     'senderId': user.uid,
+  //     'text': _controller.text,
+  //     'timestamp': FieldValue.serverTimestamp(),
+  //   });
+  //   _controller.clear();
+  // }
 
   void setRecipientName() async {
     String recipientName = await getRecipientName(
@@ -36,12 +98,6 @@ class _ChatScreenState extends State<ChatScreen> {
     setState(() {
       recName = recipientName;
     });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    setRecipientName();
   }
 
   @override
@@ -56,26 +112,36 @@ class _ChatScreenState extends State<ChatScreen> {
       body: Column(
         children: [
           Expanded(
-            child: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection('conversations/${widget.chatId}/messages')
-                  .orderBy('timestamp', descending: true)
-                  .snapshots(),
-              builder: (ctx, AsyncSnapshot<QuerySnapshot> chatSnapshot) {
-                if (chatSnapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                }
-                final chatDocs = chatSnapshot.data!.docs;
-                return ListView.builder(
-                  reverse: true,
-                  itemCount: chatDocs.length,
-                  itemBuilder: (ctx, index) => MessageBubble(
-                    chatDocs[index]['text'],
-                    chatDocs[index]['senderId'] == user.uid,
+            child: chatId == null
+                ? Center(
+                    child: Text(
+                    '...',
+                    style: TextStyle(color: Color.fromARGB(255, 63, 208, 94)),
+                  ))
+                : StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('conversations')
+                        .doc(chatId)
+                        .collection('messages')
+                        .orderBy('timestamp', descending: true)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+
+                      var messages = snapshot.data!.docs;
+
+                      return ListView.builder(
+                        reverse: true,
+                        itemCount: messages.length,
+                        itemBuilder: (ctx, index) => MessageBubble(
+                          messages[index]['text'],
+                          messages[index]['senderId'] == user.uid,
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -84,7 +150,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 Expanded(
                   child: TextField(
                     style: TextStyle(color: Colors.white),
-                    controller: _controller,
+                    controller: _messageController,
                     decoration: InputDecoration(labelText: 'Send a message...'),
                     onSubmitted: (_) => _sendMessage(),
                   ),

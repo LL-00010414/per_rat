@@ -1,13 +1,39 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:per_rat/drawer_screens/chat_screen.dart';
+import 'package:per_rat/screens/guest_profile.dart';
 
 class NewCommunities extends StatefulWidget {
+  const NewCommunities({super.key});
+
   @override
   _NewCommunitiesState createState() => _NewCommunitiesState();
 }
 
 class _NewCommunitiesState extends State<NewCommunities> {
   final TextEditingController _searchController = TextEditingController();
+  final User user = FirebaseAuth.instance.currentUser!;
+
+  // Future<String> getChatId(String recipientId) async {
+  //   var chatDocs = await FirebaseFirestore.instance
+  //       .collection('conversations')
+  //       .where('participants', arrayContains: user.uid)
+  //       .get();
+
+  //   for (var doc in chatDocs.docs) {
+  //     var participants = doc['participants'] as List<dynamic>;
+  //     if (participants.contains(recipientId)) {
+  //       return doc.id;
+  //     }
+  //   }
+
+  //   var newChatDoc =
+  //       await FirebaseFirestore.instance.collection('conversations').add({
+  //     'participants': [user.uid, recipientId],
+  //   });
+  //   return newChatDoc.id;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +62,7 @@ class _NewCommunitiesState extends State<NewCommunities> {
                 prefixIcon: Icon(Icons.menu),
                 hintText: 'search communities...',
                 suffixIcon: Icon(Icons.search),
+                hintStyle: TextStyle(color: Color.fromARGB(255, 205, 135, 13)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30.0),
                 ),
@@ -59,42 +86,65 @@ class _NewCommunitiesState extends State<NewCommunities> {
                 return ListView.builder(
                   itemCount: users.length,
                   itemBuilder: (context, index) {
-                    var user = users[index].data() as Map<String, dynamic>;
-                    var username = user['username'] ?? 'No Username';
-                    var imageUrl = user['image_url'] ?? '';
-                    var status = user['status'] ?? 'No Status';
+                    var userDoc = users[index];
+                    var userData = userDoc.data() as Map<String, dynamic>;
+                    //var user = users[index].data() as Map<String, dynamic>;
+                    var username = userData['username'] ?? 'No Username';
+                    var imageUrl = userData['image_url'] ?? '';
+                    var status = userData['status'] ?? 'No Status';
 
-                    return ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage:
-                            imageUrl.isNotEmpty ? NetworkImage(imageUrl) : null,
-                        backgroundColor: Colors.purple[100],
-                        child: imageUrl.isEmpty
-                            ? Text(
-                                username.isNotEmpty
-                                    ? username[0].toUpperCase()
-                                    : '',
-                                style: TextStyle(color: Colors.purple),
-                              )
-                            : null,
-                      ),
-                      title: Text(
-                        username,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      subtitle: Text(
-                        status,
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                      trailing: IconButton(
-                        icon: Icon(Icons.message),
-                        onPressed: () {
-                          // Handle message button press
-                        },
-                      ),
-                      onTap: () {
-                        // Handle list tile tap
-                      },
+                    return Column(
+                      children: [
+                        ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage: imageUrl.isNotEmpty
+                                ? NetworkImage(imageUrl)
+                                : NetworkImage(
+                                    'https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male4-1024.png',
+                                  ),
+                            backgroundColor: Colors.purple[100],
+                            child: imageUrl.isEmpty
+                                ? Text(
+                                    username.isNotEmpty
+                                        ? username[0].toUpperCase()
+                                        : '',
+                                    style: TextStyle(color: Colors.purple),
+                                  )
+                                : null,
+                          ),
+                          title: Text(
+                            username,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          subtitle: Text(
+                            status,
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                          trailing: IconButton(
+                            icon: Icon(Icons.message),
+                            onPressed: () {
+                              //var chatId = await getChatId(userDoc.id);
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => ChatScreen(
+                                    //chatId: chatId,
+                                    recipientId: userDoc.id,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    GuestProfile(guestUserId: userDoc.id),
+                              ),
+                            );
+                          },
+                        ),
+                        const Divider(),
+                      ],
                     );
                   },
                 );
@@ -105,11 +155,4 @@ class _NewCommunitiesState extends State<NewCommunities> {
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    theme: ThemeData.dark(),
-    home: NewCommunities(),
-  ));
 }

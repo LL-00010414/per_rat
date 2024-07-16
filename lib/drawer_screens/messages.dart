@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // Add this import for date formatting
 import 'package:per_rat/drawer_screens/chat_screen.dart';
 
-class MessageNewScreen extends StatefulWidget {
-  const MessageNewScreen({Key? key}) : super(key: key);
+class MessagesScreen extends StatefulWidget {
+  const MessagesScreen({super.key});
 
   @override
-  State<MessageNewScreen> createState() => _MessageNewScreenState();
+  State<MessagesScreen> createState() => _MessagesScreenState();
 }
 
-class _MessageNewScreenState extends State<MessageNewScreen> {
+class _MessagesScreenState extends State<MessagesScreen> {
   final user = FirebaseAuth.instance.currentUser!;
 
   Future<Map<String, dynamic>> getRecipientData(String recipientId) async {
@@ -24,7 +24,9 @@ class _MessageNewScreenState extends State<MessageNewScreen> {
       return recipientData;
     } else {
       return {
-        "image_url": "default_image_url" // Provide a default image URL
+        "image_url":
+            "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male4-1024.png",
+        // Provide a default image URL
       }; // Fallback to recipientId if user document doesn't exist
     }
   }
@@ -77,7 +79,13 @@ class _MessageNewScreenState extends State<MessageNewScreen> {
             return const Center(child: CircularProgressIndicator());
           }
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const Center(child: Text('No conversations found.'));
+            return Center(
+                child: Text(
+              'No conversations found.',
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    color: Colors.amber,
+                  ),
+            ));
           }
 
           final conversations = snapshot.data!.docs;
@@ -112,7 +120,7 @@ class _MessageNewScreenState extends State<MessageNewScreen> {
                     var recipientData = snapshot.data!['recipientData'];
                     var latestMessage = snapshot.data!['latestMessage'];
                     var recipientName =
-                        recipientData['username'] ?? recipientData['email'];
+                        recipientData['username'] ?? 'no username';
                     var isSender = latestMessage['senderId'] == user.uid;
                     var timestamp = latestMessage['timestamp'] as Timestamp?;
 
@@ -135,20 +143,22 @@ class _MessageNewScreenState extends State<MessageNewScreen> {
                           ),
                           leading: CircleAvatar(
                             radius: 28,
-                            backgroundImage:
-                                NetworkImage(recipientData['image_url']),
+                            backgroundImage: NetworkImage(
+                              recipientData['image_url'] ??
+                                  'https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male4-1024.png',
+                            ),
                           ),
                           trailing: timestamp != null
                               ? Text(
                                   formatTimestamp(timestamp),
                                   style: const TextStyle(color: Colors.grey),
                                 )
-                              : null,
+                              : Text('...'),
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => ChatScreen(
-                                  chatId: chatId,
+                                  //chatId: chatId,
                                   recipientId: recipientId,
                                 ),
                               ),
