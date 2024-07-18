@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:per_rat/components/constants.dart';
 
 class ChatScreen extends StatefulWidget {
-  // final String chatId;
   final String recipientId;
 
   const ChatScreen({
     super.key,
-    //required this.chatId,
     required this.recipientId,
   });
 
@@ -21,14 +19,15 @@ class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _messageController = TextEditingController();
   final User user = FirebaseAuth.instance.currentUser!;
   String? chatId;
-
   String recName = '';
+  bool isFriend = false;
 
   @override
   void initState() {
     super.initState();
     _setChatId();
     setRecipientName();
+    _checkIfFriend();
   }
 
   Future<void> _setChatId() async {
@@ -50,6 +49,19 @@ class _ChatScreenState extends State<ChatScreen> {
     // If conversation does not exist, set chatId to null
     setState(() {
       chatId = null;
+    });
+  }
+
+  Future<void> _checkIfFriend() async {
+    var userDoc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .get();
+    var userData = userDoc.data() as Map<String, dynamic>;
+    var friends = userData['friends'] as List<dynamic>;
+
+    setState(() {
+      isFriend = friends.contains(widget.recipientId);
     });
   }
 

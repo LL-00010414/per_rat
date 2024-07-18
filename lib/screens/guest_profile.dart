@@ -126,9 +126,10 @@ class _GuestProfileState extends State<GuestProfile> {
         _buildUserInfoRow('Location', userData!['location'] ?? '-'),
         _buildUserInfoRow(
           'Joined',
-          DateFormat('MMM dd, yyyy')
-              .format(userData!['joinedTime'] ?? DateTime(0))
-              .toString(),
+          userData!['joinedTime'] != null
+              ? DateFormat('MMM dd, yyyy')
+                  .format((userData!['joinedTime'] as Timestamp).toDate())
+              : 'N/A',
         ),
       ],
     );

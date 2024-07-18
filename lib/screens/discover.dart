@@ -74,19 +74,19 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               );
             },
             decoration: InputDecoration(
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide.none),
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                filled: true,
-                fillColor: Color.fromARGB(255, 39, 39, 39),
-                hintText: 'Search',
-                hintStyle: TextStyle(color: Colors.grey),
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: Colors.grey,
-                )),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide.none),
+              contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+              filled: true,
+              fillColor: Color.fromARGB(255, 39, 39, 39),
+              hintText: 'Search',
+              hintStyle: TextStyle(color: Colors.grey),
+              prefixIcon: Icon(
+                Icons.search,
+                color: Colors.grey,
+              ),
+            ),
           ),
         ),
       ),

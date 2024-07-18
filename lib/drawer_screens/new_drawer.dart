@@ -28,8 +28,8 @@ class _NewDrawerState extends State<NewDrawer> {
   final FirestoreService _firestoreService =
       FirestoreService(); // Initialize the Firestore service
 
-  void signUserOut() {
-    _firestoreService.setUserOnlineStatus(false);
+  void signUserOut() async {
+    await _firestoreService.setUserOnlineStatus(false);
     GoogleSignIn().signOut();
     FirebaseAuth.instance.signOut();
     Navigator.pop(context);
@@ -145,8 +145,8 @@ class _NewDrawerState extends State<NewDrawer> {
                         ),
                   ),
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (ctx) => const FriendsScreen()));
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (ctx) => FriendsScreen()));
                   },
                 ),
                 ListTile(
@@ -203,7 +203,7 @@ class _NewDrawerState extends State<NewDrawer> {
                   ),
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (ctx) => const NotificationsScreen()));
+                        builder: (ctx) => NotificationsScreen()));
                   },
                 ),
                 ListTile(

@@ -117,18 +117,25 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _firestoreService.setUserOnlineStatus(true); // Set user status to online
+    _initializeData();
     _fetchAnime();
     displayRating();
     _messagingService.initialize();
 
-    //lastOnline();
-
-    // Set a timer to stop showing the skeleton after a limited time
-    // Timer(Duration(seconds: 3), () {
     setState(() {
       _isLoading = false;
     });
     // });
+  }
+
+  Future<void> _initializeData() async {
+    try {
+      await _firestoreService.uploadUserMetadata();
+    } catch (e) {
+      setState(() {
+        _error = 'Failed to upload user metadata: $e';
+      });
+    }
   }
 
   @override
