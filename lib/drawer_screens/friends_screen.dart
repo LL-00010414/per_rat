@@ -59,8 +59,10 @@ class FriendsScreen extends StatelessWidget {
 
                   return ListTile(
                     leading: CircleAvatar(
-                      backgroundImage:
-                          NetworkImage(friendUserData['image_url'] ?? ''),
+                      backgroundImage: NetworkImage(
+                        friendUserData['image_url'] ??
+                            'https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male4-1024.png',
+                      ),
                     ),
                     title: Text(
                       friendUserData['username'] ?? friendUserData['email'],

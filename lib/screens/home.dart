@@ -9,8 +9,8 @@ import 'package:per_rat/data/messaging_service.dart';
 import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/models/show_rating.dart';
 import 'package:per_rat/screens/show_rating_details_screen.dart';
-import 'package:per_rat/widgets/home_anime_item.dart';
 import 'package:per_rat/widgets/home_anime_skeleton.dart';
+import 'package:per_rat/widgets/new_home_anime_item.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -37,6 +37,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   //chat
   final MessagingService _messagingService = MessagingService();
+
+  //selection mode
+  bool _isSelectionMode = false;
+  List<ShowRating> _selectedRatings = [];
 
   void _fetchAnime() async {
     try {
@@ -98,9 +102,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         _showratings.remove(showRating);
       });
 
+      ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('${showRating.showName} has been deleted'),
+          content: Text('Selected ratings have been deleted'),
         ),
       );
     } catch (e) {
@@ -110,6 +115,25 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         ),
       );
     }
+  }
+
+  void _toggleSelectionMode() {
+    setState(() {
+      _isSelectionMode = !_isSelectionMode;
+      if (!_isSelectionMode) {
+        _selectedRatings.clear();
+      }
+    });
+  }
+
+  void _toggleRatingSelection(ShowRating rating) {
+    setState(() {
+      if (_selectedRatings.contains(rating)) {
+        _selectedRatings.remove(rating);
+      } else {
+        _selectedRatings.add(rating);
+      }
+    });
   }
 
   @override
@@ -196,16 +220,38 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                   if (animeSet == null) {
                     return const Text('No ratings added');
                   }
-                  return HomeAnimeItem(
-                    showRating: rating,
-                    anime: animeSet!,
-                    onSelectRating: (rating) {
-                      selectRating(context, rating);
+                  return GestureDetector(
+                    onLongPress: () {
+                      _toggleSelectionMode();
+                      _toggleRatingSelection(rating);
                     },
-                    onDeleteRating: (rating) {
-                      deleteRating(rating);
+                    onTap: () {
+                      if (_isSelectionMode) {
+                        _toggleRatingSelection(rating);
+                      } else {
+                        selectRating(context, rating);
+                      }
                     },
+                    child: NewHomeAnimeItem(
+                      showRating: rating,
+                      anime: animeSet!,
+                      isSelected: _selectedRatings.contains(rating),
+                      onDeleteRating: (rating) {
+                        deleteRating(rating);
+                      },
+                    ),
                   );
+
+                  // return HomeAnimeItem(
+                  //   showRating: rating,
+                  //   anime: animeSet!,
+                  //   onSelectRating: (rating) {
+                  //     selectRating(context, rating);
+                  //   },
+                  //   onDeleteRating: (rating) {
+                  //     deleteRating(rating);
+                  //   },
+                  // );
                 },
               );
 
@@ -221,9 +267,27 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     return Scaffold(
       appBar: AppBar(
         title: const Text('HOME'),
-        actions: [],
+        actions: _isSelectionMode
+            ? [
+                IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: () {
+                    for (var rating in _selectedRatings) {
+                      deleteRating(rating);
+                    }
+                    _toggleSelectionMode();
+                  },
+                ),
+              ]
+            : [],
       ),
       body: content,
+      floatingActionButton: _isSelectionMode
+          ? FloatingActionButton(
+              onPressed: _toggleSelectionMode,
+              child: const Icon(Icons.close),
+            )
+          : null,
     );
   }
 }

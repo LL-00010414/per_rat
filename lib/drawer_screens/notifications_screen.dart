@@ -58,7 +58,10 @@ class NotificationsScreen extends StatelessWidget {
 
                   return ListTile(
                     leading: CircleAvatar(
-                      backgroundImage: NetworkImage(senderData['image_url']),
+                      backgroundImage: NetworkImage(
+                        senderData['image_url'] ??
+                            'https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male4-1024.png',
+                      ),
                     ),
                     title: Text(senderData['username'] ?? senderData['email']),
                     subtitle: Text('Friend request received'),
@@ -66,11 +69,16 @@ class NotificationsScreen extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(
+                          style: OutlinedButton.styleFrom(
+                              //backgroundColor: Colors.green,
+                              foregroundColor: Colors.green),
                           icon: Icon(Icons.check),
                           onPressed: () =>
                               acceptFriendRequest(context, senderId),
                         ),
                         IconButton(
+                          style: OutlinedButton.styleFrom(
+                              foregroundColor: Colors.red),
                           icon: Icon(Icons.close),
                           onPressed: () =>
                               rejectFriendRequest(context, senderId),
