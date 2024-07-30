@@ -24,13 +24,29 @@ class FriendsScreen extends StatelessWidget {
             return Center(child: Text('Error loading friends.'));
           }
           if (!snapshot.hasData || !snapshot.data!.exists) {
-            return Center(child: Text('No friends found.'));
+            return Center(
+              child: Text(
+                'No friends found.',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(color: Colors.grey),
+              ),
+            );
           }
 
           var userData = snapshot.data!.data() as Map<String, dynamic>;
           var friends = userData['friends'] as List<dynamic>?;
           if (friends == null || friends.isEmpty) {
-            return Center(child: Text('No friends found.'));
+            return Center(
+              child: Text(
+                'No friends found.',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(color: Colors.grey),
+              ),
+            );
           }
 
           return ListView.builder(

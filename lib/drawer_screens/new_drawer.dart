@@ -98,19 +98,20 @@ class _NewDrawerState extends State<NewDrawer> {
                     );
                   }
 
-                  var userData = snapshot.data!;
+                  var userData = snapshot.data!.data() as Map<String, dynamic>;
+                  // var imageUrl = userData['image_url'] as String? ??
+                  //     'https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male4-1024.png';
 
                   return Row(
                     children: [
                       CircleAvatar(
-                          radius: 30,
-                          backgroundImage: userData['image_url'] != null
-                              ? NetworkImage(userData['image_url'])
-                              : NetworkImage(
-                                  'https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male4-1024.png',
-                                )
-                          //as ImageProvider,
-                          ),
+                        radius: 30,
+                        backgroundImage: userData.containsKey('image_url') &&
+                                userData['image_url'] != null
+                            ? NetworkImage(userData['image_url'] as String)
+                            : const NetworkImage(
+                                'https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male4-1024.png'),
+                      ),
                       const SizedBox(width: 15),
                       Text(
                         getDisplayEmail(widget.user1.email!),
@@ -126,13 +127,11 @@ class _NewDrawerState extends State<NewDrawer> {
           ),
           Expanded(
             child: ListView(
-              padding: EdgeInsets.only(
-                left: 6,
-              ),
+              padding: const EdgeInsets.only(left: 6),
               children: [
                 ListTile(
                   contentPadding:
-                      EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
                   leading: Icon(
                     Icons.people_outline_rounded,
                     size: 24,
@@ -151,7 +150,7 @@ class _NewDrawerState extends State<NewDrawer> {
                 ),
                 ListTile(
                   contentPadding:
-                      EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
                   leading: Icon(
                     Icons.group,
                     size: 24,
@@ -170,7 +169,7 @@ class _NewDrawerState extends State<NewDrawer> {
                 ),
                 ListTile(
                   contentPadding:
-                      EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
                   leading: Icon(
                     Icons.message,
                     size: 24,
@@ -189,7 +188,7 @@ class _NewDrawerState extends State<NewDrawer> {
                 ),
                 ListTile(
                   contentPadding:
-                      EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
                   leading: Icon(
                     Icons.notifications,
                     size: 24,
@@ -208,7 +207,7 @@ class _NewDrawerState extends State<NewDrawer> {
                 ),
                 ListTile(
                   contentPadding:
-                      EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
                   leading: Icon(
                     Icons.settings,
                     size: 24,

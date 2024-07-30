@@ -30,7 +30,10 @@ class NotificationsScreen extends StatelessWidget {
             return Center(
                 child: Text(
               'No new notifications',
-              style: TextStyle(color: Colors.amber),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge!
+                  .copyWith(color: Colors.grey),
             ));
           }
 

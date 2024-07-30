@@ -82,9 +82,10 @@ class _MessagesScreenState extends State<MessagesScreen> {
             return Center(
                 child: Text(
               'No conversations found.',
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    color: Colors.amber,
-                  ),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge!
+                  .copyWith(color: Colors.grey),
             ));
           }
 

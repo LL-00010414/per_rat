@@ -13,9 +13,8 @@ class AccountSettingsScreen extends StatelessWidget {
       body: Center(
           child: Text(
         'Account Settings Screen',
-        style: TextStyle(
-          color: Colors.amber,
-        ),
+        style:
+            Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.grey),
       )),
     );
   }

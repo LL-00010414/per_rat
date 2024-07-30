@@ -71,7 +71,11 @@ class _NewCommunitiesState extends State<NewCommunities> {
           return Center(child: CircularProgressIndicator());
         }
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return Center(child: Text('No people found.'));
+          return Center(
+              child: Text(
+            'No people found.',
+            style: TextStyle(color: Colors.grey),
+          ));
         }
 
         final users = snapshot.data!.docs
@@ -79,7 +83,11 @@ class _NewCommunitiesState extends State<NewCommunities> {
             .toList();
 
         if (users.isEmpty) {
-          return Center(child: Text('No people found.'));
+          return Center(
+              child: Text(
+            'No people found.',
+            style: TextStyle(color: Colors.grey),
+          ));
         }
 
         return ListView.builder(
