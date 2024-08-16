@@ -10,6 +10,7 @@ final colorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
   seedColor: const Color.fromARGB(255, 102, 6, 247),
   surface: const Color.fromARGB(255, 56, 49, 66),
+  outline: Color.fromARGB(255, 84, 74, 100),
 );
 
 final theme = ThemeData().copyWith(
@@ -53,6 +54,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       theme: theme,
       routerConfig: _router,
     );

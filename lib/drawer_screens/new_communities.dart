@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:per_rat/screens/guest_profile.dart';
+import 'package:random_name_generator/random_name_generator.dart';
 
 class NewCommunities extends StatefulWidget {
   const NewCommunities({super.key});
@@ -15,6 +16,9 @@ class _NewCommunitiesState extends State<NewCommunities> {
   final User user = FirebaseAuth.instance.currentUser!;
   List<String> friends = [];
   String searchOption = 'people';
+
+  //random name generator
+  var randomNames = RandomNames(Zone.us);
 
   @override
   void initState() {
@@ -95,7 +99,7 @@ class _NewCommunitiesState extends State<NewCommunities> {
           itemBuilder: (context, index) {
             var userDoc = users[index];
             var userData = userDoc.data() as Map<String, dynamic>;
-            var username = userData['username'] ?? 'No Username';
+            var username = userData['username'] ?? '${randomNames.name()}';
             var imageUrl = userData['image_url'] ?? '';
             var status = userData['status'] ?? 'No Status';
 
@@ -119,7 +123,10 @@ class _NewCommunitiesState extends State<NewCommunities> {
                   ),
                   title: Text(
                     username,
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(
+                      color: Colors.white,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   subtitle: Text(
                     status,

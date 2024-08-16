@@ -112,10 +112,13 @@ class _GenericAnimeScreenState extends State<GenericAnimeScreen> {
     }
 
     void editRating(BuildContext context, ShowRating showRating) {
-      Navigator.of(context).push(MaterialPageRoute(
+      Navigator.of(context).push(
+        MaterialPageRoute(
           builder: (ctx) => EditRatingsScreen(
-                showRating: showRating,
-              )));
+            showRating: showRating,
+          ),
+        ),
+      );
     }
 
     Widget content = _isLoading
