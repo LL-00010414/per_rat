@@ -59,67 +59,59 @@ If you prefer not to go through the testing process, you can download the APK fi
 - [Download APK](https://mega.nz/file/UDtiySAa#OCi2-Kc2uP_LRpz-WPXQGcmmPUrIX67OLo9k-Syy8Vc)
 
 
-
-    
 ## Screenshots
 
-<div style="display: flex; justify-content: space-around; align-items: center;">
+<table>
+  <tr>
+    <th align="center">Home Screen</th>
+    <th align="center">Discover Screen</th>
+    <th align="center">Seasonal Screen</th>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/c1ec32eb-0f49-40af-be6f-b88c145aed1c" alt="Home Screen" width="200"/>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/ae811bcd-2d50-4046-a5bb-40c189d0a556" alt="Discover Screen" width="200"/>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/22ee5b40-d8b4-4322-ae04-b9dc45f53831" alt="Seasonal Screen" width="200"/>
+    </td>
+  </tr>
+  <tr>
+    <th align="center">MyList Screen</th>
+    <th align="center">Anime Details</th>
+    <th align="center">Anime Details...</th>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/d29f6a75-78f0-43c9-848f-e5cad68e65a4" alt="MyList Screen" width="200"/>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/074fe1a6-a156-49aa-bcf2-e198335124d2" alt="Anime Details Screen" width="200"/>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/0a23e355-01ee-4438-8318-cd7bed1056d9" alt="Anime Details Screen..." height="416" width="200"/>
+    </td>
+  </tr>
+  <tr>
+    <th align="center">Communities</th>
+    <th align="center">Friends</th>
+    <th align="center">Messaging</th>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/48ced705-ad45-45ab-b4ee-a806df914110" alt="Communities Screen" width="200"/>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/8f697948-0785-4559-98aa-af4a63490946" alt="Friends Screen" width="200"/>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/44382985-4c04-46e1-9b6d-27130afdc1e7" alt="Messaging Screen" width="200"/>
+    </td>
+  </tr>
+</table>
 
-  <div style="text-align: center;">
-    <h4>Home Screen</h4>
-    <img src="https://github.com/user-attachments/assets/c1ec32eb-0f49-40af-be6f-b88c145aed1c" alt="Home Screen" width="200"/>
-  </div>
-
-  <div style="text-align: center;">
-    <h4>Discover Screen</h4>
-    <img src="https://github.com/user-attachments/assets/ae811bcd-2d50-4046-a5bb-40c189d0a556" alt="Discover Screen" width="200"/>
-  </div>
-
-  <div style="text-align: center;">
-    <h4>Seasonal Screen</h4>
-    <img src="https://github.com/user-attachments/assets/22ee5b40-d8b4-4322-ae04-b9dc45f53831" alt="Profile Screen" width="200"/>
-  </div>
-
-</div>
-
-<div style="display: flex; justify-content: space-around; align-items: center;">
-
-  <div style="text-align: center;">
-    <h4>MyList Screen</h4>
-    <img src="https://github.com/user-attachments/assets/d29f6a75-78f0-43c9-848f-e5cad68e65a4" alt="MyList Screen" width="200"/>
-  </div>
-
-  <div style="text-align: center;">
-    <h4>Anime Details</h4>
-    <img src="https://github.com/user-attachments/assets/074fe1a6-a156-49aa-bcf2-e198335124d2" alt="Anime Details Screen" width="200"/>
-  </div>
-
-  <div style="text-align: center;">
-    <h4>Anime Details...</h4>
-    <img src="https://github.com/user-attachments/assets/0a23e355-01ee-4438-8318-cd7bed1056d9" alt="Anime Details Screen..." height="416" width="200" />
-  </div>
-  
-</div>
-
-
-<div style="display: flex; justify-content: space-around; align-items: center;">
-
-  <div style="text-align: center;">
-    <h4>Communities</h4>
-    <img src="https://github.com/user-attachments/assets/48ced705-ad45-45ab-b4ee-a806df914110" alt="Friends &amp; Comm. Screen" width="200"/>
-  </div>
-
-  <div style="text-align: center;">
-    <h4>Friends</h4>
-    <img src="https://github.com/user-attachments/assets/8f697948-0785-4559-98aa-af4a63490946" alt="Friends Screen" width="200"/>
-  </div>
-
-  <div style="text-align: center;">
-    <h4>Messaging</h4>
-    <img src="https://github.com/user-attachments/assets/44382985-4c04-46e1-9b6d-27130afdc1e7" alt="Messaging Screen" width="200"/>
-  </div>
-
-</div>
 
 
 
