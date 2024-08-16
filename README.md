@@ -56,7 +56,7 @@ You can install the project via Google Play closed testing or by directly downlo
 
 If you prefer not to go through the testing process, you can download the APK file directly from the following link:
 
-- [Download APK](https://mega.nz/file/UDtiySAa#OCi2-Kc2uP_LRpz-WPXQGcmmPUrIX67OLo9k-Syy8Vc)
+- [Download APK](https://mega.nz/file/tHES2TRb#Em6g16WjrwGi8TX2L7JYR-Jx1OZMgVf2caVAk01x0ak)
 
 
 ## Screenshots
