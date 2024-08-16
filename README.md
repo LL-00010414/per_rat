@@ -67,6 +67,10 @@ If you prefer not to go through the testing process, you can download the APK fi
 
 ![home-page](https://github.com/user-attachments/assets/c1ec32eb-0f49-40af-be6f-b88c145aed1c)
 
+### Home Screen
+
+<img src="https://github.com/user-attachments/assets/c1ec32eb-0f49-40af-be6f-b88c145aed1c" alt="Home Screen" width="300"/>
+
 #### Discover page
 
 ![discover-page](https://github.com/user-attachments/assets/ae811bcd-2d50-4046-a5bb-40c189d0a556)
