@@ -90,12 +90,7 @@ class _RealtimeSearchScreenState extends State<RealtimeSearchScreen> {
                         .where('title',
                             isLessThanOrEqualTo: searchName + '\uf8ff')
                         .snapshots(),
-                    //previous method
-                    // stream: FirebaseFirestore.instance
-                    //     .collection('anime')
-                    //     .orderBy('title')
-                    //     .startAt([searchName]).endAt(
-                    //         [searchName + "\uf8ff"]).snapshots(),
+
                     builder: (context, snapshot) {
                       if (snapshot.hasError) {
                         return Center(child: Text('Something went wrong'));
@@ -138,10 +133,16 @@ class _RealtimeSearchScreenState extends State<RealtimeSearchScreen> {
                               demographic: data['demographic'],
                               studio: data['studio'],
                               status: data['status'],
-                              startDate: DateTime.parse(data[
-                                  'startDate']), // Parse startDate as DateTime
-                              endDate: DateTime.parse(
-                                  data['endDate']), // Parse endDate as DateTime
+                              startDate: data['startDate'] != null
+                                  ? DateTime.tryParse(data['startDate']) ??
+                                      DateTime(2000, 1, 1)
+                                  : DateTime(2000, 1,
+                                      1), // Provide a default date if null
+                              endDate: data['endDate'] != null
+                                  ? DateTime.tryParse(data['endDate']) ??
+                                      DateTime(2000, 1, 1)
+                                  : DateTime(2000, 1,
+                                      1), // Provide a default date if null
                             );
                           })
                           .where((anime) => anime != null)

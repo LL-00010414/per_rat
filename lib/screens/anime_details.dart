@@ -350,33 +350,4 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
           .toList(),
     );
   }
-
-  // Widget _buildSimilarAnimeList(List<Anime> similarAnime) {
-  //   return Column(
-  //     children: similarAnime
-  //         .map((anime) => ListTile(
-  //               contentPadding: EdgeInsets.all(8),
-  //               leading: Image.network(
-  //                 anime.imageUrl,
-  //                 height: 50,
-  //                 width: 50,
-  //                 fit: BoxFit.cover,
-  //               ),
-  //               title: Text(
-  //                 anime.title,
-  //                 style: TextStyle(color: Colors.white),
-  //               ),
-  //               onTap: () {
-  //                 Navigator.of(context).push(
-  //                   MaterialPageRoute(
-  //                     builder: (ctx) => AnimeDetailsScreen(
-  //                       anime: anime,
-  //                     ),
-  //                   ),
-  //                 );
-  //               },
-  //             ))
-  //         .toList(),
-  //   );
-  // }
 }
