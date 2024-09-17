@@ -15,7 +15,6 @@ class GuestProfile extends StatefulWidget {
 }
 
 class _GuestProfileState extends State<GuestProfile> {
-  //final user = FirebaseAuth.instance.currentUser!;
   Map<String, dynamic>? userData;
 
   @override
@@ -46,12 +45,6 @@ class _GuestProfileState extends State<GuestProfile> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text(userData?['username'] ?? 'Profile'),
-        // actions: [
-        //   IconButton(
-        //     icon: Icon(Icons.edit),
-        //     onPressed: () {},
-        //   ),
-        // ],
       ),
       body: userData == null
           ? Center(child: CircularProgressIndicator())
@@ -115,20 +108,21 @@ class _GuestProfileState extends State<GuestProfile> {
             'Last Online',
             userData!['status'] == 'online'
                 ? 'now'
-                : _formatTimestamp(userData!['last_online'])),
+                : _formatTimestamp(userData!['last_online'] as Timestamp?)),
         _buildUserInfoRow('Gender', userData!['gender'] ?? '-'),
         _buildUserInfoRow(
           'Birthday',
           userData!['birthday'] != null
-              ? _formatTimestamp(userData!['birthday'])
+              ? _formatTimestamp(userData!['birthday'] as Timestamp?)
               : '-',
         ),
         _buildUserInfoRow('Location', userData!['location'] ?? '-'),
         _buildUserInfoRow(
           'Joined',
           userData!['joinedTime'] != null
-              ? DateFormat('MMM dd, yyyy')
-                  .format((userData!['joinedTime'] as Timestamp).toDate())
+              ? DateFormat('MMM dd, yyyy').format(
+                  (userData!['joinedTime'] as Timestamp?)?.toDate() ??
+                      DateTime.now())
               : 'N/A',
         ),
       ],
@@ -196,8 +190,11 @@ class _GuestProfileState extends State<GuestProfile> {
     );
   }
 
-  String _formatTimestamp(Timestamp timestamp) {
+  String _formatTimestamp(Timestamp? timestamp) {
+    if (timestamp == null) {
+      return 'N/A';
+    }
     DateTime date = timestamp.toDate();
-    return "${date.year}-${date.month}-${date.day}";
+    return "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
   }
 }
