@@ -72,14 +72,6 @@ class _SeasonalScreenState extends State<SeasonalScreen>
 
   @override
   Widget build(BuildContext context) {
-    // final List<Anime> lastSeaAnime = _registeredAnime
-    //     .where((anime) =>
-    //         anime.startDate.isBefore(DateTime.now()) &&
-    //         anime.endDate.isBefore(DateTime.now()) &&
-    //         anime.endDate.year != 0 &&
-    //         anime.startDate.year != 0)
-    //     .toList();
-
     final List<Anime> lastAnime = _registeredAnime
         .where((anime) =>
             anime.endDate.isBefore(DateTime.now()) &&

@@ -347,109 +347,6 @@ class _EditRatingsScreenState extends State<EditRatingsScreen> {
                   ),
                 ],
               ),
-
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     OutlinedButton(
-              //       style: OutlinedButton.styleFrom(
-              //           foregroundColor: Colors.white,
-              //           backgroundColor: cCompleted,
-              //           //padding: const EdgeInsets.all(16.0),
-              //           textStyle: const TextStyle(fontSize: buttonFontSize),
-              //           shape: RoundedRectangleBorder(
-              //             borderRadius: BorderRadius.circular(5),
-              //           )),
-              //       onPressed: () {
-              //         selectStatus(1);
-              //       },
-              //       child: const Text('Completed'),
-              //     ),
-              //     OutlinedButton(
-              //       style: OutlinedButton.styleFrom(
-              //           foregroundColor: Colors.white,
-              //           backgroundColor: cWatching,
-
-              //           //padding: const EdgeInsets.all(16.0),
-              //           textStyle: const TextStyle(fontSize: buttonFontSize),
-              //           shape: RoundedRectangleBorder(
-              //             borderRadius: BorderRadius.circular(5),
-              //           )),
-              //       onPressed: () {
-              //         selectStatus(2);
-              //       },
-              //       child: const Text('Watching'),
-              //     ),
-              //     OutlinedButton(
-              //       style: OutlinedButton.styleFrom(
-              //           foregroundColor: Colors.white,
-              //           backgroundColor: cPTW,
-              //           //padding: const EdgeInsets.all(16.0),
-              //           textStyle: const TextStyle(fontSize: buttonFontSize),
-              //           shape: RoundedRectangleBorder(
-              //             borderRadius: BorderRadius.circular(5),
-              //           )),
-              //       onPressed: () {
-              //         selectStatus(3);
-              //       },
-              //       child: const Text('Plan to Watch'),
-              //     ),
-              //   ],
-              // ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.start,
-              //   children: [
-              //     Padding(
-              //       padding: const EdgeInsets.only(
-              //         bottom: 10,
-              //         right: 3,
-              //       ),
-              //       child: OutlinedButton(
-              //         style: OutlinedButton.styleFrom(
-              //             foregroundColor: Colors.white,
-              //             backgroundColor: cOnHold,
-              //             //padding: const EdgeInsets.all(16.0),
-              //             textStyle: const TextStyle(fontSize: buttonFontSize),
-              //             shape: RoundedRectangleBorder(
-              //               borderRadius: BorderRadius.circular(5),
-              //             )),
-              //         onPressed: () {
-              //           selectStatus(4);
-              //         },
-              //         child: Container(
-              //           child: const Text('On Hold'),
-              //           margin: EdgeInsets.symmetric(
-              //             horizontal: 9,
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //     Padding(
-              //       padding: const EdgeInsets.only(
-              //         bottom: 10,
-              //         right: 12,
-              //       ),
-              //       child: OutlinedButton(
-              //         style: OutlinedButton.styleFrom(
-              //             foregroundColor: Colors.white,
-              //             backgroundColor: cDropped,
-              //             //padding: const EdgeInsets.all(16.0),
-              //             textStyle: const TextStyle(fontSize: buttonFontSize),
-              //             shape: RoundedRectangleBorder(
-              //               borderRadius: BorderRadius.circular(5),
-              //             )),
-              //         onPressed: () {
-              //           selectStatus(5);
-              //         },
-              //         child: Container(
-              //             margin: EdgeInsets.symmetric(
-              //               horizontal: 3,
-              //             ),
-              //             child: const Text('Dropped')),
-              //       ),
-              //     ),
-              //   ],
-              // ),
               SizedBox(
                 height: 20,
               ),
@@ -624,7 +521,7 @@ class _EditRatingsScreenState extends State<EditRatingsScreen> {
           IconButton(
             onPressed: _submit,
             icon: Icon(
-              Icons.save_outlined, size: 30, color: Colors.green,
+              Icons.save_outlined, size: 30, color: Colors.yellowAccent,
               //Theme.of(context).colorScheme.primary,
             ),
           )

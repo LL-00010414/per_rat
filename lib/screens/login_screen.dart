@@ -89,16 +89,6 @@ class _LoginScreenState extends State<LoginScreen> {
         // ),
       ),
       body: SingleChildScrollView(
-        // OutlinedButton(
-        //   onPressed: () {
-        //     Navigator.pop(context);
-        //   },
-        //   child: const SizedBox(
-        //     width: 30,
-        //     height: 20,
-        //     child: Icon(Icons.arrow_back),
-        //   ),
-        // ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -112,10 +102,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 fit: BoxFit.cover,
                 //colorBlendMode: BlendMode.src,
               ),
-              // const Icon(
-              //   Icons.movie_rounded,
-              //   size: 150,
-              // ),
               const SizedBox(
                 height: 30,
               ),

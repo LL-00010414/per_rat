@@ -71,6 +71,7 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
+            //behavior: SnackBarBehavior.floating,
             content: Text('The movie rating has been edited!'),
           ),
         );
@@ -88,6 +89,7 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
+            //behavior: SnackBarBehavior.floating,
             content: Text('The movie rating has been added!'),
           ),
         );
@@ -530,56 +532,6 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
                       }),
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.sizeOf(context).height * 0.315,
-                //width: 500,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                  backgroundColor: Colors.green,
-                                  //padding: const EdgeInsets.all(16.0),
-                                  textStyle:
-                                      const TextStyle(fontSize: buttonFontSize),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                  )),
-                              onPressed: _submit,
-                              child: const Padding(
-                                padding: EdgeInsets.all(14.0),
-                                child: Text(
-                                  'Submit',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              )),
-                          OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                  backgroundColor: Colors.red,
-                                  //padding: const EdgeInsets.all(16.0),
-                                  textStyle:
-                                      const TextStyle(fontSize: buttonFontSize),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                  )),
-                              onPressed: () {},
-                              child: const Padding(
-                                padding: EdgeInsets.all(14.0),
-                                child: Text(
-                                  'Delete',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              )),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
             ],
           ),
         ),
@@ -601,6 +553,48 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
         ],
       ),
       body: SafeArea(child: content),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(
+          bottom: 15,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    //padding: const EdgeInsets.all(16.0),
+                    textStyle: const TextStyle(fontSize: buttonFontSize),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    )),
+                onPressed: _submit,
+                child: const Padding(
+                  padding: EdgeInsets.all(14.0),
+                  child: Text(
+                    'Submit',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )),
+            OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    //padding: const EdgeInsets.all(16.0),
+                    textStyle: const TextStyle(fontSize: buttonFontSize),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    )),
+                onPressed: () {},
+                child: const Padding(
+                  padding: EdgeInsets.all(14.0),
+                  child: Text(
+                    'Delete',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )),
+          ],
+        ),
+      ),
     );
   }
 }

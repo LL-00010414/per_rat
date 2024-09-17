@@ -26,6 +26,13 @@ class _RealtimeSearchScreenState extends State<RealtimeSearchScreen> {
     );
   }
 
+  String capitalizeFirstLetter(String value) {
+    if (value.isEmpty) {
+      return value;
+    }
+    return value[0].toUpperCase() + value.substring(1);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +53,7 @@ class _RealtimeSearchScreenState extends State<RealtimeSearchScreen> {
               child: TextField(
                 onChanged: (value) {
                   setState(() {
-                    searchName = value;
+                    searchName = capitalizeFirstLetter(value);
                   });
                 },
                 style: TextStyle(
@@ -86,6 +93,8 @@ class _RealtimeSearchScreenState extends State<RealtimeSearchScreen> {
                     //new algorithm
                     stream: FirebaseFirestore.instance
                         .collection('anime')
+                        .orderBy('title')
+                        //.startAt([searchName]).endAt([searchName + "\uf8ff"])
                         .where('title', isGreaterThanOrEqualTo: searchName)
                         .where('title',
                             isLessThanOrEqualTo: searchName + '\uf8ff')

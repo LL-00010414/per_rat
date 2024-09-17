@@ -18,17 +18,6 @@ Widget allAnimeItemSkeleton = Shimmer.fromColors(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
       ),
-      // child: Row(
-      //   children: [
-      //     Image.network(
-      //       fit: BoxFit.cover,
-      //       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2-QJauhqYAPN8jJCj63Fx3RZyeNZKNNw3q7RWOEEwjF5AvoVxQFgP7tR-NBHvb3Qmq0I&usqp=CAU',
-      //     ),
-      //     Column(
-      //       children: [],
-      //     )
-      //   ],
-      // ),
     ),
   ),
 );
