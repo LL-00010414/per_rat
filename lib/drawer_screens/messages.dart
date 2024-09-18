@@ -121,7 +121,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                     var recipientData = snapshot.data!['recipientData'];
                     var latestMessage = snapshot.data!['latestMessage'];
                     var recipientName =
-                        recipientData['username'] ?? 'no username';
+                        recipientData['username'] ?? 'Anonymous';
                     var isSender = latestMessage['senderId'] == user.uid;
                     var timestamp = latestMessage['timestamp'] as Timestamp?;
 

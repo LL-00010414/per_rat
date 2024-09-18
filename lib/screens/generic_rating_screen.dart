@@ -24,9 +24,9 @@ class GenericAnimeScreen extends StatefulWidget {
 }
 
 class _GenericAnimeScreenState extends State<GenericAnimeScreen> {
+  List<Anime> _registeredAnime = [];
   List<ShowRating> _showratings = [];
 
-  List<Anime> _registeredAnime = [];
   String? _error;
   bool _isLoading = true; // Add a loading state
 
@@ -41,8 +41,9 @@ class _GenericAnimeScreenState extends State<GenericAnimeScreen> {
       List<Anime> loadedAnime = await loadAnimeFromFirestore();
       setState(() {
         _registeredAnime = loadedAnime;
-        _isLoading = false;
+        //_isLoading = false;
       });
+      _checkLoadingState();
     } catch (e) {
       setState(() {
         _error = 'Failed to load anime: $e';
@@ -80,6 +81,18 @@ class _GenericAnimeScreenState extends State<GenericAnimeScreen> {
     } catch (e) {
       setState(() {
         _error = 'Failed to load ratings: $e';
+        _isLoading = false;
+      });
+    }
+  }
+
+  // Check if both anime and ratings have been loaded
+  void _checkLoadingState() {
+    if (_registeredAnime.isNotEmpty ||
+        _showratings.isNotEmpty ||
+        _error != null) {
+      setState(() {
+        _isLoading = false;
       });
     }
   }
@@ -88,15 +101,7 @@ class _GenericAnimeScreenState extends State<GenericAnimeScreen> {
   void initState() {
     super.initState();
     _fetchAnime();
-
     displayRating();
-
-    // Set a timer to stop showing the skeleton after a limited time
-    // Timer(Duration(seconds: 3), () {
-    setState(() {
-      _isLoading = false;
-    });
-    // });
   }
 
   @override
@@ -140,6 +145,10 @@ class _GenericAnimeScreenState extends State<GenericAnimeScreen> {
                 itemBuilder: (context, index) {
                   var rating = _showratings[index];
                   animeSet = getAnimeFromShowrating(rating);
+                  // Skip rendering if no matching anime is found
+                  if (animeSet == null) {
+                    return SizedBox.shrink(); // Returns an empty widget
+                  }
                   return AllAnimeItem(
                       showRating: rating,
                       anime: animeSet!,

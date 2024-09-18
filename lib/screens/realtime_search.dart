@@ -26,10 +26,12 @@ class _RealtimeSearchScreenState extends State<RealtimeSearchScreen> {
     );
   }
 
-  String capitalizeFirstLetter(String value) {
-    if (value.isEmpty) {
-      return value;
+  String capitalizeFirstLetter(String? value) {
+    if (value == null || value.isEmpty) {
+      return '';
     }
+
+    value = value.trim(); // Remove any unnecessary spaces
     return value[0].toUpperCase() + value.substring(1);
   }
 

@@ -270,7 +270,12 @@ class _EditRatingsScreenState extends State<EditRatingsScreen> {
                       onPressed: () {
                         selectStatus(1);
                       },
-                      child: const Text('Completed'),
+                      child: FittedBox(
+                        child: const Text(
+                          'Completed',
+                          maxLines: 1,
+                        ),
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -306,7 +311,12 @@ class _EditRatingsScreenState extends State<EditRatingsScreen> {
                       onPressed: () {
                         selectStatus(3);
                       },
-                      child: const Text('Plan to Watch'),
+                      child: FittedBox(
+                        child: const Text(
+                          'Plan to \n Watch',
+                          maxLines: 2,
+                        ),
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -458,56 +468,6 @@ class _EditRatingsScreenState extends State<EditRatingsScreen> {
                       }),
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.sizeOf(context).height * 0.315,
-                //width: 500,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                                backgroundColor: Colors.green,
-                                //padding: const EdgeInsets.all(16.0),
-                                textStyle:
-                                    const TextStyle(fontSize: buttonFontSize),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                                )),
-                            onPressed: _submit,
-                            child: const Padding(
-                              padding: EdgeInsets.all(14.0),
-                              child: Text(
-                                'Submit',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            )),
-                        OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            //padding: const EdgeInsets.all(16.0),
-                            textStyle:
-                                const TextStyle(fontSize: buttonFontSize),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                          ),
-                          onPressed: () {},
-                          child: const Padding(
-                            padding: EdgeInsets.all(14.0),
-                            child: Text(
-                              'Delete',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
             ],
           ),
         ),
@@ -528,6 +488,58 @@ class _EditRatingsScreenState extends State<EditRatingsScreen> {
         ],
       ),
       body: SafeArea(child: content),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.only(
+          bottom: 15,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    //padding: const EdgeInsets.all(16.0),
+                    textStyle: const TextStyle(fontSize: buttonFontSize),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    )),
+                onPressed: _submit,
+                child: const Padding(
+                  padding: EdgeInsets.all(14.0),
+                  child: Text(
+                    'Submit',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )),
+            OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    //padding: const EdgeInsets.all(16.0),
+                    textStyle: const TextStyle(fontSize: buttonFontSize),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    )),
+                onPressed: () {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      duration: const Duration(seconds: 2),
+                      content: Text(
+                          "${animeSet == null ? 'anime' : animeSet!.title} has been deleted"),
+                    ),
+                  );
+                },
+                child: const Padding(
+                  padding: EdgeInsets.all(14.0),
+                  child: Text(
+                    'Delete',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )),
+          ],
+        ),
+      ),
     );
   }
 }

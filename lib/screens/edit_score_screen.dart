@@ -237,7 +237,12 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
                       onPressed: () {
                         selectStatus(1);
                       },
-                      child: const Text('Completed'),
+                      child: FittedBox(
+                        child: const Text(
+                          'Completed',
+                          maxLines: 1,
+                        ),
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -273,7 +278,12 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
                       onPressed: () {
                         selectStatus(3);
                       },
-                      child: const Text('Plan to Watch'),
+                      child: FittedBox(
+                        child: const Text(
+                          'Plan to \n Watch',
+                          maxLines: 2,
+                        ),
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -317,109 +327,6 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
               SizedBox(
                 height: 20,
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     OutlinedButton(
-              //       style: OutlinedButton.styleFrom(
-              //           foregroundColor: Colors.white,
-              //           backgroundColor: cCompleted,
-              //           //padding: const EdgeInsets.all(16.0),
-              //           textStyle: const TextStyle(fontSize: buttonFontSize),
-              //           shape: RoundedRectangleBorder(
-              //             borderRadius: BorderRadius.circular(5),
-              //           )),
-              //       onPressed: () {
-              //         selectStatus(1);
-              //       },
-              //       child: const Text('Completed'),
-              //     ),
-
-              //     OutlinedButton(
-              //       style: OutlinedButton.styleFrom(
-              //           foregroundColor: Colors.white,
-              //           backgroundColor: cWatching,
-
-              //           //padding: const EdgeInsets.all(16.0),
-              //           textStyle: const TextStyle(fontSize: buttonFontSize),
-              //           shape: RoundedRectangleBorder(
-              //             borderRadius: BorderRadius.circular(5),
-              //           )),
-              //       onPressed: () {
-              //         selectStatus(2);
-              //       },
-              //       child: const Text('Watching'),
-              //     ),
-              //     OutlinedButton(
-              //       style: OutlinedButton.styleFrom(
-              //           foregroundColor: Colors.white,
-              //           backgroundColor: cPTW,
-              //           //padding: const EdgeInsets.all(16.0),
-              //           textStyle: const TextStyle(fontSize: buttonFontSize),
-              //           shape: RoundedRectangleBorder(
-              //             borderRadius: BorderRadius.circular(5),
-              //           )),
-              //       onPressed: () {
-              //         selectStatus(3);
-              //       },
-              //       child: const Text('Plan to Watch'),
-              //     ),
-              //   ],
-              // ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.start,
-              //   children: [
-              //     Padding(
-              //       padding: const EdgeInsets.only(
-              //         bottom: 10,
-              //         right: 3,
-              //       ),
-              //       child: OutlinedButton(
-              //         style: OutlinedButton.styleFrom(
-              //             foregroundColor: Colors.white,
-              //             backgroundColor: cOnHold,
-              //             //padding: const EdgeInsets.all(16.0),
-              //             textStyle: const TextStyle(fontSize: buttonFontSize),
-              //             shape: RoundedRectangleBorder(
-              //               borderRadius: BorderRadius.circular(5),
-              //             )),
-              //         onPressed: () {
-              //           selectStatus(4);
-              //         },
-              //         child: Container(
-              //           child: const Text('On Hold'),
-              //           margin: EdgeInsets.symmetric(
-              //             horizontal: 9,
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //     Padding(
-              //       padding: const EdgeInsets.only(
-              //         bottom: 10,
-              //         right: 12,
-              //       ),
-              //       child: OutlinedButton(
-              //         style: OutlinedButton.styleFrom(
-              //             foregroundColor: Colors.white,
-              //             backgroundColor: cDropped,
-              //             //padding: const EdgeInsets.all(16.0),
-              //             textStyle: const TextStyle(fontSize: buttonFontSize),
-              //             shape: RoundedRectangleBorder(
-              //               borderRadius: BorderRadius.circular(5),
-              //             )),
-              //         onPressed: () {
-              //           selectStatus(5);
-              //         },
-              //         child: Container(
-              //             margin: EdgeInsets.symmetric(
-              //               horizontal: 3,
-              //             ),
-              //             child: const Text('Dropped')),
-              //       ),
-              //     ),
-              //   ],
-              // ),
               const Text(
                 'Progress',
                 style: TextStyle(
@@ -584,7 +491,16 @@ class _EditScoreScreenState extends State<EditScoreScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                     )),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      duration: const Duration(seconds: 2),
+                      content: Text("${widget.anime.title} has been deleted"),
+                    ),
+                  );
+                },
                 child: const Padding(
                   padding: EdgeInsets.all(14.0),
                   child: Text(

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:per_rat/components/constants.dart';
+import 'package:per_rat/drawer_screens/community_details.dart';
 import 'package:per_rat/screens/guest_profile.dart';
 import 'package:random_name_generator/random_name_generator.dart';
 
@@ -19,7 +21,7 @@ class _NewCommunitiesState extends State<NewCommunities> {
   String searchQuery = ''; // To store the search query
 
   //random name generator
-  var randomNames = RandomNames(Zone.us);
+  //var randomNames = RandomNames(Zone.us);
   var randomCommunities = RandomNames(Zone.japan);
 
   @override
@@ -110,7 +112,7 @@ class _NewCommunitiesState extends State<NewCommunities> {
           itemBuilder: (context, index) {
             var userDoc = users[index];
             var userData = userDoc.data() as Map<String, dynamic>;
-            var username = userData['username'] ?? '${randomNames.name()}';
+            var username = userData['username'] ?? userData['email'] ?? '';
             var imageUrl = userData['image_url'] ?? '';
             var status = userData['status'] ?? 'No Status';
 
@@ -133,7 +135,9 @@ class _NewCommunitiesState extends State<NewCommunities> {
                     backgroundColor: Colors.purple[100],
                   ),
                   title: Text(
-                    username,
+                    !username.toString().contains('@')
+                        ? username
+                        : getDisplayEmail(username.toString()),
                     style: TextStyle(
                       color: Colors.white,
                       overflow: TextOverflow.ellipsis,
@@ -168,7 +172,7 @@ class _NewCommunitiesState extends State<NewCommunities> {
   // A helper method to filter users based on the search query
   bool _filterByQuery(DocumentSnapshot doc) {
     var userData = doc.data() as Map<String, dynamic>;
-    var username = userData['username'] ?? '${randomNames.name()}';
+    var username = userData['username'] ?? userData['email'] ?? '';
 
     if (searchQuery.isEmpty) {
       return true; // Return all if search query is empty
@@ -201,6 +205,11 @@ class _NewCommunitiesState extends State<NewCommunities> {
                 style: TextStyle(color: Colors.grey),
               ),
               onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (ctx) => CommunityDetails(),
+                  ),
+                );
                 // Navigate to community details or join community
               },
             ),
@@ -279,15 +288,15 @@ class _NewCommunitiesState extends State<NewCommunities> {
       appBar: AppBar(
         title: const Text('Communities'),
         actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: IconButton(
-              icon: const Icon(Icons.more_vert),
-              onPressed: () {
-                // Handle more actions
-              },
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          //   child: IconButton(
+          //     icon: const Icon(Icons.more_vert),
+          //     onPressed: () {
+          //       // Handle more actions
+          //     },
+          //   ),
+          // ),
         ],
       ),
       body: Column(
@@ -300,6 +309,7 @@ class _NewCommunitiesState extends State<NewCommunities> {
               bottom: 5,
             ),
             child: TextField(
+              autofocus: false,
               style: TextStyle(color: Colors.grey),
               controller: _searchController,
               decoration: InputDecoration(

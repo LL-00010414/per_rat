@@ -47,8 +47,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       List<Anime> loadedAnime = await loadAnimeFromFirestore();
       setState(() {
         _registeredAnime = loadedAnime;
-        _isLoading = false;
+        //_isLoading = false;
       });
+      _checkLoadingState();
     } catch (e) {
       setState(() {
         _error = 'Failed to load anime: $e';
@@ -85,6 +86,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     } catch (e) {
       setState(() {
         _error = 'Failed to load ratings: $e';
+        _isLoading = false;
       });
     }
   }
@@ -136,6 +138,17 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     });
   }
 
+  // Check if both anime and ratings have been loaded
+  void _checkLoadingState() {
+    if (_registeredAnime.isNotEmpty ||
+        _showratings.isNotEmpty ||
+        _error != null) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -145,11 +158,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     _fetchAnime();
     displayRating();
     _messagingService.initialize();
-
-    setState(() {
-      _isLoading = false;
-    });
-    // });
   }
 
   Future<void> _initializeData() async {
