@@ -8,7 +8,7 @@ import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/models/show_rating.dart';
 import 'package:per_rat/screens/edit_ratings.dart';
 import 'package:per_rat/screens/show_rating_details_screen.dart';
-import 'package:per_rat/widgets/all_anime_item_gpt.dart';
+import 'package:per_rat/widgets/all_anime_item.dart';
 import 'package:per_rat/widgets/all_anime_item_skeleton.dart';
 
 class GenericAnimeScreen extends StatefulWidget {
@@ -173,36 +173,5 @@ class _GenericAnimeScreenState extends State<GenericAnimeScreen> {
     return Scaffold(
       body: content,
     );
-
-    // final Stream<QuerySnapshot> dataStream = FirebaseFirestore.instance
-    //     .collection('users')
-    //     .doc(user.uid)
-    //     .collection('ratings')
-    //     .where('status', isEqualTo: widget.filterStatus)
-    //     .orderBy('timestamp', descending: true)
-    //     .snapshots();
-
-    // return Scaffold(
-    //   body: StreamBuilder<QuerySnapshot>(
-    //     stream: dataStream,
-    //     builder: (context, snapshot) {
-    //       if (snapshot.connectionState == ConnectionState.waiting) {
-    //         return Center(child: CircularProgressIndicator());
-    //       }
-
-    //       if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-    //         return Center(
-    //             child: Text(
-    //           'No ratings found.',
-    //           style: TextStyle(
-    //             color: Theme.of(context).colorScheme.primary,
-    //           ),
-    //         ));
-    //       }
-
-    //       return content;
-    //     },
-    //   ),
-    // );
   }
 }

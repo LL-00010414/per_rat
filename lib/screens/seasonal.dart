@@ -300,19 +300,8 @@ class _SeasonalScreenState extends State<SeasonalScreen>
     );
 
     return Scaffold(
-      //backgroundColor: Colors.black,
       appBar: AppBar(
-        //backgroundColor: Colors.black,
         flexibleSpace: TabBar(
-          // indicatorWeight: 2,
-          // //padding: const EdgeInsets.all(0),
-          // //labelPadding: const EdgeInsets.all(0),
-          // labelStyle: const TextStyle(
-          //   fontSize: 12,
-          // )
-          // fontWeight: FontWeight.normal,
-          // fontStyle: FontStyle.normal,
-          // ,
           isScrollable: true,
           controller: _tabController,
           tabs: const <Widget>[

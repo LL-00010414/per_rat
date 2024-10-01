@@ -8,7 +8,7 @@ import 'package:per_rat/models/anime.dart';
 import 'package:per_rat/models/show_rating.dart';
 import 'package:per_rat/screens/edit_ratings.dart';
 import 'package:per_rat/screens/show_rating_details_screen.dart';
-import 'package:per_rat/widgets/all_anime_item_gpt.dart';
+import 'package:per_rat/widgets/all_anime_item.dart';
 import 'package:per_rat/widgets/all_anime_item_skeleton.dart';
 
 class AllAnimeScreen extends StatefulWidget {

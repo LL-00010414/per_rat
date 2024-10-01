@@ -91,11 +91,14 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Anime> similarAnime = _registeredAnime
-        .where(
-            (anime) => anime.genre.any((g) => widget.anime.genre.contains(g)))
-        .where((anime) => anime.title != widget.anime.title)
-        .toList();
+    final List<Anime> similarAnime = _registeredAnime.where((anime) {
+      // Find common genres between the two anime
+      int commonGenres =
+          anime.genre.where((g) => widget.anime.genre.contains(g)).length;
+
+      // Only include anime with at least 2 similar genres and different title
+      return commonGenres >= 2 && anime.title != widget.anime.title;
+    }).toList();
 
     return Scaffold(
       backgroundColor: Colors.grey[900],
@@ -345,6 +348,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
       children: genres
           .map((genre) => Chip(
                 label: Text(genre.toUpperCase()),
+                labelStyle: TextStyle(color: Colors.white),
                 backgroundColor: Colors.redAccent,
               ))
           .toList(),

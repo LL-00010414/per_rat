@@ -60,10 +60,14 @@ class _ShowRatingDetailsState extends State<ShowRatingDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Anime> similarAnime = _registeredAnime
-        .where((anime) => anime.genre.any((g) => animeSet!.genre.contains(g)))
-        .where((anime) => anime.title != animeSet!.title)
-        .toList();
+    final List<Anime> similarAnime = _registeredAnime.where((anime) {
+      // Find common genres between the two anime
+      int commonGenres =
+          anime.genre.where((g) => animeSet!.genre.contains(g)).length;
+
+      // Only include anime with at least 2 similar genres and different title
+      return commonGenres >= 2 && anime.title != animeSet!.title;
+    }).toList();
 
     return Scaffold(
       backgroundColor: Colors.grey[900],
@@ -305,38 +309,10 @@ class _ShowRatingDetailsState extends State<ShowRatingDetails> {
       children: genres
           .map((genre) => Chip(
                 label: Text(genre.toUpperCase()),
+                labelStyle: TextStyle(color: Colors.white),
                 backgroundColor: Colors.redAccent,
               ))
           .toList(),
     );
   }
-
-  // Widget _buildSimilarAnimeList(List<Anime> similarAnime) {
-  //   return Column(
-  //     children: similarAnime
-  //         .map((anime) => ListTile(
-  //               contentPadding: EdgeInsets.all(8),
-  //               leading: Image.network(
-  //                 anime.imageUrl,
-  //                 height: 50,
-  //                 width: 50,
-  //                 fit: BoxFit.cover,
-  //               ),
-  //               title: Text(
-  //                 anime.title,
-  //                 style: TextStyle(color: Colors.white),
-  //               ),
-  //               onTap: () {
-  //                 Navigator.of(context).push(
-  //                   MaterialPageRoute(
-  //                     builder: (ctx) => AnimeDetailsScreen(
-  //                       anime: anime,
-  //                     ),
-  //                   ),
-  //                 );
-  //               },
-  //             ))
-  //         .toList(),
-  //   );
-  // }
 }
