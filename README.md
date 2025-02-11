@@ -41,22 +41,10 @@ PERRAT is an all-in-one anime rating application designed to enhance your anime 
 
 You can install the project via Google Play closed testing or by directly downloading the APK file. Follow the steps below to get started:
 
-### Option 1: Google Play Closed Testing
+Google Play
 
-1. **Join the Google Group:**
-   - To gain access, first, join the Google Group for testers: [Google Groups - Perrat Testers](https://groups.google.com/u/0/g/perrat-testers).
+[Download from Play Store](https://play.google.com/store/apps/details?id=com.kh_ab.per_rat).
 
-2. **Become a Tester:**
-   - After joining the group, sign up as a tester: [Become a Tester](https://play.google.com/apps/testing/com.kh_ab.per_rat).
-
-3. **Download the App:**
-   - Once you're a tester, you can download the application directly from the Play Store: [Download from Play Store](https://play.google.com/store/apps/details?id=com.kh_ab.per_rat).
-
-### Option 2: Direct APK Download
-
-If you prefer not to go through the testing process, you can download the APK file directly from the following link:
-
-- [Download APK](https://mega.nz/file/tHES2TRb#Em6g16WjrwGi8TX2L7JYR-Jx1OZMgVf2caVAk01x0ak)
 
 
 ## Screenshots
